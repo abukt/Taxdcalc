@@ -1,5 +1,5 @@
 "use client"
-import { useState, useEffect, useRef } from “react”;
+import { useState, useEffect, useRef } from "react";
 
 function useWidth() {
 const [w, setW] = useState(typeof window !== “undefined” ? window.innerWidth : 800);
