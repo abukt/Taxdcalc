@@ -1,17 +1,17 @@
 import Script from ‘next/script’;
 
 export const metadata = {
-title: ‘TaxdCalc — UK Salary & Take-Home Pay Calculator 2026-27’,
+title: ‘TaxdCal — UK Salary & Take-Home Pay Calculator 2026-27’,
 description: ‘Free UK salary calculator. See your take-home pay after income tax, National Insurance, student loan and pension. Scotland supported. Updated for 2026-27.’,
 openGraph: {
-title: ‘TaxdCalc — UK Take-Home Pay Calculator 2026-27’,
+title: ‘TaxdCal — UK Take-Home Pay Calculator 2026-27’,
 description: ‘Free UK salary calculator. Income tax, NI, pension and student loan. Scotland supported.’,
-url: ‘https://taxdcalc.co.uk’,
-siteName: ‘TaxdCalc’,
+url: ‘https://taxdcal.co.uk’,
+siteName: ‘TaxdCal’,
 type: ‘website’,
 },
 alternates: {
-canonical: ‘https://taxdcalc.co.uk’,
+canonical: ‘https://taxdcal.co.uk’,
 },
 robots: {
 index: true,
