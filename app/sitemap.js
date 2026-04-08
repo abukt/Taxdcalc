@@ -1,9 +1,9 @@
 // app/sitemap.js
 // Next.js auto-generates /sitemap.xml from this file.
-// Submit taxdcalc.co.uk/sitemap.xml to Google Search Console.
+// Submit taxdcal.co.uk/sitemap.xml to Google Search Console.
 
 export default function sitemap() {
-  const base = 'https://taxdcalc.co.uk';
+  const base = 'https://taxdcal.co.uk';
   const now = new Date();
 
   // Core calculator pages — these need separate URL routes first
