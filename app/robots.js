@@ -8,7 +8,7 @@ export default function robots() {
       userAgent: '*',
       allow: '/',
     },
-    sitemap: 'https://taxdcalc.co.uk/sitemap.xml',
-    host: 'https://taxdcalc.co.uk',
+    sitemap: 'https://taxdcal.co.uk/sitemap.xml',
+    host: 'https://taxdcal.co.uk',
   };
 }
