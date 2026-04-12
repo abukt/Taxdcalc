@@ -1,4 +1,4 @@
-use client';
+'use client';
 import Link from 'next/link';
 import { NavBar, Footer, GLOBAL_CSS, C, useWidth } from '../AppRoot';
 import { articles } from '../lib/articles-meta';
