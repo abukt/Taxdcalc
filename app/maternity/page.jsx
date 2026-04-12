@@ -1,4 +1,4 @@
-‘use client’;
+'use client';
 import { useState } from ‘react’;
 import { NavBar, Footer, PageHero, Disclaimer, InputField, SliderField, AnimNum, GLOBAL_CSS, C, fmt, fmtD, useWidth } from ‘../AppRoot’;
 
