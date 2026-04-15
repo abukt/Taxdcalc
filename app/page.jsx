@@ -605,7 +605,7 @@ export default function HomePage() {
           <p style={{ color: 'rgba(255,255,255,0.38)', marginBottom: 20, fontSize: 13 }}>Plain-English guides. Confirmed 2026-27 HMRC and Scottish Government figures.</p>
           <div style={{ display: 'grid', gridTemplateColumns: mob ? '1fr' : 'repeat(auto-fill,minmax(230px,1fr))', gap: 12 }}>
             {ARTICLES.map(a => (
-              <Link key={a.slug} href={`/blog/${a.slug}`}
+              <Link key={a.slug} href={'/blog/' + a.slug}
                 style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.07)', borderRadius: 10, padding: 16, display: 'block', transition: 'all 0.2s' }}
                 onMouseEnter={e => { e.currentTarget.style.background = 'rgba(13,148,136,0.12)'; e.currentTarget.style.borderColor = 'rgba(20,184,166,0.3)'; }}
                 onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.04)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.07)'; }}>
