@@ -121,8 +121,10 @@ export default function BonusPage() {
         </h1>
         <p style={{color:'rgba(255,255,255,0.5)',fontSize:mob?13:15,maxWidth:440,margin:'0 auto'}}>See exactly how much of your bonus you keep after income tax and National Insurance.</p>
       </div>
-      <div style={{maxWidth:860,margin:mob?'-28px 0 0':'-34px auto 0',padding:mob?'0 16px 48px':'0 24px 56px'}}>
-        <Link href="/" style={{display:'inline-flex',alignItems:'center',gap:8,background:C.navy,color:'white',padding:'10px 18px',borderRadius:8,fontSize:13,fontWeight:700,marginBottom:20}}>← Back to Salary Calculator</Link>
+      <div style={{background:'#F4F6F9',padding:mob?'16px 16px 0':'18px 24px 0',maxWidth:860,margin:'0 auto'}}>
+        <Link href="/" style={{display:'inline-flex',alignItems:'center',gap:8,background:C.navy,color:'white',padding:'10px 18px',borderRadius:8,fontSize:13,fontWeight:700}}><- Back to Salary Calculator</Link>
+      </div>
+      <div style={{maxWidth:860,margin:'0 auto',padding:mob?'16px 16px 48px':'16px 24px 56px'}}>
         <div style={{display:'grid',gridTemplateColumns:mob?'1fr':'1fr 1fr',gap:20,alignItems:'start'}}>
           <div style={{background:'white',borderRadius:14,padding:mob?20:26,boxShadow:C.shadow,border:'1px solid '+C.border}} className="fu">
             <h2 style={{fontFamily:'DM Serif Display',fontSize:19,color:C.navy,marginBottom:20}}>Your Details</h2>
