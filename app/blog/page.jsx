@@ -43,7 +43,7 @@ export default function BlogPage() {
       </div>
 
       <div style={{maxWidth:920,margin:'0 auto',
-transform:'translateY(-18px)'',padding:mob?'0 16px 48px':'0 24px 56px'}}>
+transform:'translateY(-18px)',padding:mob?'0 16px 48px':'0 24px 56px'}}>
         {/* Category filter */}
         <div style={{display:'flex',gap:8,flexWrap:'wrap',marginBottom:22}}>
           {CATEGORIES.map(c=>(
