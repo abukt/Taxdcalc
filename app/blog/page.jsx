@@ -42,7 +42,8 @@ export default function BlogPage() {
         <p style={{color:'rgba(255,255,255,0.45)',fontSize:14,maxWidth:420,margin:'0 auto'}}>Plain-English guides to take-home pay, income tax, NI, pensions and your payslip. All figures confirmed for 2026-27.</p>
       </div>
 
-      <div style={{maxWidth:920,margin:mob?'-22px 0 0':'-26px auto 0',padding:mob?'0 16px 48px':'0 24px 56px'}}>
+      <div style={{maxWidth:920,margin:'0 auto',
+transform:'translateY(-18px)'',padding:mob?'0 16px 48px':'0 24px 56px'}}>
         {/* Category filter */}
         <div style={{display:'flex',gap:8,flexWrap:'wrap',marginBottom:22}}>
           {CATEGORIES.map(c=>(
