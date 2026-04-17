@@ -77,8 +77,10 @@ export default function ComparisonPage() {
         </h1>
         <p style={{color:'rgba(255,255,255,0.5)',fontSize:mob?13:15,maxWidth:480,margin:'0 auto'}}>See which offer puts more money in your pocket after income tax, NI, pension and student loan.</p>
       </div>
-      <div style={{maxWidth:1000,margin:mob?'-28px 0 0':'-34px auto 0',padding:mob?'0 16px 48px':'0 24px 56px'}}>
-        <Link href="/" style={{display:'inline-flex',alignItems:'center',gap:8,background:C.navy,color:'white',padding:'10px 18px',borderRadius:8,fontSize:13,fontWeight:700,marginBottom:20}}>← Back to Salary Calculator</Link>
+      <div style={{background:'#F4F6F9',padding:mob?'16px 16px 0':'18px 24px 0',maxWidth:1000,margin:'0 auto'}}>
+        <Link href="/" style={{display:'inline-flex',alignItems:'center',gap:8,background:C.navy,color:'white',padding:'10px 18px',borderRadius:8,fontSize:13,fontWeight:700}}><- Back to Salary Calculator</Link>
+      </div>
+      <div style={{maxWidth:1000,margin:'0 auto',padding:mob?'16px 16px 48px':'16px 24px 56px'}}>
         <div style={{display:'grid',gridTemplateColumns:mob?'1fr':'1fr 1fr',gap:20,marginBottom:20}}>
           <JobPanel label="Job A" salary={aS} setSalary={setAS} pension={aP} setPension={setAP} loan={aL} setLoan={setAL} result={rA} accentColor={C.teal} accentBg={C.tealBg} accentBorder={C.tealBorder}/>
           <JobPanel label="Job B" salary={bS} setSalary={setBS} pension={bP} setPension={setBP} loan={bL} setLoan={setBL} result={rB} accentColor={C.amber} accentBg={C.amberBg} accentBorder={C.amberBorder}/>
