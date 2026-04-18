@@ -312,16 +312,20 @@ function VisaCheckerCard({ visa, mob }) {
 
 function ComplianceAlert({ mtd, gross, mob }) {
   const [dismissed, setDismissed] = React.useState(false);
+  
   if (!mtd || dismissed) return null;
+  
   return (
     <div style={{ background: '#FEF2F2', border: '1.5px solid #FECACA', borderRadius: 12, padding: '14px 15px', position: 'relative', marginBottom: 14 }}>
       <button onClick={() => setDismissed(true)} style={{ position: 'absolute', top: 10, right: 12, background: 'none', border: 'none', color: '#94A3B8' }}>✕</button>
       <div style={{ fontSize: 12, fontWeight: 700, color: '#991B1B' }}>🔴 Making Tax Digital 2026</div>
-     <div style={{ fontSize: 11, color: '#7F1D1D', marginTop: 4 }}>
-  Income {'>'} £50k requires quarterly digital filing. <a href="https://www.gov.uk/guidance/find-software-thats-compatible-with-making-tax-digital-for-income-tax" target="_blank" style={{ fontWeight: 700 }}>Software Guide ↗</a>
-</div>
+      <div style={{ fontSize: 11, color: '#7F1D1D', marginTop: 4 }}>
+        Income {'>'} £50k requires quarterly digital filing. <a href="https://www.gov.uk/guidance/find-software-thats-compatible-with-making-tax-digital-for-income-tax" target="_blank" style={{ fontWeight: 700 }}>Software Guide ↗</a>
+      </div>
+    </div>
   );
 }
+
 
 function DirectorOptimizer({ director, mob }) {
   const [expanded, setExpanded] = React.useState(false);
