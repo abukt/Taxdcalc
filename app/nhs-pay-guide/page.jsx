@@ -53,23 +53,60 @@ export default function NHSPayGuide(){
   const mob=useW()<640;
   const[hcas,setHcas]=useState('none');
 
-  const schema={
-    '@context':'https://schema.org',
-    '@graph':[
-      {'@type':'Article','@id':'https://taxdcal.co.uk/nhs-pay-guide#article',headline:'NHS Pay Guide 2026-27: Agenda for Change Bands, Take-Home Pay and Pension',datePublished:'2026-04-18',dateModified:'2026-04-18',author:{'@type':'Organization',name:'TaxdCalc'},publisher:{'@type':'Organization',name:'TaxdCalc',url:'https://taxdcal.co.uk'}},
-      {'@type':'FAQPage',mainEntity:[
-        {'@type':'Question',name:'What is Agenda for Change (AfC)?',acceptedAnswer:{'@type':'Answer',text:'Agenda for Change is the pay system used by the NHS in England, Wales, and Northern Ireland. It places all NHS staff (except doctors, dentists, and senior managers) into pay bands 1 to 9, with specific salary ranges and progression points for each band.'}},
-        {'@type':'Question',name:'How does NHS London weighting work?',acceptedAnswer:{'@type':'Answer',text:'NHS London weighting is called the High Cost Area Supplement (HCAS). In 2026-27: fringe areas +£1,478/year, outer London +£4,271/year, inner London +£5,132/year. HCAS supplements are pensionable.'}},
-        {'@type':'Question',name:'How much is the NHS pension contribution in 2026-27?',acceptedAnswer:{'@type':'Answer',text:'NHS pension contribution rates range from 5.0% for bands 2 and 3, up to 13.5% for bands 8c and above. Most Band 5 staff contribute 9.8%. The NHS pension is a defined benefit scheme — worth substantially more than these rates suggest.'}},
-      ]},
-    ]
-  };
+  const schemaFAQ={
+  '@context':'https://schema.org',
+  '@type':'FAQPage',
+  mainEntity:[
+    {'@type':'Question',name:'What is Agenda for Change (AfC)?',acceptedAnswer:{'@type':'Answer',text:'Agenda for Change is the pay system for NHS staff in England, Wales and Northern Ireland. All roles (except doctors, dentists and very senior managers) are placed into pay bands 1 to 9, each with specific salary ranges and spine points.'}},
+    {'@type':'Question',name:'How does NHS London weighting work?',acceptedAnswer:{'@type':'Answer',text:'NHS London weighting is called the High Cost Area Supplement (HCAS). In 2026-27: fringe +£1,478/year, outer London +£4,271/year, inner London +£5,132/year. HCAS is pensionable and based on your workplace postcode, not where you live.'}},
+    {'@type':'Question',name:'How much is the NHS pension contribution in 2026-27?',acceptedAnswer:{'@type':'Answer',text:'NHS pension contribution rates range from 5.0% for Bands 2 and 3 up to 13.5% for Bands 8c and above. Band 5 staff contribute 9.8%. The NHS pension is a defined benefit scheme valued at roughly 20-23% employer contribution equivalent.'}},
+    {'@type':'Question',name:'What is the take-home pay for NHS Band 5 in 2026-27?',acceptedAnswer:{'@type':'Answer',text:'NHS Band 5 entry salary (£29,970) takes home approximately £22,748 per year (£1,896 per month) after income tax, NI and 9.8% NHS pension. At the top of Band 5 (£36,483) take-home is approximately £26,927 per year.'}},
+    {'@type':'Question',name:'What is the difference between NHS Band 5 and Band 6?',acceptedAnswer:{'@type':'Answer',text:'Band 5 covers roles like staff nurses and newly qualified AHPs. Band 6 covers senior nurses and specialist practitioners. Band 6 entry is £37,338 in 2026-27, compared to Band 5 entry at £29,970 — a difference of approximately £4,000 in annual take-home pay.'}},
+  ]
+};
+const schemaBreadcrumb={'@context':'https://schema.org','@type':'BreadcrumbList',itemListElement:[{'@type':'ListItem',position:1,name:'TaxdCalc',item:'https://taxdcal.co.uk'},{'@type':'ListItem',position:2,name:'NHS Pay Guide 2026-27',item:'https://taxdcal.co.uk/nhs-pay-guide'}]};
+const schemaArticle={'@context':'https://schema.org','@type':'Article','@id':'https://taxdcal.co.uk/nhs-pay-guide#article',headline:'NHS Pay Guide 2026-27: Agenda for Change Bands, Take-Home Pay and Pension',description:'All NHS Agenda for Change bands 2-9, take-home pay after income tax, NI and NHS pension, and London HCAS weighting for 2026-27.',datePublished:'2026-04-18',dateModified:'2026-04-18',author:{'@type':'Organization',name:'TaxdCalc'},publisher:{'@type':'Organization',name:'TaxdCalc',url:'https://taxdcal.co.uk'}};
 
   return(
     <>
       <style>{GS}</style>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{__html:JSON.stringify(schema)}}/>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{__html:JSON.stringify(schemaFAQ)}}/>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{__html:JSON.stringify(schemaBreadcrumb)}}/>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{__html:JSON.stringify(schemaArticle)}}/>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{__html:JSON.stringify({
+        '@context':'https://schema.org','@type':'HowTo',
+        name:'How to calculate NHS take-home pay in 2026-27',
+        description:'Step-by-step guide to calculating your NHS Agenda for Change take-home pay including HCAS and NHS pension.',
+        step:[
+          {'@type':'HowToStep',position:1,name:'Find your Agenda for Change band',text:'Your AfC band determines your pay range. Check your contract or payslip. Bands run from 2 to 9.'},
+          {'@type':'HowToStep',position:2,name:'Check your London HCAS supplement',text:'If you work in London or the commuter belt, add your HCAS: fringe £1,478, outer London £4,271, inner London £5,132 per year.'},
+          {'@type':'HowToStep',position:3,name:'Find your NHS pension contribution rate',text:'Bands 2-3: 5%, Band 4: 6.1%, Band 5: 9.8%, Band 6: 10.7%, Band 7-8a: 12.5%, Bands 8b and above: 13.5%.'},
+          {'@type':'HowToStep',position:4,name:'Calculate income tax and NI',text:'Income tax: 20% on earnings between £12,570 and £50,270, 40% above. NI: 8% on £12,570–£50,270, 2% above. NHS pension is salary sacrifice so reduces your taxable income.'},
+          {'@type':'HowToStep',position:5,name:'Use the TaxdCalc NHS pay calculator',text:'Enter your band, London zone and Scotland to get your exact take-home pay with all NHS-specific deductions calculated correctly.'},
+        ]
+      })}}/>
       <Nav/>
+
+      {/* AI ANSWER BLOCK */}
+      <div className="ai-answer" style={{background:'#F0FDFA',borderBottom:'1px solid #99F6E4',padding:mob?'14px 16px':'16px 24px'}}>
+        <div style={{maxWidth:900,margin:'0 auto'}}>
+          <div style={{fontSize:10,color:'#0D9488',fontWeight:700,letterSpacing:'0.12em',textTransform:'uppercase',fontFamily:'JetBrains Mono',marginBottom:6}}>Quick Answer — NHS Pay 2026-27</div>
+          <p style={{fontSize:mob?14:15,color:'#0f766e',lineHeight:1.65,fontWeight:600,marginBottom:10}}>
+            NHS Band 5 entry take-home is <strong>£22,748/year (£1,896/month)</strong> after income tax, NI and 9.8% NHS pension. Band 6 entry: <strong>£26,215/year</strong>. Inner London Band 5 entry with HCAS: <strong>£25,680/year</strong>.
+          </p>
+          <div style={{display:'grid',gridTemplateColumns:mob?'repeat(2,1fr)':'repeat(4,1fr)',gap:8}}>
+            {[['Band 5 entry','£22,748/yr'],['Band 6 entry','£26,215/yr'],['Inner London Band 5','£25,680/yr'],['NHS pension (Band 5)','9.8% rate']].map(([l,v])=>(
+              <div key={l} style={{background:'rgba(13,148,136,0.1)',borderRadius:7,padding:'9px 11px'}}>
+                <div style={{fontSize:9,color:'#0D9488',textTransform:'uppercase',letterSpacing:'0.1em',fontFamily:'JetBrains Mono',marginBottom:3}}>{l}</div>
+                <div style={{fontFamily:'JetBrains Mono',fontSize:12,fontWeight:700,color:'#0f766e'}}>{v}</div>
+              </div>
+            ))}
+          </div>
+          <div style={{marginTop:10,fontSize:12,color:'#0f766e',lineHeight:1.6}}>
+            💡 <strong>Tip:</strong> NHS pension contributions are salary sacrifice — they reduce your taxable income and save both income tax and NI. The NHS pension is a defined benefit scheme worth approximately 20-23% employer contribution equivalent.
+          </div>
+        </div>
+      </div>
 
       {/* Hero */}
       <div style={{background:`linear-gradient(135deg,${C.navy},${C.navyMid})`,padding:mob?'32px 20px 48px':'44px 24px 60px',position:'relative',overflow:'hidden'}}>
