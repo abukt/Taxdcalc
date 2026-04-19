@@ -1,5 +1,5 @@
 'use client';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import Link from 'next/link';
 
 // ── RESPONSIVE ────────────────────────────────────────────────────────────────
@@ -145,6 +145,8 @@ input[type=range]{-webkit-appearance:none;width:100%;height:4px;background:#CBD5
 input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:50%;background:#0C1E3C;cursor:pointer;border:2px solid white;box-shadow:0 2px 6px rgba(0,0,0,0.2);}
 select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%2364748b' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;background-color:white;}
 @keyframes fadeUp{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
+@media print{.no-print{display:none!important;}body{background:white!important;padding-bottom:0!important;}}
+@media(max-width:767px){body{padding-bottom:52px;}}
 .fu{animation:fadeUp 0.38s ease both;}
 .bfill{transition:width 0.48s cubic-bezier(0.4,0,0.2,1);}
 button{-webkit-tap-highlight-color:transparent;cursor:pointer;font-family:inherit;}
@@ -152,6 +154,77 @@ a{text-decoration:none;color:inherit;}
 `;
 
 // ── BLOG ARTICLES (for homepage teasers) ──────────────────────────────────────
+
+// ── TAX TRAP DETECTOR ─────────────────────────────────────────────────────────
+function detectTraps(gross, pensionPct, loan, numChildren) {
+  const pen = gross * (pensionPct / 100);
+  const adj = gross - pen;
+  const traps = [];
+  // 60% trap
+  if (adj > 95000 && adj <= 125140) {
+    const inTrap = adj > 100000;
+    const toEscape = Math.max(0, adj - 100000);
+    const itWith = calcTax(adj, 0, false, '');
+    const itEscape = calcTax(adj, toEscape, false, '');
+    const niSaved = calcNI(adj) - calcNI(Math.max(0, adj - toEscape));
+    traps.push({ id: 'trap60', active: inTrap, approaching: !inTrap, severity: inTrap ? 'critical' : 'warning',
+      headline: inTrap
+        ? `60% effective rate — you keep only 28p of each extra pound (£${Math.round(adj - 100000).toLocaleString('en-GB')} in the trap)`
+        : `£${(100000 - adj).toLocaleString('en-GB')} away from the 60% tax trap`,
+      detail: inTrap
+        ? `Sacrificing £${Math.round(toEscape).toLocaleString('en-GB')} into pension escapes it — saving £${Math.round(itWith - itEscape + niSaved).toLocaleString('en-GB')} in tax.`
+        : `Above £100,000 your Personal Allowance is withdrawn, creating a 60% marginal rate. Stay below with salary sacrifice.`,
+      saving: inTrap ? Math.round(itWith - itEscape + niSaved) : 0,
+      action: '/sacrifice', actionLabel: 'Calculate pension sacrifice',
+    });
+  }
+  // Plan 5
+  if (loan === 'plan5' && gross > 25000) {
+    const annual = (gross - 25000) * 0.09;
+    const extra = gross > 27295 ? annual - (gross - 27295) * 0.09 : annual;
+    traps.push({ id: 'plan5', active: true, severity: gross < 30000 ? 'critical' : 'warning',
+      headline: `Plan 5: £${Math.round(annual / 12).toLocaleString('en-GB')}/month repayment — 40-year write-off period`,
+      detail: `£${Math.round(extra).toLocaleString('en-GB')}/year more than Plan 2. At £25,000 threshold, nearly every full-time worker repays.`,
+      saving: 0, action: '/blog/plan-5-student-loan-take-home', actionLabel: 'Plan 5 full guide',
+    });
+  }
+  // HICBC
+  if (numChildren > 0 && adj > 60000) {
+    const cbRates = [0, 1331.60, 2212.60, 3093.60, 3974.60];
+    const fullCB = cbRates[Math.min(numChildren, 4)];
+    const taper = Math.min(1, (adj - 60000) / 20000);
+    const charge = fullCB * taper;
+    traps.push({ id: 'hicbc', active: true, severity: adj > 75000 ? 'critical' : 'warning',
+      headline: `Child Benefit taper: losing £${Math.round(charge).toLocaleString('en-GB')}/year — net benefit £${Math.round(fullCB - charge).toLocaleString('en-GB')}`,
+      detail: `With ${numChildren} child${numChildren > 1 ? 'ren' : ''}, salary sacrifice below £60,000 recovers all Child Benefit.`,
+      saving: Math.round(charge), action: '/sacrifice', actionLabel: 'Recover Child Benefit',
+    });
+  }
+  return traps;
+}
+function TrapAlert({ trap }) {
+  const [exp, setExp] = useState(false);
+  const col = trap.severity === 'critical'
+    ? { bg: '#FEF2F2', bd: '#FECACA', txt: '#DC2626' }
+    : { bg: '#FFF7ED', bd: '#FED7AA', txt: '#EA580C' };
+  return (
+    <div style={{ background: col.bg, border: `1.5px solid ${col.bd}`, borderRadius: 10, padding: '12px 14px', marginBottom: 8 }}>
+      <div style={{ display: 'flex', gap: 8, alignItems: 'flex-start' }}>
+        <span style={{ fontSize: 16, flexShrink: 0 }}>{trap.severity === 'critical' ? '🚨' : '⚠️'}</span>
+        <div style={{ flex: 1, minWidth: 0 }}>
+          <div style={{ fontSize: 13, fontWeight: 700, color: col.txt, lineHeight: 1.4, marginBottom: 3 }}>{trap.headline}</div>
+          {exp && <div style={{ fontSize: 12, color: '#475569', lineHeight: 1.6, marginBottom: 8 }}>{trap.detail}</div>}
+          <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', alignItems: 'center' }}>
+            {trap.saving > 0 && <span style={{ fontSize: 10, background: col.bg, color: col.txt, border: `1px solid ${col.bd}`, borderRadius: 3, padding: '2px 6px', fontWeight: 700, fontFamily: 'JetBrains Mono' }}>Save up to £{trap.saving.toLocaleString('en-GB')}/yr</span>}
+            <a href={trap.action} style={{ fontSize: 11, color: col.txt, fontWeight: 700, borderBottom: `1px solid ${col.bd}` }}>{trap.actionLabel} →</a>
+            <button onClick={() => setExp(!exp)} style={{ fontSize: 11, color: '#64748B', background: 'none', border: 'none', padding: 0 }}>{exp ? 'Less ↑' : 'Why? ↓'}</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 const ARTICLES = [
   { slug: 'how-uk-income-tax-brackets-work', title: 'How UK Income Tax Brackets Work (2026-27)', category: 'Tax Basics', desc: 'Understand marginal rates and why a pay rise never means less take-home pay.' },
   { slug: 'national-insurance-explained', title: 'National Insurance Explained (2026-27)', category: 'Tax Basics', desc: 'Class 1 NI rates, 2026-27 thresholds, and how NI differs from income tax.' },
@@ -293,9 +366,77 @@ export default function HomePage() {
   const [tab, setTab] = useState('breakdown');
   const [scotland, setScotland] = useState(false);
   const [taxCode, setTaxCode] = useState('');
+  const [numChildren, setNumChildren] = useState(0);
+  const [showEmailModal, setShowEmailModal] = useState(false);
+  const [emailCaptured, setEmailCaptured] = useState(false);
+  const [emailInput, setEmailInput] = useState('');
+  const [showScenario, setShowScenario] = useState(false);
+  const [scenarioSalary, setScenarioSalary] = useState('');
+  const [scenarioPension, setScenarioPension] = useState(5);
+  const [shareStatus, setShareStatus] = useState('');
+  const [showYoY, setShowYoY] = useState(false);
+  const [showEmployer, setShowEmployer] = useState(false);
+
+  // ── localStorage persistence ─────────────────────────────────────────────
+  useEffect(() => {
+    try {
+      const saved = JSON.parse(localStorage.getItem('txdc_prefs') || '{}');
+      if (saved.salary) setSalaryStr(String(saved.salary));
+      if (saved.pension !== undefined) setPension(saved.pension);
+      if (saved.loan) setLoan(saved.loan);
+      if (saved.scotland !== undefined) setScotland(saved.scotland);
+    } catch (e) {}
+  }, []);
+  useEffect(() => {
+    try {
+      localStorage.setItem('txdc_prefs', JSON.stringify({ salary: salaryStr, pension, loan, scotland }));
+    } catch (e) {}
+  }, [salaryStr, pension, loan, scotland]);
+
+  // ── URL permalink ?salary=45000&pension=5&plan=none ──────────────────────
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const p = new URLSearchParams(window.location.search);
+    if (p.get('salary')) setSalaryStr(p.get('salary'));
+    if (p.get('pension')) setPension(Number(p.get('pension')));
+    if (p.get('plan')) setLoan(p.get('plan'));
+  }, []);
 
   const salary = Math.max(0, Number(salaryStr) || 0);
   const r = calculate(salary, pension, loan, scotland, taxCode);
+  const traps = detectTraps(salary, pension, loan, numChildren);
+
+  // ── Derived values ────────────────────────────────────────────────────────
+  const employerNI = salary > 5000 ? (salary - 5000) * 0.15 : 0;
+  const totalEmployerCost = salary + employerNI;
+  const netHourly = r.takeHome / (52 * 37.5);
+  // Year-on-year: 2025-26 had same thresholds but NLW was £11.44, NI same
+  const r2526 = calculate(salary, pension, loan, scotland, taxCode); // thresholds identical
+  const yoyDelta = r.takeHome - r2526.takeHome;
+
+  // ── Scenario comparison ───────────────────────────────────────────────────
+  const scenSalaryNum = Math.max(0, Number(scenarioSalary) || 0);
+  const rScen = calculate(scenSalaryNum, scenarioPension, loan, scotland, taxCode);
+  const scenDelta = rScen.takeHome - r.takeHome;
+
+  // ── Share function ────────────────────────────────────────────────────────
+  const handleShare = useCallback(async () => {
+    const url = `${window.location.origin}/?salary=${salary}&pension=${pension}&plan=${loan}`;
+    const text = `I take home ${fmt(r.takeHome)}/year on my ${fmt(salary)} salary — check yours:`;
+    if (navigator.share) {
+      try { await navigator.share({ title: 'TaxdCalc — My Take-Home Pay', text, url }); setShareStatus('shared'); } catch (e) {}
+    } else {
+      await navigator.clipboard?.writeText(url);
+      setShareStatus('copied');
+    }
+    setTimeout(() => setShareStatus(''), 2500);
+  }, [salary, pension, loan, r.takeHome]);
+
+  // ── PDF print ─────────────────────────────────────────────────────────────
+  const handlePDF = useCallback(() => {
+    if (!emailCaptured) { setShowEmailModal(true); return; }
+    window.print();
+  }, [emailCaptured]);
 
   const pm = {
     annual: { g: r.gross, th: r.takeHome },
@@ -368,7 +509,7 @@ export default function HomePage() {
               </div>
               <div style={{ position: 'relative' }}>
                 <span style={{ position: 'absolute', left: 13, top: '50%', transform: 'translateY(-50%)', color: C.slate, fontSize: 16, fontWeight: 600, fontFamily: 'JetBrains Mono', pointerEvents: 'none', lineHeight: 1 }}>{'\u00A3'}</span>
-                <input type="number" inputMode="numeric" value={salaryStr} placeholder="0" min={0} max={999999}
+                <input type="number" inputMode="decimal" value={salaryStr} placeholder="0" min={0} max={999999}
                   onChange={e => setSalaryStr(e.target.value)}
                   style={{ width: '100%', padding: '13px 14px 13px 30px', border: `1.5px solid ${C.borderDark}`, borderRadius: 8, fontSize: 16, fontFamily: 'JetBrains Mono', fontWeight: 500, color: C.navy, background: 'white', outline: 'none', WebkitAppearance: 'none' }}
                   onFocus={e => e.target.style.borderColor = C.teal}
@@ -406,6 +547,20 @@ export default function HomePage() {
 
             <ScotlandToggle scotland={scotland} setScotland={setScotland} />
             <TaxCodePanel taxCode={taxCode} setTaxCode={setTaxCode} />
+
+            {/* Children for HICBC — only show if salary >55k */}
+            {salary > 55000 && (
+              <div style={{ marginBottom: 18 }}>
+                <label style={{ display: 'block', fontSize: 13, fontWeight: 600, color: C.navyLight, marginBottom: 7 }}>
+                  Children <span style={{ fontWeight: 400, color: C.slate }}>(affects Child Benefit)</span>
+                </label>
+                <select value={numChildren} onChange={e => setNumChildren(Number(e.target.value))}
+                  style={{ width: '100%', padding: '11px 40px 11px 14px', border: `1.5px solid ${C.borderDark}`, borderRadius: 8, fontSize: 14, color: C.navy, outline: 'none' }}
+                  onFocus={e => e.target.style.borderColor = C.teal} onBlur={e => e.target.style.borderColor = C.borderDark}>
+                  {[0,1,2,3,4].map(n => <option key={n} value={n}>{n === 0 ? 'No children' : `${n} child${n > 1 ? 'ren' : ''}`}</option>)}
+                </select>
+              </div>
+            )}
 
             {/* Tax bands reference */}
             <div style={{ padding: '12px 14px', background: scotland ? C.scotBg : C.tealBg, border: `1px solid ${scotland ? C.scotBorder : C.tealBorder}`, borderRadius: 8 }}>
@@ -547,6 +702,162 @@ export default function HomePage() {
           </div>
         </div>
       </div>
+
+      {/* TAX TRAP ALERTS */}
+      {traps.length > 0 && (
+        <div style={{ maxWidth: 1100, margin: '16px auto 0', padding: mob ? '0 16px' : '0 24px' }}>
+          <div style={{ padding: '14px 18px', background: '#FFF7ED', border: '1px solid #FED7AA', borderRadius: 12 }}>
+            <div style={{ fontSize: 11, fontWeight: 700, color: '#EA580C', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 10, fontFamily: 'JetBrains Mono' }}>
+              {traps.some(t => t.severity === 'critical') ? '🚨 Tax Traps Detected' : '⚠️ Tax Warnings'}
+            </div>
+            {traps.map(trap => <TrapAlert key={trap.id} trap={trap} />)}
+          </div>
+        </div>
+      )}
+
+      {/* SHARE / PDF / EXTRA TOOLS BAR */}
+      {salary > 0 && (
+        <div style={{ maxWidth: 1100, margin: '12px auto 0', padding: mob ? '0 16px' : '0 24px' }}>
+          <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', alignItems: 'center' }}>
+            <button onClick={handleShare}
+              style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '9px 16px', borderRadius: 8, border: `1.5px solid ${C.borderDark}`, background: C.white, color: shareStatus ? C.teal : C.navyLight, fontSize: 12, fontWeight: 600 }}>
+              {shareStatus === 'copied' ? '✓ Link copied' : shareStatus === 'shared' ? '✓ Shared' : '↗ Share result'}
+            </button>
+            <button onClick={handlePDF}
+              style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '9px 16px', borderRadius: 8, border: `1.5px solid ${C.borderDark}`, background: C.white, color: C.navyLight, fontSize: 12, fontWeight: 600 }}>
+              ↓ Save PDF
+            </button>
+            <button onClick={() => setShowScenario(!showScenario)}
+              style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '9px 16px', borderRadius: 8, border: `1.5px solid ${showScenario ? C.teal : C.borderDark}`, background: showScenario ? C.tealBg : C.white, color: showScenario ? C.teal : C.navyLight, fontSize: 12, fontWeight: 600 }}>
+              ⇄ Compare scenario
+            </button>
+            <button onClick={() => setShowEmployer(!showEmployer)}
+              style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '9px 16px', borderRadius: 8, border: `1.5px solid ${showEmployer ? C.amber : C.borderDark}`, background: showEmployer ? C.amberBg : C.white, color: showEmployer ? C.amber : C.navyLight, fontSize: 12, fontWeight: 600 }}>
+              £ Employer cost
+            </button>
+            {/* Net hourly truth */}
+            {salary > 0 && (
+              <div style={{ marginLeft: 'auto', fontSize: 12, color: C.slate, fontFamily: 'JetBrains Mono', display: 'flex', alignItems: 'center', gap: 4 }}>
+                <span>Net hourly</span>
+                <span style={{ fontWeight: 700, color: C.navy }}>{fmtD(netHourly)}</span>
+                <span style={{ color: C.slateLight, fontSize: 10 }}>37.5h wk</span>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* SCENARIO COMPARISON PANEL */}
+      {showScenario && salary > 0 && (
+        <div style={{ maxWidth: 1100, margin: '12px auto 0', padding: mob ? '0 16px' : '0 24px' }}>
+          <div style={{ background: C.white, border: `1px solid ${C.border}`, borderRadius: 12, padding: mob ? 16 : 22, boxShadow: C.shadow }}>
+            <h3 style={{ fontFamily: 'DM Serif Display', fontSize: 16, color: C.navy, marginBottom: 14 }}>Pay Rise / Scenario Comparison</h3>
+            <div style={{ display: 'grid', gridTemplateColumns: mob ? '1fr' : '1fr 1fr', gap: 16, marginBottom: 14 }}>
+              <div>
+                <label style={{ display: 'block', fontSize: 12, fontWeight: 600, color: C.navyLight, marginBottom: 7 }}>Compare salary</label>
+                <div style={{ position: 'relative' }}>
+                  <span style={{ position: 'absolute', left: 13, top: '50%', transform: 'translateY(-50%)', color: C.slate, fontSize: 16, fontWeight: 600, fontFamily: 'JetBrains Mono', pointerEvents: 'none' }}>£</span>
+                  <input type="number" inputMode="decimal" value={scenarioSalary} placeholder={String(salary)}
+                    onChange={e => setScenarioSalary(e.target.value)}
+                    style={{ width: '100%', padding: '12px 14px 12px 28px', border: `1.5px solid ${C.borderDark}`, borderRadius: 8, fontSize: 15, fontFamily: 'JetBrains Mono', color: C.navy, background: 'white', outline: 'none' }}
+                    onFocus={e => e.target.style.borderColor = C.teal} onBlur={e => e.target.style.borderColor = C.borderDark} />
+                </div>
+              </div>
+              <div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 7 }}>
+                  <label style={{ fontSize: 12, fontWeight: 600, color: C.navyLight }}>Pension</label>
+                  <span style={{ fontFamily: 'JetBrains Mono', fontSize: 12, color: C.teal }}>{scenarioPension}%</span>
+                </div>
+                <input type="range" min={0} max={30} step={0.5} value={scenarioPension} onChange={e => setScenarioPension(Number(e.target.value))} />
+              </div>
+            </div>
+            {scenSalaryNum > 0 && (
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 10 }}>
+                {[
+                  ['Current', fmt(r.takeHome), C.navy],
+                  [scenSalaryNum > salary ? 'After pay rise' : 'New salary', fmt(rScen.takeHome), scenDelta >= 0 ? C.green : C.red],
+                  ['Annual difference', (scenDelta >= 0 ? '+' : '') + fmt(scenDelta), scenDelta >= 0 ? C.green : C.red],
+                ].map(([label, value, color]) => (
+                  <div key={label} style={{ background: C.bg, borderRadius: 8, padding: '12px 14px', textAlign: 'center' }}>
+                    <div style={{ fontSize: 10, color: C.slate, letterSpacing: '0.08em', textTransform: 'uppercase', fontFamily: 'JetBrains Mono', marginBottom: 4 }}>{label}</div>
+                    <div style={{ fontFamily: 'DM Serif Display', fontSize: mob ? 18 : 22, color, lineHeight: 1 }}>{value}</div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* EMPLOYER COST PANEL */}
+      {showEmployer && salary > 0 && (
+        <div style={{ maxWidth: 1100, margin: '12px auto 0', padding: mob ? '0 16px' : '0 24px' }}>
+          <div style={{ background: C.white, border: `1px solid ${C.amberBorder}`, borderRadius: 12, padding: mob ? 16 : 22, boxShadow: C.shadow }}>
+            <h3 style={{ fontFamily: 'DM Serif Display', fontSize: 16, color: C.navy, marginBottom: 4 }}>Employer Cost Calculator</h3>
+            <p style={{ fontSize: 12, color: C.slate, marginBottom: 14 }}>What hiring you actually costs your employer in 2026-27.</p>
+            <div style={{ display: 'grid', gridTemplateColumns: mob ? '1fr 1fr' : 'repeat(4,1fr)', gap: 10 }}>
+              {[
+                ['Your salary', fmt(salary), C.navy],
+                ['Employer NI (15%)', fmt(employerNI), C.red],
+                ['Total employer cost', fmt(totalEmployerCost), C.amber],
+                ['Cost premium', `+${((employerNI / salary) * 100).toFixed(1)}%`, C.amber],
+              ].map(([label, value, color]) => (
+                <div key={label} style={{ background: C.amberBg, border: `1px solid ${C.amberBorder}`, borderRadius: 8, padding: '12px 14px' }}>
+                  <div style={{ fontSize: 10, color: C.amber, letterSpacing: '0.08em', textTransform: 'uppercase', fontFamily: 'JetBrains Mono', marginBottom: 4 }}>{label}</div>
+                  <div style={{ fontFamily: 'DM Serif Display', fontSize: mob ? 18 : 22, color, lineHeight: 1 }}>{value}</div>
+                </div>
+              ))}
+            </div>
+            <div style={{ marginTop: 12, fontSize: 11, color: C.slate, lineHeight: 1.6 }}>
+              Employer NI is charged at 15% on salary above £5,000/year. This cost is invisible on your payslip but is the reason salary sacrifice pension contributions are valuable for employers too — every £1 of salary sacrifice saves your employer 15p.
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* EMAIL CAPTURE MODAL */}
+      {showEmailModal && (
+        <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.55)', zIndex: 200, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '0 20px' }}>
+          <div style={{ background: 'white', borderRadius: 16, padding: 28, maxWidth: 420, width: '100%', boxShadow: '0 20px 60px rgba(0,0,0,0.3)' }}>
+            <h3 style={{ fontFamily: 'DM Serif Display', fontSize: 22, color: C.navy, marginBottom: 8 }}>Save your breakdown as PDF</h3>
+            <p style={{ fontSize: 13, color: C.slate, lineHeight: 1.7, marginBottom: 18 }}>
+              Get your full take-home breakdown and optionally receive an alert when 2027-28 rates go live.
+            </p>
+            <input type="email" value={emailInput} onChange={e => setEmailInput(e.target.value)}
+              placeholder="Your email (optional)"
+              style={{ width: '100%', padding: '12px 14px', border: `1.5px solid ${C.borderDark}`, borderRadius: 8, fontSize: 14, color: C.navy, outline: 'none', marginBottom: 12 }}
+              onFocus={e => e.target.style.borderColor = C.teal} onBlur={e => e.target.style.borderColor = C.borderDark} />
+            <div style={{ display: 'flex', gap: 10 }}>
+              <button onClick={() => { setEmailCaptured(true); setShowEmailModal(false); window.print(); }}
+                style={{ flex: 1, padding: '12px', background: C.teal, color: 'white', border: 'none', borderRadius: 8, fontSize: 14, fontWeight: 700 }}>
+                Download PDF
+              </button>
+              <button onClick={() => setShowEmailModal(false)}
+                style={{ padding: '12px 16px', background: C.bg, color: C.slate, border: `1px solid ${C.border}`, borderRadius: 8, fontSize: 14 }}>
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* MOBILE STICKY RESULT BAR */}
+      {mob && salary > 0 && (
+        <div style={{ position: 'fixed', bottom: 0, left: 0, right: 0, background: C.navy, zIndex: 90, height: 52, display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 20px', boxShadow: '0 -2px 16px rgba(0,0,0,0.3)' }}>
+          <div>
+            <div style={{ fontSize: 9, color: 'rgba(255,255,255,0.4)', fontFamily: 'JetBrains Mono', letterSpacing: '0.1em', textTransform: 'uppercase' }}>Take-home</div>
+            <div style={{ fontFamily: 'DM Serif Display', fontSize: 20, color: '#14B8A6', lineHeight: 1 }}>
+              <AnimNum value={Math.max(0, r.takeHome)} />
+            </div>
+          </div>
+          <div style={{ textAlign: 'right' }}>
+            <div style={{ fontSize: 9, color: 'rgba(255,255,255,0.4)', fontFamily: 'JetBrains Mono', letterSpacing: '0.1em', textTransform: 'uppercase' }}>Monthly</div>
+            <div style={{ fontFamily: 'JetBrains Mono', fontSize: 14, color: 'white', fontWeight: 700, lineHeight: 1 }}>
+              <AnimNum value={Math.max(0, r.monthly.takeHome)} f={fmtD} />
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* MORE CALCULATORS */}
       <section style={{ background: C.white, borderTop: `1px solid ${C.border}`, padding: mob ? '44px 16px' : '52px 24px', marginTop: 48 }}>
