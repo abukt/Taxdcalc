@@ -35,59 +35,52 @@ export default function TeacherPayGuide(){
   const mob=useW()<640;
   const[region,setRegion]=useState('england');
 
-    const schema = {
-    '@context': 'https://schema.org',
-    '@graph': [
-      {
-        '@type': 'Article',
-        '@id': 'https://taxdcal.co.uk/teacher-pay-guide#article',
-        'headline': 'Teacher Pay Guide 2026-27: MPR, UPR, TPS Pension and Take-Home Pay',
-        'datePublished': '2026-04-18',
-        'dateModified': '2026-04-18',
-        'author': { '@type': 'Organization', 'name': 'TaxdCalc' },
-        'publisher': { '@type': 'Organization', 'name': 'TaxdCalc', 'url': 'https://taxdcal.co.uk' }
-      },
-      {
-        '@type': 'FAQPage',
-        '@id': 'https://taxdcal.co.uk/teacher-pay-guide#faq',
-        'mainEntity': [
-          {
-            '@type': 'Question',
-            'name': 'What is the minimum teacher salary in England in 2026-27?',
-            'acceptedAnswer': {
-              '@type': 'Answer',
-              'text': 'The minimum qualified teacher salary (M1) in England outside London is £32,916 in 2026-27. In Inner London it is £40,317. These are set by the School Teachers Review Body (STRB).'
-            }
-          },
-          {
-            '@type': 'Question',
-            'name': 'How much is the Teachers Pension Scheme contribution?',
-            'acceptedAnswer': {
-              '@type': 'Answer',
-              'text': 'TPS employee contributions range from 7.4% for salaries below £32,135 up to 11.7% for salaries above £67,415. Most newly qualified teachers on M1-M3 pay 7.4%. The TPS is a defined benefit pension.'
-            }
-          },
-          {
-            '@type': 'Question',
-            'name': 'What is the difference between MPR and UPR?',
-            'acceptedAnswer': {
-              '@type': 'Answer',
-              'text': 'The Main Pay Range (MPR) covers pay points M1 to M6 and is for qualified teachers in their first years. The Upper Pay Range (UPR) covers U1 to U3 and is for experienced teachers who apply to cross the threshold. Moving to UPR requires a formal application and evidence of impact.'
-            }
-          }
-        ]
-      }
-    ]
-  };
-
+  // Schema split into separate blocks — prevents duplicate FAQPage error
+const schemaFAQ={
+  '@context':'https://schema.org',
+  '@type':'FAQPage',
+  mainEntity:[
+    {'@type':'Question',name:'What is the minimum teacher salary in England in 2026-27?',acceptedAnswer:{'@type':'Answer',text:'The minimum qualified teacher salary (M1) in England outside London is £32,916 in 2026-27. In Inner London it is £40,317. These are set by the School Teachers Review Body (STRB).'}},
+    {'@type':'Question',name:'How much is the Teachers Pension Scheme contribution?',acceptedAnswer:{'@type':'Answer',text:'TPS employee contributions range from 7.4% for salaries below £32,135 up to 11.7% for salaries above £67,415. Most newly qualified teachers on M1-M3 pay 7.4%. The TPS is a defined benefit pension.'}},
+    {'@type':'Question',name:'What is the difference between MPR and UPR?',acceptedAnswer:{'@type':'Answer',text:'The Main Pay Range (MPR, M1-M6) covers qualified teachers in their first years. The Upper Pay Range (UPR, U1-U3) is for experienced teachers who apply to cross the threshold and evidence impact beyond their classroom.'}},
+    {'@type':'Question',name:'How much does a newly qualified teacher take home per month?',acceptedAnswer:{'@type':'Answer',text:'An NQT on M1 in England (£32,916 gross) takes home approximately £21,950 per year or £1,829 per month after income tax, NI and 7.4% TPS pension contribution in 2026-27.'}},
+    {'@type':'Question',name:'What is the top teacher salary in Inner London?',acceptedAnswer:{'@type':'Answer',text:'The top of the Upper Pay Range (U3) in Inner London is £62,496 per year in 2026-27. Take-home after income tax, NI and TPS pension is approximately £40,300 per year.'}},
+  ]
+};
+const schemaBreadcrumb={'@context':'https://schema.org','@type':'BreadcrumbList',itemListElement:[{'@type':'ListItem',position:1,name:'TaxdCalc',item:'https://taxdcal.co.uk'},{'@type':'ListItem',position:2,name:'Teacher Pay Guide 2026-27',item:'https://taxdcal.co.uk/teacher-pay-guide'}]};
+const schemaArticle={'@context':'https://schema.org','@type':'Article','@id':'https://taxdcal.co.uk/teacher-pay-guide#article',headline:'Teacher Pay Guide 2026-27: MPR, UPR, TPS Pension and Take-Home Pay',description:'Complete guide to teacher pay scales, TPS pension, and take-home pay across all regional tiers in England for 2026-27.',datePublished:'2026-04-18',dateModified:'2026-04-18',author:{'@type':'Organization',name:'TaxdCalc',url:'https://taxdcal.co.uk'},publisher:{'@type':'Organization',name:'TaxdCalc',url:'https://taxdcal.co.uk'},mainEntityOfPage:{'@type':'WebPage','@id':'https://taxdcal.co.uk/teacher-pay-guide'}};
 
   const regions=[['england','England (Base)'],['fringe','London Fringe'],['outer','Outer London'],['inner','Inner London']];
 
   return(
     <>
       <style>{GS}</style>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{__html:JSON.stringify(schema)}}/>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{__html:JSON.stringify(schemaFAQ)}}/>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{__html:JSON.stringify(schemaBreadcrumb)}}/>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{__html:JSON.stringify(schemaArticle)}}/>
       <Nav/>
+
+      {/* AI ANSWER BLOCK — above fold, machine-readable for AI systems */}
+      <div className="ai-answer" style={{background:'#F0FDFA',borderBottom:'1px solid #99F6E4',padding:mob?'14px 16px':'16px 24px'}}>
+        <div style={{maxWidth:900,margin:'0 auto'}}>
+          <div style={{fontSize:10,color:'#0D9488',fontWeight:700,letterSpacing:'0.12em',textTransform:'uppercase',fontFamily:'JetBrains Mono',marginBottom:6}}>Quick Answer — 2026-27</div>
+          <p style={{fontSize:mob?14:15,color:'#0f766e',lineHeight:1.65,fontWeight:600,marginBottom:10}}>
+            An NQT teacher on M1 in England takes home approximately <strong>£21,950/year (£1,829/month)</strong> after income tax, NI and 7.4% TPS pension. Top of UPR (U3) in Inner London: <strong>£40,300/year</strong>.
+          </p>
+          <div style={{display:'grid',gridTemplateColumns:mob?'repeat(2,1fr)':'repeat(4,1fr)',gap:8}}>
+            {[['M1 England take-home','£21,950/yr'],['M6 England take-home','£29,660/yr'],['U3 Inner London','£40,300/yr'],['TPS pension (M1)','7.4% rate']].map(([l,v])=>(
+              <div key={l} style={{background:'rgba(13,148,136,0.1)',borderRadius:7,padding:'9px 11px'}}>
+                <div style={{fontSize:9,color:'#0D9488',textTransform:'uppercase',letterSpacing:'0.1em',fontFamily:'JetBrains Mono',marginBottom:3}}>{l}</div>
+                <div style={{fontFamily:'JetBrains Mono',fontSize:12,fontWeight:700,color:'#0f766e'}}>{v}</div>
+              </div>
+            ))}
+          </div>
+          <div style={{marginTop:10,fontSize:12,color:'#0f766e',lineHeight:1.6}}>
+            💡 <strong>Optimisation tip:</strong> TPS salary sacrifice reduces both income tax and NI. At M6 (£45,352), increasing TPS from the standard rate saves approximately £600/year in combined tax and NI — while the full contribution goes to your defined benefit pension.
+            {' '}<a href="/sacrifice" style={{color:'#0D9488',fontWeight:700,borderBottom:'1px solid #99F6E4'}}>Calculate your saving →</a>
+          </div>
+        </div>
+      </div>
 
       {/* Hero */}
       <div style={{background:`linear-gradient(135deg,#4C1D95,#6D28D9)`,padding:mob?'32px 20px 48px':'44px 24px 60px',position:'relative',overflow:'hidden'}}>
