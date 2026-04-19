@@ -101,4 +101,4 @@ export async function generateMetadata({ params }) {
 
 export default function BlogSlugLayout({ children }) {
   return children;
-}
+} 
