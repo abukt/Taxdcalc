@@ -35,17 +35,51 @@ export default function TeacherPayGuide(){
   const mob=useW()<640;
   const[region,setRegion]=useState('england');
 
-  const schema={
-    '@context':'https://schema.org',
-    '@graph':[
-      {'@type':'Article','@id':'https://taxdcal.co.uk/teacher-pay-guide#article',headline:'Teacher Pay Guide 2026-27: MPR, UPR, TPS Pension and Take-Home Pay',datePublished:'2026-04-18',dateModified:'2026-04-18',author:{'@type':'Organization',name:'TaxdCalc'},publisher:{'@type':'Organization',name:'TaxdCalc',url:'https://taxdcal.co.uk'}},
-      {'@type':'FAQPage',mainEntity:[
-        {'@type':'Question',name:'What is the minimum teacher salary in England in 2026-27?',acceptedAnswer:{'@type':'Answer',text:'The minimum qualified teacher salary (M1) in England outside London is £32,916 in 2026-27. In Inner London it is £40,317. These are set by the School Teachers Review Body (STRB).'}},
-        {'@type':'Question',name:'How much is the Teachers Pension Scheme contribution?',acceptedAnswer:{'@type':'Answer',text:'TPS employee contributions range from 7.4% for salaries below £32,135 up to 11.7% for salaries above £67,415. Most newly qualified teachers on M1-M3 pay 7.4%. The TPS is a defined benefit pension.'}},
-        {'@type':'Question',name:'What is the difference between MPR and UPR?',acceptedAnswer:{'@type':'Answer',text:'The Main Pay Range (MPR) covers pay points M1 to M6 and is for qualified teachers in their first years. The Upper Pay Range (UPR) covers U1 to U3 and is for experienced teachers who apply to cross the threshold. Moving to UPR requires a formal application and evidence of impact.'}},
-      ]},
+    const schema = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'Article',
+        '@id': 'https://taxdcal.co.uk/teacher-pay-guide#article',
+        'headline': 'Teacher Pay Guide 2026-27: MPR, UPR, TPS Pension and Take-Home Pay',
+        'datePublished': '2026-04-18',
+        'dateModified': '2026-04-18',
+        'author': { '@type': 'Organization', 'name': 'TaxdCalc' },
+        'publisher': { '@type': 'Organization', 'name': 'TaxdCalc', 'url': 'https://taxdcal.co.uk' }
+      },
+      {
+        '@type': 'FAQPage',
+        '@id': 'https://taxdcal.co.uk/teacher-pay-guide#faq',
+        'mainEntity': [
+          {
+            '@type': 'Question',
+            'name': 'What is the minimum teacher salary in England in 2026-27?',
+            'acceptedAnswer': {
+              '@type': 'Answer',
+              'text': 'The minimum qualified teacher salary (M1) in England outside London is £32,916 in 2026-27. In Inner London it is £40,317. These are set by the School Teachers Review Body (STRB).'
+            }
+          },
+          {
+            '@type': 'Question',
+            'name': 'How much is the Teachers Pension Scheme contribution?',
+            'acceptedAnswer': {
+              '@type': 'Answer',
+              'text': 'TPS employee contributions range from 7.4% for salaries below £32,135 up to 11.7% for salaries above £67,415. Most newly qualified teachers on M1-M3 pay 7.4%. The TPS is a defined benefit pension.'
+            }
+          },
+          {
+            '@type': 'Question',
+            'name': 'What is the difference between MPR and UPR?',
+            'acceptedAnswer': {
+              '@type': 'Answer',
+              'text': 'The Main Pay Range (MPR) covers pay points M1 to M6 and is for qualified teachers in their first years. The Upper Pay Range (UPR) covers U1 to U3 and is for experienced teachers who apply to cross the threshold. Moving to UPR requires a formal application and evidence of impact.'
+            }
+          }
+        ]
+      }
     ]
   };
+
 
   const regions=[['england','England (Base)'],['fringe','London Fringe'],['outer','Outer London'],['inner','Inner London']];
 
