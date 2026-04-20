@@ -232,7 +232,4 @@ export default function MaternityPaySelfEmployed(){
           </div>
         </div>
       )}
-            <Footer/>
-    </>
-  );
-}
+      <Footer/>
