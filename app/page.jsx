@@ -471,6 +471,41 @@ export default function HomePage() {
       <style>{STYLE}</style>
       <NavBar />
 
+      {/* AI ANSWER BLOCK — above fold, dynamic, machine-readable for AI systems */}
+      {salary > 0 && (
+        <div className="ai-answer" style={{ background: C.tealBg, borderBottom: `1px solid ${C.tealBorder}`, padding: mob ? '13px 16px' : '15px 24px' }}>
+          <div style={{ maxWidth: 1100, margin: '0 auto' }}>
+            <div style={{ fontSize: 10, color: C.teal, fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', fontFamily: 'JetBrains Mono', marginBottom: 5 }}>
+              Quick Answer — 2026-27
+            </div>
+            <p style={{ fontSize: mob ? 13 : 14, color: '#0f766e', fontWeight: 600, lineHeight: 1.6, marginBottom: 8 }}>
+              On a <strong>{fmt(salary)}</strong> salary, take-home pay is <strong>{fmt(r.takeHome)}</strong>/year (<strong>{fmtD(r.monthly.takeHome)}</strong>/month) after income tax of {fmt(r.incomeTax)} and National Insurance of {fmt(r.ni)} in 2026-27{scotland ? ' (Scotland rates)' : ''}.
+            </p>
+            <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', alignItems: 'center' }}>
+              <span style={{ fontSize: 11, color: '#0f766e', background: 'rgba(13,148,136,0.12)', padding: '3px 10px', borderRadius: 4, fontFamily: 'JetBrains Mono' }}>
+                {((r.takeHome / r.gross) * 100).toFixed(1)}% kept
+              </span>
+              <span style={{ fontSize: 11, color: '#0f766e', background: 'rgba(13,148,136,0.12)', padding: '3px 10px', borderRadius: 4, fontFamily: 'JetBrains Mono' }}>
+                Effective rate: {r.effectiveRate.toFixed(1)}%
+              </span>
+              {salary > 100000 && salary <= 125140 && (
+                <span style={{ fontSize: 11, color: '#DC2626', background: '#FEF2F2', border: '1px solid #FECACA', padding: '3px 10px', borderRadius: 4, fontWeight: 700 }}>
+                  ⚠️ 60% tax trap — salary sacrifice recommended
+                </span>
+              )}
+              {salary > 50270 && salary <= 100000 && (
+                <span style={{ fontSize: 11, color: '#D97706', background: '#FFFBEB', border: '1px solid #FDE68A', padding: '3px 10px', borderRadius: 4, fontWeight: 700 }}>
+                  40% higher rate on earnings above £50,270
+                </span>
+              )}
+              <a href="/sacrifice" style={{ fontSize: 11, color: C.teal, fontWeight: 700, borderBottom: `1px solid ${C.tealBorder}`, textDecoration: 'none' }}>
+                Optimise with salary sacrifice →
+              </a>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* HERO */}
       <div style={{ background: `linear-gradient(135deg,${C.navy},${C.navyMid})`, padding: mob ? '36px 20px 68px' : '48px 24px 80px', position: 'relative', overflow: 'hidden' }}>
         <div style={{ position: 'absolute', top: -60, right: -40, width: 260, height: 260, borderRadius: '50%', background: 'rgba(13,148,136,0.07)', pointerEvents: 'none' }} />
