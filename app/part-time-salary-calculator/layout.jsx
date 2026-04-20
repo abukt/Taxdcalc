@@ -218,8 +218,8 @@ export default function PartTimePage(){
           </div>
         </div>
       )}
-          <Footer/>
+             {children}
+      <Footer />
     </>
   );
 }
-
