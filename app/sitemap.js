@@ -1,28 +1,37 @@
 // app/sitemap.js
-// Auto-generates /sitemap.xml — submit URL to Google Search Console
-// taxdcal.co.uk/sitemap.xml
+// Complete sitemap covering all routes. Submit to Search Console: taxdcal.co.uk/sitemap.xml
 
 export default function sitemap() {
   const base = 'https://taxdcal.co.uk';
   const now = new Date();
 
-  const calculators = [
-    { url: base,                                      priority: 1.0, freq: 'monthly' },
-    { url: base + '/ir35',                            priority: 0.9, freq: 'monthly' },
-    { url: base + '/nhs',                             priority: 0.9, freq: 'monthly' },
-    { url: base + '/maternity',                       priority: 0.8, freq: 'monthly' },
-    { url: base + '/hourly',                          priority: 0.8, freq: 'monthly' },
-    { url: base + '/bonus',                           priority: 0.8, freq: 'monthly' },
-    { url: base + '/sacrifice',                       priority: 0.8, freq: 'monthly' },
-    { url: base + '/comparison',                      priority: 0.7, freq: 'monthly' },
-    { url: base + '/tools',                           priority: 0.7, freq: 'monthly' },
-    { url: base + '/part-time-salary-calculator',     priority: 0.8, freq: 'monthly' },
-    { url: base + '/maternity-pay-self-employed',     priority: 0.8, freq: 'yearly'  },
-    { url: base + '/nhs-pay-guide',                   priority: 0.85, freq: 'yearly' },
-    { url: base + '/teacher-pay-guide',               priority: 0.85, freq: 'yearly' },
+  const core = [
+    { url: base,                                          priority: 1.0, freq: 'monthly' },
+    { url: base + '/ir35',                                priority: 0.9, freq: 'monthly' },
+    { url: base + '/nhs',                                 priority: 0.9, freq: 'monthly' },
+    { url: base + '/maternity',                           priority: 0.8, freq: 'monthly' },
+    { url: base + '/hourly',                              priority: 0.8, freq: 'monthly' },
+    { url: base + '/bonus',                               priority: 0.8, freq: 'monthly' },
+    { url: base + '/sacrifice',                           priority: 0.8, freq: 'monthly' },
+    { url: base + '/comparison',                          priority: 0.7, freq: 'monthly' },
+    { url: base + '/tools',                               priority: 0.7, freq: 'monthly' },
+    { url: base + '/part-time-salary-calculator',         priority: 0.8, freq: 'monthly' },
+    { url: base + '/maternity-pay-self-employed',         priority: 0.8, freq: 'yearly'  },
+    { url: base + '/embed',                               priority: 0.5, freq: 'yearly'  },
   ];
 
-  const blogPages = [
+  const guides = [
+    { url: base + '/nhs-pay-guide',                       priority: 0.85, freq: 'yearly' },
+    { url: base + '/teacher-pay-guide',                   priority: 0.85, freq: 'yearly' },
+    { url: base + '/public-sector-pay',                   priority: 0.85, freq: 'yearly' },
+    { url: base + '/public-sector-pay/police',            priority: 0.80, freq: 'yearly' },
+    { url: base + '/public-sector-pay/firefighters',      priority: 0.80, freq: 'yearly' },
+    { url: base + '/public-sector-pay/civil-service',     priority: 0.80, freq: 'yearly' },
+    { url: base + '/public-sector-pay/armed-forces',      priority: 0.80, freq: 'yearly' },
+    { url: base + '/public-sector-pay/council-workers',   priority: 0.80, freq: 'yearly' },
+  ];
+
+  const blog = [
     { url: base + '/blog',                                                    priority: 0.8, freq: 'weekly' },
     { url: base + '/blog/how-uk-income-tax-brackets-work',                   priority: 0.8, freq: 'yearly' },
     { url: base + '/blog/national-insurance-explained',                      priority: 0.8, freq: 'yearly' },
@@ -42,16 +51,13 @@ export default function sitemap() {
     { url: base + '/blog/plan-5-student-loan-take-home',                     priority: 0.9, freq: 'yearly' },
   ];
 
-  const salaryAmounts = [
+  const salary = [
     20000,22000,25000,27000,28000,30000,32000,35000,38000,40000,
     42000,45000,48000,50000,55000,60000,65000,70000,75000,80000,
     85000,90000,95000,100000,105000,110000,120000,125000,150000,
-  ];
-  const salaryPages = salaryAmounts.map(s => ({
-    url: base + '/' + s + '-salary-take-home', priority: 0.85, freq: 'yearly',
-  }));
+  ].map(s => ({ url: base + '/' + s + '-salary-take-home', priority: 0.85, freq: 'yearly' }));
 
-  const specialPages = [
+  const special = [
     { url: base + '/minimum-wage-take-home',          priority: 0.85, freq: 'yearly' },
     { url: base + '/nhs-band-5-take-home',            priority: 0.85, freq: 'yearly' },
     { url: base + '/nhs-band-6-take-home',            priority: 0.85, freq: 'yearly' },
@@ -60,7 +66,7 @@ export default function sitemap() {
     { url: base + '/graduate-salary-take-home',       priority: 0.80, freq: 'yearly' },
   ];
 
-  return [...calculators, ...blogPages, ...salaryPages, ...specialPages].map(p => ({
+  return [...core, ...guides, ...blog, ...salary, ...special].map(p => ({
     url: p.url,
     lastModified: now,
     changeFrequency: p.freq,
