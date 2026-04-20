@@ -43,22 +43,23 @@ export default function MaternityPaySelfEmployed(){
   // Lost earnings during time off
   const lostEarnings=(weeklyEarnings*weeksOff)-( maWeeklyRate*Math.min(weeksOff,MA_WEEKS));
 
-  const schema={
-    '@context':'https://schema.org',
-    '@graph':[
-      {'@type':'WebApplication','@id':'https://taxdcal.co.uk/maternity-pay-self-employed#calc',name:'Self-Employed Maternity Pay Calculator UK 2026-27',applicationCategory:'FinanceApplication',offers:{'@type':'Offer',price:'0',priceCurrency:'GBP'}},
-      {'@type':'FAQPage',mainEntity:[
-        {'@type':'Question',name:'Can self-employed people get maternity pay?',acceptedAnswer:{'@type':'Answer',text:'Yes. Self-employed people cannot claim SMP (Statutory Maternity Pay, which is an employer payment) but can claim Maternity Allowance (MA) from the DWP. The standard rate in 2026-27 is £184.03 per week for up to 39 weeks.'}},
-        {'@type':'Question',name:'How much is Maternity Allowance in 2026-27?',acceptedAnswer:{'@type':'Answer',text:'Maternity Allowance for self-employed workers is £184.03 per week for up to 39 weeks in 2026-27, provided you have paid Class 2 National Insurance and earned an average of at least £30 per week over any 13 weeks in the 66 weeks before your due date.'}},
-        {'@type':'Question',name:'Is Maternity Allowance taxable?',acceptedAnswer:{'@type':'Answer',text:'No. Maternity Allowance is not taxable. It does not count as income for income tax purposes. However, it does need to be reported to HMRC via Self Assessment.'}},
-      ]},
-    ]
-  };
+  // Schema split — FAQPage MUST be a separate script, never inside @graph
+  const schemaCalc={'@context':'https://schema.org','@type':'WebApplication','@id':'https://taxdcal.co.uk/maternity-pay-self-employed#calc',name:'Self-Employed Maternity Pay Calculator UK 2026-27',applicationCategory:'FinanceApplication',operatingSystem:'Any',offers:{'@type':'Offer',price:'0',priceCurrency:'GBP'},provider:{'@type':'Organization',name:'TaxdCalc',url:'https://taxdcal.co.uk'},url:'https://taxdcal.co.uk/maternity-pay-self-employed'};
+  const schemaFAQ={'@context':'https://schema.org','@type':'FAQPage',mainEntity:[
+    {'@type':'Question',name:'Can self-employed people get maternity pay?',acceptedAnswer:{'@type':'Answer',text:'Yes. Self-employed people cannot claim SMP but can claim Maternity Allowance (MA) from the DWP. The standard rate in 2026-27 is £184.03 per week for up to 39 weeks.'}},
+    {'@type':'Question',name:'How much is Maternity Allowance in 2026-27?',acceptedAnswer:{'@type':'Answer',text:'Maternity Allowance is £184.03 per week for up to 39 weeks in 2026-27, provided you have paid Class 2 NI and earned at least £30/week average over any 13 weeks in the 66 weeks before your due date.'}},
+    {'@type':'Question',name:'Is Maternity Allowance taxable?',acceptedAnswer:{'@type':'Answer',text:'No. Maternity Allowance is not taxable income. It does not count for income tax purposes but should be reported via Self Assessment if you complete one.'}},
+    {'@type':'Question',name:'How long does Maternity Allowance last?',acceptedAnswer:{'@type':'Answer',text:'Maternity Allowance lasts up to 39 weeks. You can choose when it starts — from 11 weeks before your due date at the earliest, or any time after the birth.'}},
+    {'@type':'Question',name:'What if I have not paid enough Class 2 NI?',acceptedAnswer:{'@type':'Answer',text:'If you have not paid Class 2 NI you may still qualify for MA at the lower rate of £27 per week, provided you were registered as self-employed for at least 26 weeks in the 66 weeks before your due date.'}},
+  ]};
+  const schemaBreadcrumb={'@context':'https://schema.org','@type':'BreadcrumbList',itemListElement:[{'@type':'ListItem',position:1,name:'TaxdCalc',item:'https://taxdcal.co.uk'},{'@type':'ListItem',position:2,name:'Self-Employed Maternity Pay',item:'https://taxdcal.co.uk/maternity-pay-self-employed'}]};
 
   return(
     <>
       <style>{GS}</style>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{__html:JSON.stringify(schema)}}/>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{__html:JSON.stringify(schemaCalc)}}/>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{__html:JSON.stringify(schemaFAQ)}}/>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{__html:JSON.stringify(schemaBreadcrumb)}}/>
       <Nav/>
 
       {/* Hero */}
@@ -217,7 +218,18 @@ export default function MaternityPaySelfEmployed(){
           </div>
         </div>
       </div>
+      
+      {/* STICKY RESULT BAR — mobile only */}
+      {mob && annualEarnings > 0 && (
+        <div style={{position:'fixed',bottom:0,left:0,right:0,background:C.navy,zIndex:90,height:52,display:'flex',alignItems:'center',justifyContent:'space-between',padding:'0 20px',boxShadow:'0 -2px 16px rgba(0,0,0,0.3)'}}>
+          <div>
+            <div style={{fontSize:9,color:'rgba(255,255,255,0.4)',fontFamily:'JetBrains Mono',textTransform:'uppercase',letterSpacing:'0.1em'}}>Maternity Allowance</div>
+            <div style={{fontFamily:'DM Serif Display',fontSize:19,color:'#14B8A6',lineHeight:1}}>{fmt(maWeeklyRate * 39)}</div>
+          </div>
+          <div style={{textAlign:'right'}}>
+            <div style={{fontSize:9,color:'rgba(255,255,255,0.4)',fontFamily:'JetBrains Mono',textTransform:'uppercase',letterSpacing:'0.1em'}}>Weekly MA</div>
+            <div style={{fontFamily:'JetBrains Mono',fontSize:13,color:'white',fontWeight:700,lineHeight:1}}>{fmtD(maWeeklyRate)}</div>
+          </div>
+        </div>
+      )}
       <Footer/>
-    </>
-  );
-}
