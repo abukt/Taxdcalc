@@ -246,7 +246,8 @@ export default function BonusPage() {
             <div style={{fontFamily:'JetBrains Mono',fontSize:13,color:'white',fontWeight:700,lineHeight:1}}>{fmt(Number(bonus))}</div>
           </div>
         </div>
-      )}
+            )}
       <Footer/>
+    </>
   );
 }
