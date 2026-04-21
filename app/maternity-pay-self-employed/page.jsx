@@ -8,42 +8,76 @@ const C={navy:'#0C1E3C',navyMid:'#1e3d6e',teal:'#0D9488',tealL:'#14B8A6',tealBg:
 const GS=`@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Source+Serif+4:wght@400;600;700&family=JetBrains+Mono:wght@400;500&display=swap');*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}body{background:#F4F6F9;color:#1E293B;font-family:'Source Serif 4',Georgia,serif;-webkit-tap-highlight-color:transparent;}input[type=range]{-webkit-appearance:none;width:100%;height:4px;background:#CBD5E1;border-radius:2px;outline:none;}input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:50%;background:#0C1E3C;border:2px solid white;box-shadow:0 2px 6px rgba(0,0,0,0.2);}a{text-decoration:none;color:inherit;}button{cursor:pointer;font-family:inherit;}@keyframes fi{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}.fi{animation:fi 0.35s ease both;}`;
 
 // 2026-27 rates
-const MA_WEEKLY = 184.03;       // Maternity Allowance standard rate
-const MA_WEEKS = 39;            // Duration
-const SMP_HIGHER_PCT = 0.90;    // First 6 weeks SMP rate
-const SMP_STANDARD_WEEKLY = 184.03; // Standard SMP rate wks 7-39
+const MA_WEEKLY = 184.03;
+const MA_WEEKS = 39;
+const SMP_HIGHER_PCT = 0.90;
+const SMP_STANDARD_WEEKLY = 184.03;
 const SMP_WEEKS = 39;
 
 function Nav(){const mob=useW()<640;const[open,setOpen]=useState(false);const links=[['/',   'Salary Calculator'],['/maternity','Employed Maternity'],['/tools','All Tools'],['/blog','Tax Guides']];return(<nav style={{background:C.navy,position:'sticky',top:0,zIndex:100,boxShadow:'0 2px 16px rgba(0,0,0,0.25)'}}><div style={{maxWidth:1100,margin:'0 auto',padding:'0 20px',height:56,display:'flex',alignItems:'center',justifyContent:'space-between'}}><Link href="/" style={{display:'flex',alignItems:'center',gap:9}}><div style={{width:30,height:30,background:'linear-gradient(135deg,#0D9488,#14B8A6)',borderRadius:7,display:'flex',alignItems:'center',justifyContent:'center',flexShrink:0}}><span style={{color:'white',fontWeight:700,fontSize:12,fontFamily:'JetBrains Mono'}}>Tx</span></div><span style={{color:'white',fontFamily:'DM Serif Display',fontSize:17}}>Taxd<span style={{color:'#14B8A6'}}>Calc</span></span></Link>{mob?(<button onClick={()=>setOpen(!open)} style={{background:'rgba(255,255,255,0.08)',border:'1px solid rgba(255,255,255,0.12)',borderRadius:7,padding:'8px 10px',display:'flex',flexDirection:'column',gap:4}}>{[0,1,2].map(i=><span key={i} style={{display:'block',width:18,height:2,background:'white',borderRadius:1}}/>)}</button>):(<div style={{display:'flex',gap:2,alignItems:'center'}}>{links.map(([href,label])=>(<Link key={href} href={href} style={{padding:'7px 13px',borderRadius:6,color:'rgba(255,255,255,0.6)',fontSize:13}}>{label}</Link>))}<span style={{fontSize:11,color:'#14B8A6',fontFamily:'JetBrains Mono',background:'rgba(13,148,136,0.15)',padding:'3px 9px',borderRadius:4,border:'1px solid rgba(20,184,166,0.3)',marginLeft:8}}>2026-27</span></div>)}</div>{mob&&open&&(<div style={{background:'#162d52',borderTop:'1px solid rgba(255,255,255,0.08)',padding:'6px 0 12px'}}>{links.map(([href,label])=>(<Link key={href} href={href} onClick={()=>setOpen(false)} style={{display:'block',padding:'12px 24px',color:'rgba(255,255,255,0.65)',fontSize:14}}>{label}</Link>))}</div>)}</nav>);}
-function Footer(){return(<footer style={{background:'#070D1C',padding:'24px 20px',borderTop:'1px solid rgba(255,255,255,0.05)',marginTop:48}}><div style={{maxWidth:1100,margin:'0 auto',display:'flex',justifyContent:'space-between',flexWrap:'wrap',gap:14,alignItems:'center'}}><Link href="/" style={{display:'flex',alignItems:'center',gap:8}}><div style={{width:26,height:26,background:'linear-gradient(135deg,#0D9488,#14B8A6)',borderRadius:6,display:'flex',alignItems:'center',justifyContent:'center'}}><span style={{color:'white',fontWeight:700,fontSize:11,fontFamily:'JetBrains Mono'}}>Tx</span></div><span style={{color:'white',fontFamily:'DM Serif Display',fontSize:15}}>Taxd<span style={{color:'#14B8A6'}}>Calc</span></span></Link><span style={{fontSize:11,color:'rgba(255,255,255,0.2)',fontFamily:'JetBrains Mono'}}>Updated April 2026</span><span style={{fontSize:11,color:'rgba(255,255,255,0.18)',maxWidth:280,lineHeight:1.6}}>For guidance only. Consult HMRC or a qualified adviser.</span></div></footer>);}
-
-const fmt=n=>'\u00A3'+Math.abs(n||0).toLocaleString('en-GB',{minimumFractionDigits:2,maximumFractionDigits:2});
-const fmtR=n=>'\u00A3'+Math.round(n||0).toLocaleString('en-GB');
-
+function Footer(){
+  return(
+    <footer style={{background:'#070D1C',padding:'40px 24px 28px',borderTop:'1px solid rgba(255,255,255,0.06)',marginTop:0}}>
+      <div style={{maxWidth:1100,margin:'0 auto'}}>
+        <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fill,minmax(180px,1fr))',gap:'28px 24px',marginBottom:28}}>
+          <div>
+            <div style={{fontSize:10,color:'rgba(255,255,255,0.28)',letterSpacing:'0.14em',textTransform:'uppercase',marginBottom:12,fontFamily:'JetBrains Mono',fontWeight:600}}>Core Tools</div>
+            {[['/','Salary Calculator'],['/ir35','IR35 Calculator'],['/nhs','NHS Pay Bands'],['/hourly','Hourly Rate'],['/bonus','Bonus Tax'],['/sacrifice','Salary Sacrifice'],['/comparison','Job Comparison'],['/maternity','Maternity Pay'],['/part-time-salary-calculator','Part-Time Pay']].map(([h,l])=>(
+              <Link key={h} href={h} style={{display:'block',fontSize:12,color:'rgba(255,255,255,0.42)',marginBottom:7,lineHeight:1.4,textDecoration:'none'}}>{l}</Link>
+            ))}
+          </div>
+          <div>
+            <div style={{fontSize:10,color:'rgba(255,255,255,0.28)',letterSpacing:'0.14em',textTransform:'uppercase',marginBottom:12,fontFamily:'JetBrains Mono',fontWeight:600}}>Tax Planning</div>
+            {[['/blog/60-percent-tax-trap','60% Tax Trap'],['/blog/hicbc-child-benefit-charge','Child Benefit Taper'],['/blog/personal-allowance-taper-100k','£100k PA Taper'],['/blog/plan-5-student-loan-take-home','Plan 5 Student Loan'],['/blog/salary-sacrifice-electric-car-uk-2026','EV Salary Sacrifice'],['/blog/pension-tax-relief-your-free-money','Pension Tax Relief'],['/blog/ir35-inside-outside-calculator-2026','IR35 Guide']].map(([h,l])=>(
+              <Link key={h} href={h} style={{display:'block',fontSize:12,color:'rgba(255,255,255,0.42)',marginBottom:7,lineHeight:1.4,textDecoration:'none'}}>{l}</Link>
+            ))}
+          </div>
+          <div>
+            <div style={{fontSize:10,color:'rgba(255,255,255,0.28)',letterSpacing:'0.14em',textTransform:'uppercase',marginBottom:12,fontFamily:'JetBrains Mono',fontWeight:600}}>Public Sector</div>
+            {[['/nhs-pay-guide','NHS Pay Guide'],['/teacher-pay-guide','Teacher Pay Guide'],['/public-sector-pay','Public Sector Hub'],['/public-sector-pay/police','Police Pay'],['/public-sector-pay/firefighters','Firefighter Pay'],['/public-sector-pay/civil-service','Civil Service Pay'],['/public-sector-pay/armed-forces','Armed Forces Pay'],['/public-sector-pay/council-workers','Council Workers Pay']].map(([h,l])=>(
+              <Link key={h} href={h} style={{display:'block',fontSize:12,color:'rgba(255,255,255,0.42)',marginBottom:7,lineHeight:1.4,textDecoration:'none'}}>{l}</Link>
+            ))}
+          </div>
+          <div>
+            <div style={{fontSize:10,color:'rgba(255,255,255,0.28)',letterSpacing:'0.14em',textTransform:'uppercase',marginBottom:12,fontFamily:'JetBrains Mono',fontWeight:600}}>Guides</div>
+            {[['/blog','All Tax Guides'],['/blog/45000-salary-take-home-uk-2026','£45k Salary Guide'],['/blog/50000-salary-after-tax-uk-2026','£50k Salary Guide'],['/blog/nhs-band-5-take-home-pay-2026','NHS Band 5 Guide'],['/maternity-pay-self-employed','Self-Employed Maternity'],['/tools','All Tools']].map(([h,l])=>(
+              <Link key={h} href={h} style={{display:'block',fontSize:12,color:'rgba(255,255,255,0.42)',marginBottom:7,lineHeight:1.4,textDecoration:'none'}}>{l}</Link>
+            ))}
+          </div>
+        </div>
+        <div style={{borderTop:'1px solid rgba(255,255,255,0.07)',paddingTop:20,display:'flex',justifyContent:'space-between',flexWrap:'wrap',gap:12,alignItems:'center'}}>
+          <Link href="/" style={{display:'flex',alignItems:'center',gap:9,textDecoration:'none'}}>
+            <div style={{width:28,height:28,background:'linear-gradient(135deg,#0D9488,#14B8A6)',borderRadius:7,display:'flex',alignItems:'center',justifyContent:'center',flexShrink:0}}>
+              <span style={{color:'white',fontWeight:700,fontSize:12,fontFamily:'JetBrains Mono'}}>Tx</span>
+            </div>
+            <span style={{color:'white',fontFamily:'DM Serif Display',fontSize:16}}>Taxd<span style={{color:'#14B8A6'}}>Calc</span></span>
+          </Link>
+          <span style={{fontSize:11,color:'rgba(255,255,255,0.22)',fontFamily:'JetBrains Mono'}}>Updated April 2026 · 2026-27 HMRC rates</span>
+          <span style={{fontSize:11,color:'rgba(255,255,255,0.18)',maxWidth:320,lineHeight:1.6}}>For guidance only. Consult HMRC or a qualified tax adviser.</span>
+        </div>
+      </div>
+    </footer>
+  );
+}
 export default function MaternityPaySelfEmployed(){
   const mob=useW()<640;
-  const[avgEarnings,setAvgEarnings]=useState('30000');
+  const[avgEarnings,setAvgEarnings]=useState('');
   const[weeksOff,setWeeksOff]=useState(26);
-  const[hasClass2,setHasClass2]=useState(true); // paid NI Class 2
+  const[hasClass2,setHasClass2]=useState(true);
 
   const annualEarnings=Math.max(0,Number(avgEarnings)||0);
   const weeklyEarnings=annualEarnings/52;
 
-  // Maternity Allowance (for self-employed)
-  // MA: 39 weeks at £184.03/wk standard, or 90% of avg weekly earnings if lower
   const maWeeklyRate=Math.min(MA_WEEKLY, weeklyEarnings*0.90);
   const maTotal=maWeeklyRate*MA_WEEKS;
 
-  // Comparison: employed SMP
   const smpHigherWeeks=6;
   const smpHigher=(weeklyEarnings*SMP_HIGHER_PCT)*smpHigherWeeks;
   const smpStandard=SMP_STANDARD_WEEKLY*(SMP_WEEKS-smpHigherWeeks);
   const smpTotal=smpHigher+smpStandard;
 
-  // Lost earnings during time off
-  const lostEarnings=(weeklyEarnings*weeksOff)-( maWeeklyRate*Math.min(weeksOff,MA_WEEKS));
+  const lostEarnings=(weeklyEarnings*weeksOff)-(maWeeklyRate*Math.min(weeksOff,MA_WEEKS));
 
-  // Schema split — FAQPage MUST be a separate script, never inside @graph
   const schemaCalc={'@context':'https://schema.org','@type':'WebApplication','@id':'https://taxdcal.co.uk/maternity-pay-self-employed#calc',name:'Self-Employed Maternity Pay Calculator UK 2026-27',applicationCategory:'FinanceApplication',operatingSystem:'Any',offers:{'@type':'Offer',price:'0',priceCurrency:'GBP'},provider:{'@type':'Organization',name:'TaxdCalc',url:'https://taxdcal.co.uk'},url:'https://taxdcal.co.uk/maternity-pay-self-employed'};
   const schemaFAQ={'@context':'https://schema.org','@type':'FAQPage',mainEntity:[
     {'@type':'Question',name:'Can self-employed people get maternity pay?',acceptedAnswer:{'@type':'Answer',text:'Yes. Self-employed people cannot claim SMP but can claim Maternity Allowance (MA) from the DWP. The standard rate in 2026-27 is £184.03 per week for up to 39 weeks.'}},
@@ -61,8 +95,16 @@ export default function MaternityPaySelfEmployed(){
       <script type="application/ld+json" dangerouslySetInnerHTML={{__html:JSON.stringify(schemaFAQ)}}/>
       <script type="application/ld+json" dangerouslySetInnerHTML={{__html:JSON.stringify(schemaBreadcrumb)}}/>
       <Nav/>
-
-      {/* Hero */}
+      {annualEarnings > 0 && (
+        <div className="ai-answer" style={{background:'#F0FDFA',borderBottom:'1px solid #99F6E4',padding:mob?'13px 16px':'15px 24px'}}>
+          <div style={{maxWidth:1000,margin:'0 auto'}}>
+            <div style={{fontSize:10,color:'#0D9488',fontWeight:700,letterSpacing:'0.12em',textTransform:'uppercase',fontFamily:'JetBrains Mono',marginBottom:5}}>Quick Answer — Maternity Allowance 2026-27</div>
+            <p style={{fontSize:mob?13:14,color:'#0f766e',fontWeight:600,lineHeight:1.6}}>
+              On {'£'}{annualEarnings.toLocaleString('en-GB')} earnings ({'£'}{weeklyEarnings.toFixed(2)}/week): Maternity Allowance is <strong>{'£'}{maWeeklyRate.toFixed(2)}/week</strong> for up to 39 weeks — total <strong>{'£'}{Math.round(maWeeklyRate*39).toLocaleString('en-GB')}</strong>. Standard rate capped at {'£'}184.03/week.
+            </p>
+          </div>
+        </div>
+      )}
       <div style={{background:`linear-gradient(135deg,#831843,#9D174D)`,padding:mob?'32px 20px 48px':'44px 24px 60px',position:'relative',overflow:'hidden'}}>
         <div style={{position:'absolute',top:-50,right:-50,width:200,height:200,borderRadius:'50%',background:'rgba(255,255,255,0.05)',pointerEvents:'none'}}/>
         <div style={{maxWidth:900,margin:'0 auto'}}>
@@ -73,25 +115,20 @@ export default function MaternityPaySelfEmployed(){
       </div>
 
       <div style={{maxWidth:900,margin:'0 auto',padding:mob?'20px 16px 60px':'28px 24px 72px'}}>
-
-        {/* Calculator */}
         <div style={{background:C.white,borderRadius:12,padding:mob?18:24,border:`1px solid ${C.border}`,boxShadow:C.shadow,marginBottom:20}} className="fi">
           <h2 style={{fontFamily:'DM Serif Display',fontSize:17,color:C.navy,marginBottom:16}}>Your Maternity Allowance Estimate</h2>
 
           <div style={{display:'grid',gridTemplateColumns:mob?'1fr':'1fr 1fr',gap:16,marginBottom:16}}>
-            {/* Annual earnings */}
             <div>
               <label style={{display:'block',fontSize:12,fontWeight:600,color:C.navy,marginBottom:7}}>Average annual self-employed earnings</label>
               <div style={{position:'relative'}}>
-                <span style={{position:'absolute',left:13,top:'50%',transform:'translateY(-50%)',color:C.slate,fontSize:15,fontWeight:600,fontFamily:'JetBrains Mono',pointerEvents:'none'}}>\u00A3</span>
+                <span style={{position:'absolute',left:13,top:'50%',transform:'translateY(-50%)',color:C.slate,fontSize:15,fontWeight:600,fontFamily:'JetBrains Mono',pointerEvents:'none'}}>&pound;</span>
                 <input type="number" inputMode="decimal" value={avgEarnings} onChange={e=>setAvgEarnings(e.target.value)}
                   style={{width:'100%',padding:'12px 14px 12px 28px',border:`1.5px solid ${C.borderDk}`,borderRadius:8,fontSize:15,fontFamily:'JetBrains Mono',color:C.navy,background:'white',outline:'none'}}
                   onFocus={e=>e.target.style.borderColor=C.teal} onBlur={e=>e.target.style.borderColor=C.borderDk}/>
               </div>
               <div style={{fontSize:11,color:C.slate,marginTop:4}}>Weekly earnings: {fmt(weeklyEarnings)}</div>
             </div>
-
-            {/* Weeks off */}
             <div>
               <div style={{display:'flex',justifyContent:'space-between',marginBottom:7}}>
                 <label style={{fontSize:12,fontWeight:600,color:C.navy}}>Planned weeks off</label>
@@ -106,7 +143,6 @@ export default function MaternityPaySelfEmployed(){
             </div>
           </div>
 
-          {/* Class 2 NI toggle */}
           <div style={{padding:'12px 14px',background:hasClass2?C.tealBg:C.amberBg,border:`1.5px solid ${hasClass2?C.tealBd:C.amberBd}`,borderRadius:9,marginBottom:16,display:'flex',alignItems:'center',justifyContent:'space-between',gap:12}}>
             <div>
               <div style={{fontSize:13,fontWeight:700,color:hasClass2?C.teal:C.amber}}>Paying Class 2 National Insurance?</div>
@@ -123,24 +159,22 @@ export default function MaternityPaySelfEmployed(){
             </div>
           )}
 
-          {/* Results */}
           {annualEarnings>0&&(
             <div style={{display:'grid',gridTemplateColumns:mob?'1fr 1fr':'repeat(3,1fr)',gap:10}}>
               {[
                 ['Weekly MA rate',fmt(maWeeklyRate),'#14B8A6'],
-                [`Total MA (${Math.min(weeksOff,MA_WEEKS)} wks)`,fmtR(maWeeklyRate*Math.min(weeksOff,MA_WEEKS)),'#14B8A6'],
-                ['Lost earnings',fmtR(lostEarnings),'#DC2626'],
+                [`Total MA (${Math.min(weeksOff,MA_WEEKS)} wks)`,fmt(maWeeklyRate*Math.min(weeksOff,MA_WEEKS)),'#14B8A6'],
+                ['Lost earnings',fmt(lostEarnings),'#DC2626'],
               ].map(([label,value,color])=>(
                 <div key={label} style={{background:C.bg,borderRadius:9,padding:'12px 14px',textAlign:'center'}}>
                   <div style={{fontSize:10,color:C.slate,letterSpacing:'0.08em',textTransform:'uppercase',fontFamily:'JetBrains Mono',marginBottom:4}}>{label}</div>
-                  <div style={{fontFamily:'DM Serif Display',fontSize:mob?20:24,color,lineHeight:1}}>{value}</div>
+                  <div style={{fontFamily:'DM Serif Display',fontSize:mob?20:24,color:color,lineHeight:1}}>{value}</div>
                 </div>
               ))}
             </div>
           )}
         </div>
 
-        {/* MA vs SMP comparison */}
         <div style={{background:C.white,borderRadius:12,padding:mob?16:22,border:`1px solid ${C.border}`,boxShadow:C.shadow,marginBottom:20}}>
           <h2 style={{fontFamily:'DM Serif Display',fontSize:18,color:C.navy,marginBottom:6}}>Maternity Allowance vs Employed SMP</h2>
           <p style={{fontSize:13,color:C.mid,lineHeight:1.7,marginBottom:16}}>The key difference: employed mothers get 6 weeks at 90% of their actual salary, which for higher earners is significantly more than MA. Self-employed mothers get MA capped at £{MA_WEEKLY}/week regardless of earnings.</p>
@@ -152,7 +186,7 @@ export default function MaternityPaySelfEmployed(){
                   ['Duration','39 weeks maximum','39 weeks (52 weeks available unpaid)'],
                   ['Weeks 1–6',annualEarnings>0?`${fmt(maWeeklyRate)}/week (lower of 90% or £${MA_WEEKLY})`:`90% of weekly earnings (max £${MA_WEEKLY})`,'90% of average weekly earnings (no cap)'],
                   ['Weeks 7–39',`${fmt(maWeeklyRate)}/week`,`£${SMP_STANDARD_WEEKLY}/week`],
-                  annualEarnings>0?['Total (39 weeks)',fmtR(maWeeklyRate*39),fmtR(smpTotal)]:null,
+                  annualEarnings>0?['Total (39 weeks)',fmt(maWeeklyRate*39),fmt(smpTotal)]:null,
                   ['Paid by','DWP (claim via Jobcentre Plus)','Your employer (HMRC reimburses)'],
                   ['Taxable?','No — not taxable','Yes — taxable as income'],
                   ['Affects pension?','No pension contributions during MA','Yes — employer pension contributions continue during SMP'],
@@ -167,7 +201,6 @@ export default function MaternityPaySelfEmployed(){
           </div>
         </div>
 
-        {/* Eligibility checklist */}
         <div style={{background:C.white,borderRadius:12,padding:mob?16:22,border:`1px solid ${C.border}`,boxShadow:C.shadow,marginBottom:20}}>
           <h2 style={{fontFamily:'DM Serif Display',fontSize:18,color:C.navy,marginBottom:14}}>Maternity Allowance Eligibility Checklist</h2>
           {[
@@ -188,13 +221,12 @@ export default function MaternityPaySelfEmployed(){
           ))}
         </div>
 
-        {/* Planning tips */}
         <div style={{background:C.amberBg,border:`1px solid ${C.amberBd}`,borderRadius:12,padding:mob?16:22,marginBottom:20}}>
           <h2 style={{fontFamily:'DM Serif Display',fontSize:18,color:'#92400E',marginBottom:14}}>Planning Tips for Self-Employed Parents</h2>
           {[
             ['Invoice ahead of going on leave','Any invoices raised before going on leave count as trading income. Consider invoicing outstanding work early.'],
             ['Keep Self Assessment up to date','Your Class 2 NI record is based on your Self Assessment. If you are behind on returns, HMRC may not have accurate records for your MA claim.'],
-            ['Budget for the MA cap','If your weekly earnings are above £204.47 (the 90% equivalent of the cap), you will notice the difference. Budget for a lower income from week 1 of leave.'],
+            ['Budget for the MA cap','If your weekly earnings are above £204.47, you will notice the difference. Budget for a lower income from week 1 of leave.'],
             ['Pension contributions during MA','Unlike employed mothers, your pension contributions pause unless you choose to continue them voluntarily. HMRC does not require pension contributions during MA.'],
           ].map(([title,detail])=>(
             <div key={title} style={{padding:'9px 0',borderBottom:`1px solid ${C.amberBd}`}}>
@@ -204,7 +236,6 @@ export default function MaternityPaySelfEmployed(){
           ))}
         </div>
 
-        {/* CTA to employed maternity calculator */}
         <div style={{display:'grid',gridTemplateColumns:mob?'1fr':'1fr 1fr',gap:12}}>
           <div style={{background:`linear-gradient(135deg,${C.navy},${C.navyMid})`,borderRadius:12,padding:'18px 20px'}}>
             <div style={{fontFamily:'DM Serif Display',fontSize:15,color:'white',marginBottom:4}}>Employed maternity pay</div>
@@ -218,8 +249,7 @@ export default function MaternityPaySelfEmployed(){
           </div>
         </div>
       </div>
-      
-      {/* STICKY RESULT BAR — mobile only */}
+
       {mob && annualEarnings > 0 && (
         <div style={{position:'fixed',bottom:0,left:0,right:0,background:C.navy,zIndex:90,height:52,display:'flex',alignItems:'center',justifyContent:'space-between',padding:'0 20px',boxShadow:'0 -2px 16px rgba(0,0,0,0.3)'}}>
           <div>
