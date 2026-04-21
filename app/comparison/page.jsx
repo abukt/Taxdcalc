@@ -49,7 +49,7 @@ function Footer(){
             </div>
             <span style={{color:'white',fontFamily:'DM Serif Display',fontSize:16}}>Taxd<span style={{color:'#14B8A6'}}>Calc</span></span>
           </Link>
-          <span style={{fontSize:11,color:'rgba(255,255,255,0.22)',fontFamily:'JetBrains Mono'}}>Updated April 2026 · 2026-27 HMRC rates</span>
+          <span style={{fontSize:11,color:'rgba(255,255,255,0.22)',fontFamily:'JetBrains Mono'}}>Updated April 2026 &middot; 2026-27 HMRC rates</span>
           <span style={{fontSize:11,color:'rgba(255,255,255,0.18)',maxWidth:320,lineHeight:1.6}}>For guidance only. Consult HMRC or a qualified tax adviser.</span>
         </div>
       </div>
@@ -75,26 +75,26 @@ function JobPanel({ label, salary, setSalary, pension, setPension, loan, setLoan
         </div>
         <div style={{marginBottom:18}}>
           <div style={{display:'flex',justifyContent:'space-between',marginBottom:10}}>
-            <label style={{fontSize:13,fontWeight:600,color:C.navyLight}}>Pension Contribution</label>
+            <label style={{fontSize:13,fontWeight:600,color:C.navyLight}}>Pension %</label>
             <span style={{fontFamily:'JetBrains Mono',fontSize:14,color:accentColor,fontWeight:600}}>{pension}%</span>
           </div>
           <input type="range" min={0} max={20} step={0.5} value={pension} onChange={e=>setPension(Number(e.target.value))} style={{accentColor}}/>
         </div>
         <div style={{marginBottom:4}}>
-          <label style={{display:'block',fontSize:13,fontWeight:600,color:C.navyLight,marginBottom:7}}>Student Loan Plan</label>
+          <label style={{display:'block',fontSize:13,fontWeight:600,color:C.navyLight,marginBottom:7}}>Student Loan</label>
           <select value={loan} onChange={e=>setLoan(e.target.value)} style={{width:'100%',padding:'12px 40px 12px 14px',border:'1.5px solid '+C.borderDark,borderRadius:8,fontSize:14,color:C.navy,outline:'none'}}>
             <option value="none">No student loan</option>
-            <option value="plan1">Plan 1 (Pre-2012)</option>
-            <option value="plan2">Plan 2 (2012-2023)</option>
-            <option value="plan4">Plan 4 (Scotland)</option>
-            <option value="plan5">Plan 5 (Post-2023)</option>
+            <option value="plan1">Plan 1</option>
+            <option value="plan2">Plan 2</option>
+            <option value="plan4">Plan 4 Scotland</option>
+            <option value="plan5">Plan 5</option>
           </select>
         </div>
       </div>
       <div style={{background:accentBg,border:'2px solid '+accentBorder,borderRadius:12,padding:'18px',textAlign:'center'}}>
-        <div style={{fontSize:11,color:accentColor,fontWeight:700,letterSpacing:'0.1em',textTransform:'uppercase',marginBottom:5}}>{label} Net Pay</div>
+        <div style={{fontSize:11,color:accentColor,fontWeight:700,letterSpacing:'0.1em',textTransform:'uppercase',marginBottom:5}}>{label} Take-Home</div>
         <div style={{fontFamily:'DM Serif Display',fontSize:'clamp(24px,4vw,34px)',color:C.navy}}>{fmt(result.takeHome)}</div>
-        <div style={{fontSize:12,color:C.textMid,marginTop:3,fontFamily:'JetBrains Mono'}}>{fmtD(result.monthly.takeHome)}/mo</div>
+        <div style={{fontSize:12,color:C.textMid,marginTop:3,fontFamily:'JetBrains Mono'}}>{fmtD(result.monthly.takeHome)}/month</div>
       </div>
     </div>
   );
@@ -108,8 +108,8 @@ export default function ComparisonPage() {
   const diff = rB.takeHome - rA.takeHome;
 
   const schemaFAQ={'@context':'https://schema.org','@type':'FAQPage',mainEntity:[
-    {'@type':'Question',name:'How do I compare two job offers on take-home pay?',acceptedAnswer:{'@type':'Answer',text:'Enter both gross salaries, pension percentages and student loan plans into the job comparison calculator above. It shows exact after-tax take-home for each offer and the monthly difference, accounting for all deductions.'}},
-    {'@type':'Question',name:'Does a higher salary always mean more take-home pay?',acceptedAnswer:{'@type':'Answer',text:'Almost always yes — UK marginal rates mean you keep a positive amount from any salary increase. The exception is crossing £100,000, where the Personal Allowance withdrawal creates a 60% effective rate.'}},
+    {'@type':'Question',name:'How do I compare two job offers on take-home pay?',acceptedAnswer:{'@type':'Answer',text:'Enter both gross salaries, pension percentages and student loan plans into the job comparison calculator above.'}},
+    {'@type':'Question',name:'Does a higher salary always mean more take-home pay?',acceptedAnswer:{'@type':'Answer',text:'Almost always yes. The exception is crossing £100,000 where the 60% effective rate applies.'}}
   ]};
   const schemaBreadcrumb={'@context':'https://schema.org','@type':'BreadcrumbList',itemListElement:[{'@type':'ListItem',position:1,name:'TaxdCalc',item:'https://taxdcal.co.uk'},{'@type':'ListItem',position:2,name:'Job Comparison Calculator',item:'https://taxdcal.co.uk/comparison'}]};
   const schemaCalc={'@context':'https://schema.org','@type':'WebApplication',name:'UK Job Comparison Calculator 2026-27',applicationCategory:'FinanceApplication',operatingSystem:'Any',offers:{'@type':'Offer',price:'0',priceCurrency:'GBP'},provider:{'@type':'Organization',name:'TaxdCalc',url:'https://taxdcal.co.uk'},url:'https://taxdcal.co.uk/comparison'};
@@ -117,79 +117,27 @@ export default function ComparisonPage() {
   return (
     <>
       <style>{GS}</style>
-      
       <script type="application/ld+json" dangerouslySetInnerHTML={{__html:JSON.stringify(schemaCalc)}}/>
       <script type="application/ld+json" dangerouslySetInnerHTML={{__html:JSON.stringify(schemaFAQ)}}/>
       <script type="application/ld+json" dangerouslySetInnerHTML={{__html:JSON.stringify(schemaBreadcrumb)}}/>
-<Nav/>
+      <Nav/>
 
       {/* AI ANSWER BLOCK */}
       {(rA.takeHome > 0 || rB.takeHome > 0) && (
         <div className="ai-answer" style={{background:'#F0FDFA',borderBottom:'1px solid #99F6E4',padding:mob?'13px 16px':'15px 24px'}}>
           <div style={{maxWidth:1000,margin:'0 auto'}}>
-            <div style={{fontSize:10,color:'#0D9488',fontWeight:700,letterSpacing:'0.12em',textTransform:'uppercase',fontFamily:'JetBrains Mono',marginBottom:5}}>Quick Comparison — 2026-27</div>
+            <div style={{fontSize:10,color:'#0D9488',fontWeight:700,letterSpacing:'0.12em',textTransform:'uppercase',fontFamily:'JetBrains Mono',marginBottom:5}}>Quick Comparison &mdash; 2026-27</div>
             <p style={{fontSize:mob?13:14,color:'#0f766e',fontWeight:600,lineHeight:1.6}}>
-              Job A take-home: <strong>{fmt(rA.takeHome)}/yr</strong> &middot; Job B: <strong>{fmt(rB.takeHome)}/yr</strong> &mdash; difference: <strong>{diff>0?'+':''}{fmt(diff)}/year</strong> ({diff>0?'Job B pays more':'Job A pays more'}).
+              Job A take-home: <strong>{fmt(rA.takeHome)}/yr</strong> &middot; Job B: <strong>{fmt(rB.takeHome)}/yr</strong> &mdash; difference: <strong>{diff>=0?'+':''}{fmt(diff)}/year</strong>.
             </p>
           </div>
         </div>
       )}
+
       <div style={{background:'linear-gradient(135deg,#0C1E3C,#1e3d6e)',padding:mob?'36px 20px 64px':'44px 24px 72px',textAlign:'center',position:'relative',overflow:'hidden'}}>
         <div style={{position:'absolute',top:-50,right:-50,width:220,height:220,borderRadius:'50%',background:'rgba(13,148,136,0.07)',pointerEvents:'none'}}/>
-        <div style={{display:'inline-block',background:'rgba(13,148,136,0.15)',border:'1px solid rgba(20,184,166,0.3)',borderRadius:20,padding:'4px 13px',fontSize:11,color:'#14B8A6',marginBottom:13,fontFamily:'JetBrains Mono'}}>Side-by-Side Comparison</div>
+        <div style={{display:'inline-block',background:'rgba(13,148,136,0.15)',border:'1px solid rgba(20,184,166,0.3)',borderRadius:20,padding:'4px 13px',fontSize:11,color:'#14B8A6',marginBottom:13,fontFamily:'JetBrains Mono'}}>Comparison Tool</div>
         <h1 style={{fontFamily:'DM Serif Display',fontSize:mob?26:42,color:'white',marginBottom:10,letterSpacing:'-0.02em'}}>
-          Job Offer<br/><em style={{color:'#14B8A6'}}>Comparison Tool</em>
+          Compare Job<br/><em style={{color:'#14B8A6'}}>Offers Side by Side</em>
         </h1>
-        <p style={{color:'rgba(255,255,255,0.5)',fontSize:mob?13:15,maxWidth:480,margin:'0 auto'}}>Compare two salary packages to see the real difference in your pocket after all deductions.</p>
-      </div>
-      <div style={{background:'#F4F6F9',padding:mob?'16px 16px 0':'18px 24px 0',maxWidth:1000,margin:'0 auto'}}>
-        <Link href="/" style={{display:'inline-flex',alignItems:'center',gap:8,background:C.navy,color:'white',padding:'10px 18px',borderRadius:8,fontSize:13,fontWeight:700}}>&larr; Back to Salary Calculator</Link>
-      </div>
-      <div style={{maxWidth:1000,margin:'0 auto',padding:mob?'16px 16px 48px':'16px 24px 56px'}}>
-        <div style={{display:'grid',gridTemplateColumns:mob?'1fr':'1fr 1fr',gap:20,marginBottom:20}}>
-          <JobPanel label="Job A" salary={aS} setSalary={setAS} pension={aP} setPension={setAP} loan={aL} setLoan={setAL} result={rA} accentColor={C.teal} accentBg={C.tealBg} accentBorder={C.tealBorder}/>
-          <JobPanel label="Job B" salary={bS} setSalary={setBS} pension={bP} setPension={setBP} loan={bL} setLoan={setBL} result={rB} accentColor={C.amber} accentBg={C.amberBg} accentBorder={C.amberBorder}/>
-        </div>
-        <div style={{background:'white',borderRadius:14,padding:'22px 26px',boxShadow:C.shadow,border:'1px solid '+C.border,textAlign:'center',marginBottom:16}}>
-          <div style={{fontSize:13,color:C.textMid,marginBottom:5}}>Difference in annual take-home pay</div>
-          <div style={{fontFamily:'DM Serif Display',fontSize:mob?30:42,color:diff>=0?C.teal:C.red,lineHeight:1}}>
-            {diff>=0?'+':''}{fmt(diff)}
-          </div>
-          <div style={{fontSize:13,color:C.slate,marginTop:6}}>{fmtD(Math.abs(diff/12))}/month difference - {diff>=0?'Job B':'Job A'} pays more</div>
-        </div>
-        <div style={{background:'white',borderRadius:12,padding:mob?16:22,border:'1px solid '+C.border,boxShadow:C.shadow}}>
-          <h3 style={{fontFamily:'DM Serif Display',fontSize:18,color:C.navy,marginBottom:14}}>Side-by-Side Breakdown</h3>
-          <div style={{overflowX:'auto',WebkitOverflowScrolling:'touch'}}>
-            <table style={{width:'100%',borderCollapse:'collapse',fontSize:13,minWidth:340}}>
-              <thead>
-                <tr>
-                  <th style={{textAlign:'left',padding:'8px 12px',borderBottom:'2px solid '+C.border,fontSize:11,color:C.slate,textTransform:'uppercase'}}>Category</th>
-                  <th style={{textAlign:'right',padding:'8px 12px',borderBottom:'2px solid '+C.tealBorder,color:C.teal,fontSize:13}}>Job A</th>
-                  <th style={{textAlign:'right',padding:'8px 12px',borderBottom:'2px solid '+C.amberBorder,color:C.amber,fontSize:13}}>Job B</th>
-                </tr>
-              </thead>
-              <tbody>
-                {[
-                  {l:'Gross salary',va:rA.gross,vb:rB.gross},
-                  {l:'Income Tax',va:rA.incomeTax,vb:rB.incomeTax,red:true},
-                  {l:'National Insurance',va:rA.ni,vb:rB.ni,red:true},
-                  {l:'Pension Contrib.',va:rA.pension,vb:rB.pension,red:true},
-                  (rA.studentLoan>0||rB.studentLoan>0)?{l:'Student Loan',va:rA.studentLoan,vb:rB.studentLoan,red:true}:null,
-                  {l:'Annual Net Pay',va:rA.takeHome,vb:rB.takeHome,bold:true},
-                  {l:'Monthly Net Pay',va:rA.monthly.takeHome,vb:rB.monthly.takeHome,bold:true},
-                ].filter(Boolean).map((row,i)=>(
-                  <tr key={row.l} style={{background:i%2===0?C.white:'#F8F9FA',borderBottom:'1px solid '+C.border}}>
-                    <td style={{padding:'10px 12px',fontSize:13,color:row.bold?C.navy:C.textMid,fontWeight:row.bold?700:400}}>{row.l}</td>
-                    <td style={{padding:'10px 12px',textAlign:'right',fontFamily:'JetBrains Mono',fontSize:12,color:row.red?C.red:row.bold?C.teal:C.text,fontWeight:row.bold?700:400}}>{row.red?'-':''}{fmt(row.va)}</td>
-                    <td style={{padding:'10px 12px',textAlign:'right',fontFamily:'JetBrains Mono',fontSize:12,color:row.red?C.red:row.bold?C.amber:C.text,fontWeight:row.bold?700:400}}>{row.red?'-':''}{fmt(row.vb)}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-      <Footer/>
-    </>
-  );
-}
+        <p style={{color:'rgba(255,255,255,0.5)',fontSize:mob?13:15,maxWidth:480,margin:'0 auto'}}>Analyze two offers after tax, NI, pension and student loans to
