@@ -87,21 +87,50 @@ function Nav() {
     </nav>
   );
 }
-function Footer() {
-  return (
-    <footer style={{background:'#070D1C',padding:'24px 20px',borderTop:'1px solid rgba(255,255,255,0.05)',marginTop:48}}>
-      <div style={{maxWidth:1100,margin:'0 auto',display:'flex',justifyContent:'space-between',flexWrap:'wrap',gap:14,alignItems:'center'}}>
-        <Link href="/" style={{display:'flex',alignItems:'center',gap:8}}>
-          <div style={{width:26,height:26,background:'linear-gradient(135deg,#0D9488,#14B8A6)',borderRadius:6,display:'flex',alignItems:'center',justifyContent:'center'}}><span style={{color:'white',fontWeight:700,fontSize:11,fontFamily:'JetBrains Mono'}}>Tx</span></div>
-          <span style={{color:'white',fontFamily:'DM Serif Display',fontSize:15}}>Taxd<span style={{color:'#14B8A6'}}>Calc</span></span>
-        </Link>
-        <span style={{fontSize:11,color:'rgba(255,255,255,0.2)',fontFamily:'JetBrains Mono'}}>Updated April 2026 - 2026-27</span>
-        <span style={{fontSize:11,color:'rgba(255,255,255,0.18)',maxWidth:280,lineHeight:1.6}}>For guidance only. Always consult HMRC or a qualified adviser.</span>
+function Footer(){
+  return(
+    <footer style={{background:'#070D1C',padding:'40px 24px 28px',borderTop:'1px solid rgba(255,255,255,0.06)',marginTop:0}}>
+      <div style={{maxWidth:1100,margin:'0 auto'}}>
+        <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fill,minmax(180px,1fr))',gap:'28px 24px',marginBottom:28}}>
+          <div>
+            <div style={{fontSize:10,color:'rgba(255,255,255,0.28)',letterSpacing:'0.14em',textTransform:'uppercase',marginBottom:12,fontFamily:'JetBrains Mono',fontWeight:600}}>Core Tools</div>
+            {[['/','Salary Calculator'],['/ir35','IR35 Calculator'],['/nhs','NHS Pay Bands'],['/hourly','Hourly Rate'],['/bonus','Bonus Tax'],['/sacrifice','Salary Sacrifice'],['/comparison','Job Comparison'],['/maternity','Maternity Pay'],['/part-time-salary-calculator','Part-Time Pay']].map(([h,l])=>(
+              <Link key={h} href={h} style={{display:'block',fontSize:12,color:'rgba(255,255,255,0.42)',marginBottom:7,lineHeight:1.4,textDecoration:'none'}}>{l}</Link>
+            ))}
+          </div>
+          <div>
+            <div style={{fontSize:10,color:'rgba(255,255,255,0.28)',letterSpacing:'0.14em',textTransform:'uppercase',marginBottom:12,fontFamily:'JetBrains Mono',fontWeight:600}}>Tax Planning</div>
+            {[['/blog/60-percent-tax-trap','60% Tax Trap'],['/blog/hicbc-child-benefit-charge','Child Benefit Taper'],['/blog/personal-allowance-taper-100k','£100k PA Taper'],['/blog/plan-5-student-loan-take-home','Plan 5 Student Loan'],['/blog/salary-sacrifice-electric-car-uk-2026','EV Salary Sacrifice'],['/blog/pension-tax-relief-your-free-money','Pension Tax Relief'],['/blog/ir35-inside-outside-calculator-2026','IR35 Guide']].map(([h,l])=>(
+              <Link key={h} href={h} style={{display:'block',fontSize:12,color:'rgba(255,255,255,0.42)',marginBottom:7,lineHeight:1.4,textDecoration:'none'}}>{l}</Link>
+            ))}
+          </div>
+          <div>
+            <div style={{fontSize:10,color:'rgba(255,255,255,0.28)',letterSpacing:'0.14em',textTransform:'uppercase',marginBottom:12,fontFamily:'JetBrains Mono',fontWeight:600}}>Public Sector</div>
+            {[['/nhs-pay-guide','NHS Pay Guide'],['/teacher-pay-guide','Teacher Pay Guide'],['/public-sector-pay','Public Sector Hub'],['/public-sector-pay/police','Police Pay'],['/public-sector-pay/firefighters','Firefighter Pay'],['/public-sector-pay/civil-service','Civil Service Pay'],['/public-sector-pay/armed-forces','Armed Forces Pay'],['/public-sector-pay/council-workers','Council Workers Pay']].map(([h,l])=>(
+              <Link key={h} href={h} style={{display:'block',fontSize:12,color:'rgba(255,255,255,0.42)',marginBottom:7,lineHeight:1.4,textDecoration:'none'}}>{l}</Link>
+            ))}
+          </div>
+          <div>
+            <div style={{fontSize:10,color:'rgba(255,255,255,0.28)',letterSpacing:'0.14em',textTransform:'uppercase',marginBottom:12,fontFamily:'JetBrains Mono',fontWeight:600}}>Guides</div>
+            {[['/blog','All Tax Guides'],['/blog/45000-salary-take-home-uk-2026','£45k Salary Guide'],['/blog/50000-salary-after-tax-uk-2026','£50k Salary Guide'],['/blog/nhs-band-5-take-home-pay-2026','NHS Band 5 Guide'],['/maternity-pay-self-employed','Self-Employed Maternity'],['/tools','All Tools']].map(([h,l])=>(
+              <Link key={h} href={h} style={{display:'block',fontSize:12,color:'rgba(255,255,255,0.42)',marginBottom:7,lineHeight:1.4,textDecoration:'none'}}>{l}</Link>
+            ))}
+          </div>
+        </div>
+        <div style={{borderTop:'1px solid rgba(255,255,255,0.07)',paddingTop:20,display:'flex',justifyContent:'space-between',flexWrap:'wrap',gap:12,alignItems:'center'}}>
+          <Link href="/" style={{display:'flex',alignItems:'center',gap:9,textDecoration:'none'}}>
+            <div style={{width:28,height:28,background:'linear-gradient(135deg,#0D9488,#14B8A6)',borderRadius:7,display:'flex',alignItems:'center',justifyContent:'center',flexShrink:0}}>
+              <span style={{color:'white',fontWeight:700,fontSize:12,fontFamily:'JetBrains Mono'}}>Tx</span>
+            </div>
+            <span style={{color:'white',fontFamily:'DM Serif Display',fontSize:16}}>Taxd<span style={{color:'#14B8A6'}}>Calc</span></span>
+          </Link>
+          <span style={{fontSize:11,color:'rgba(255,255,255,0.22)',fontFamily:'JetBrains Mono'}}>Updated April 2026 · 2026-27 HMRC rates</span>
+          <span style={{fontSize:11,color:'rgba(255,255,255,0.18)',maxWidth:320,lineHeight:1.6}}>For guidance only. Consult HMRC or a qualified tax adviser.</span>
+        </div>
       </div>
     </footer>
   );
 }
-
 export default function NHSPage() {
   const mob = useW() < 640;
   const [selBand, setSelBand] = useState('Band 5');
@@ -111,10 +140,37 @@ export default function NHSPage() {
   const gross = point === 'min' ? band.min : band.max;
   const r = calcNHS(gross, pensionPct);
 
+  
+  const schemaFAQ={'@context':'https://schema.org','@type':'FAQPage',mainEntity:[
+    {'@type':'Question',name:'What is NHS Band 5 take-home pay in 2026-27?',acceptedAnswer:{'@type':'Answer',text:'NHS Band 5 entry (£29,970 gross) takes home approximately £22,748/year (£1,896/month) after income tax, NI and 9.8% NHS pension in 2026-27. At the top of Band 5 (£36,483) take-home is approximately £26,927/year.'}},
+    {'@type':'Question',name:'How much is the NHS pension contribution in 2026-27?',acceptedAnswer:{'@type':'Answer',text:'NHS pension contributions range from 5.0% for Bands 2-3, 6.1% for Band 4, 9.8% for Band 5, 10.7% for Band 6, 12.5% for Band 7 and 8a, and 13.5% for Bands 8b and above. The NHS pension is a defined benefit scheme worth approximately 20-23% of salary in employer contribution equivalent.'}},
+    {'@type':'Question',name:'What is the difference between NHS Band 5 and Band 6?',acceptedAnswer:{'@type':'Answer',text:'Band 5 entry is £29,970 gross (£22,748 take-home). Band 6 entry is £37,338 gross (£27,454 take-home). The step up is worth approximately £4,706 in annual take-home. Band 6 pension contribution also rises from 9.8% to 10.7%.'}},
+    {'@type':'Question',name:'Does NHS London weighting affect take-home pay?',acceptedAnswer:{'@type':'Answer',text:'Yes. NHS High Cost Area Supplements (HCAS) add: fringe £1,478/year, outer London £4,271/year, inner London £5,132/year to gross salary. These are pensionable and increase both gross pay and pension contributions. Select London zone in the calculator above.'}},
+    {'@type':'Question',name:'How does Scotland affect NHS pay?',acceptedAnswer:{'@type':'Answer',text:'NHS Scotland uses a separate pay framework with slightly different band structures, negotiated by Scottish Government. The NHS calculator above covers England, Wales and Northern Ireland Agenda for Change bands. Toggle Scotland for income tax rate differences.'}},
+  ]};
+  const schemaBreadcrumb={'@context':'https://schema.org','@type':'BreadcrumbList',itemListElement:[{'@type':'ListItem',position:1,name:'TaxdCalc',item:'https://taxdcal.co.uk'},{'@type':'ListItem',position:2,name:'NHS Pay Calculator',item:'https://taxdcal.co.uk/nhs'}]};
+  const schemaCalc={'@context':'https://schema.org','@type':'WebApplication',name:'NHS Pay Bands Calculator 2026-27',applicationCategory:'FinanceApplication',operatingSystem:'Any',offers:{'@type':'Offer',price:'0',priceCurrency:'GBP'},provider:{'@type':'Organization',name:'TaxdCalc',url:'https://taxdcal.co.uk'},url:'https://taxdcal.co.uk/nhs'};
+
   return (
     <>
       <style>{GS}</style>
-      <Nav/>
+      
+      <script type="application/ld+json" dangerouslySetInnerHTML={{__html:JSON.stringify(schemaCalc)}}/>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{__html:JSON.stringify(schemaFAQ)}}/>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{__html:JSON.stringify(schemaBreadcrumb)}}/>
+<Nav/>
+
+      {/* AI ANSWER BLOCK */}
+      {band && (
+        <div className="ai-answer" style={{background:'#F0FDFA',borderBottom:'1px solid #99F6E4',padding:mob?'13px 16px':'15px 24px'}}>
+          <div style={{maxWidth:1000,margin:'0 auto'}}>
+            <div style={{fontSize:10,color:'#0D9488',fontWeight:700,letterSpacing:'0.12em',textTransform:'uppercase',fontFamily:'JetBrains Mono',marginBottom:5}}>Quick Answer — NHS 2026-27</div>
+            <p style={{fontSize:mob?13:14,color:'#0f766e',fontWeight:600,lineHeight:1.6}}>
+              {band.label} ({point==='min'?'entry':'top'}) gross <strong>{'£'}{gross.toLocaleString('en-GB')}</strong>: take-home <strong>{'£'}{Math.round(r.takeHome).toLocaleString('en-GB')}/year</strong> ({'£'}{(r.takeHome/12).toLocaleString('en-GB',{maximumFractionDigits:0})}/month) after income tax, NI and {pensionPct}% NHS pension.
+            </p>
+          </div>
+        </div>
+      )}
       <div style={{background:'linear-gradient(135deg,#0C1E3C,#1e3d6e)',padding:mob?'36px 20px 64px':'44px 24px 72px',textAlign:'center',position:'relative',overflow:'hidden'}}>
         <div style={{position:'absolute',top:-50,right:-50,width:220,height:220,borderRadius:'50%',background:'rgba(13,148,136,0.07)',pointerEvents:'none'}}/>
         <div style={{display:'inline-block',background:'rgba(13,148,136,0.15)',border:'1px solid rgba(20,184,166,0.3)',borderRadius:20,padding:'4px 13px',fontSize:11,color:'#14B8A6',marginBottom:13,fontFamily:'JetBrains Mono'}}>NHS Pay Bands 2026-27</div>
@@ -124,7 +180,7 @@ export default function NHSPage() {
         <p style={{color:'rgba(255,255,255,0.5)',fontSize:mob?13:15,maxWidth:480,margin:'0 auto'}}>Agenda for Change pay scales with real take-home after income tax, NI and NHS pension. All bands 1 to 9.</p>
       </div>
       <div style={{background:'#F4F6F9',padding:mob?'16px 16px 0':'18px 24px 0',maxWidth:960,margin:'0 auto'}}>
-        <Link href="/" style={{display:'inline-flex',alignItems:'center',gap:8,background:C.navy,color:'white',padding:'10px 18px',borderRadius:8,fontSize:13,fontWeight:700}}> ← Back to Salary Calculator</Link>
+        <Link href="/" style={{display:'inline-flex',alignItems:'center',gap:8,background:C.navy,color:'white',padding:'10px 18px',borderRadius:8,fontSize:13,fontWeight:700}}><- Back to Salary Calculator</Link>
       </div>
       <div style={{maxWidth:960,margin:'0 auto',padding:mob?'16px 16px 48px':'16px 24px 56px'}}>
         <div style={{display:'grid',gridTemplateColumns:mob?'1fr':'1fr 1fr',gap:20,alignItems:'start',marginBottom:20}}>
@@ -232,6 +288,20 @@ export default function NHSPage() {
           <Link href="/" style={{background:C.teal,color:'white',padding:'9px 18px',borderRadius:7,fontWeight:700,fontSize:13,display:'inline-block'}}>Open Salary Calculator</Link>
         </div>
       </div>
+      
+      {/* STICKY RESULT BAR — mobile only */}
+      {mob && band && (
+        <div style={{position:'fixed',bottom:0,left:0,right:0,background:C.navy,zIndex:90,height:52,display:'flex',alignItems:'center',justifyContent:'space-between',padding:'0 20px',boxShadow:'0 -2px 16px rgba(0,0,0,0.3)'}}>
+          <div>
+            <div style={{fontSize:9,color:'rgba(255,255,255,0.4)',fontFamily:'JetBrains Mono',textTransform:'uppercase',letterSpacing:'0.1em'}}>NHS Take-Home</div>
+            <div style={{fontFamily:'DM Serif Display',fontSize:19,color:'#14B8A6',lineHeight:1}}>{fmt(r.takeHome)}</div>
+          </div>
+          <div style={{textAlign:'right'}}>
+            <div style={{fontSize:9,color:'rgba(255,255,255,0.4)',fontFamily:'JetBrains Mono',textTransform:'uppercase',letterSpacing:'0.1em'}}>Monthly</div>
+            <div style={{fontFamily:'JetBrains Mono',fontSize:13,color:'white',fontWeight:700,lineHeight:1}}>{fmtD(r.takeHome/12)}</div>
+          </div>
+        </div>
+      )}
       <Footer/>
     </>
   );
