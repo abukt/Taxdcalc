@@ -231,7 +231,6 @@ export default function IR35Page(){
           </div>
         </div>
       )}
-           </div>
       <Footer/>
     </>
   );
