@@ -140,4 +140,60 @@ export default function ComparisonPage() {
         <h1 style={{fontFamily:'DM Serif Display',fontSize:mob?26:42,color:'white',marginBottom:10,letterSpacing:'-0.02em'}}>
           Compare Job<br/><em style={{color:'#14B8A6'}}>Offers Side by Side</em>
         </h1>
-        <p style={{color:'rgba(255,255,255,0.5)',fontSize:mob?13:15,maxWidth:480,margin:'0 auto'}}>Analyze two offers after tax, NI, pension and student loans to
+        <p style={{color:'rgba(255,255,255,0.5)',fontSize:mob?13:15,maxWidth:480,margin:'0 auto'}}>Analyze two offers after tax, NI, pension and student loans to find the best deal.</p>
+      </div>
+
+      <div style={{background:'#F4F6F9',padding:mob?'16px 16px 0':'18px 24px 0',maxWidth:1000,margin:'0 auto'}}>
+        <Link href="/" style={{display:'inline-flex',alignItems:'center',gap:8,background:C.navy,color:'white',padding:'10px 18px',borderRadius:8,fontSize:13,fontWeight:700}}>&larr; Back to Salary Calculator</Link>
+      </div>
+
+      <div style={{maxWidth:1000,margin:'0 auto',padding:mob?'16px 16px 48px':'16px 24px 56px'}}>
+        <div style={{display:'grid',gridTemplateColumns:mob?'1fr':'1fr 1fr',gap:20,marginBottom:20}}>
+          <JobPanel label="Job A" salary={aS} setSalary={setAS} pension={aP} setPension={setAP} loan={aL} setLoan={setAL} result={rA} accentColor={C.teal} accentBg={C.tealBg} accentBorder={C.tealBorder}/>
+          <JobPanel label="Job B" salary={bS} setSalary={setBS} pension={bP} setPension={setBP} loan={bL} setLoan={setBL} result={rB} accentColor={C.amber} accentBg={C.amberBg} accentBorder={C.amberBorder}/>
+        </div>
+
+        <div style={{background:'white',borderRadius:14,padding:'22px 26px',boxShadow:C.shadow,border:'1px solid '+C.border,textAlign:'center',marginBottom:16}}>
+          <div style={{fontSize:13,color:C.textMid,marginBottom:5}}>Difference in annual take-home pay</div>
+          <div style={{fontFamily:'DM Serif Display',fontSize:mob?30:42,color:diff>=0?C.teal:C.red,lineHeight:1}}>
+            {diff>=0?'+':''}{fmt(diff)}
+          </div>
+          <div style={{fontSize:13,color:C.slate,marginTop:6}}>{fmtD(Math.abs(diff/12))}/month difference &mdash; {diff>=0?'Job B':'Job A'} pays more</div>
+        </div>
+
+        <div style={{background:'white',borderRadius:12,padding:mob?16:22,border:'1px solid '+C.border,boxShadow:C.shadow}}>
+          <h3 style={{fontFamily:'DM Serif Display',fontSize:18,color:C.navy,marginBottom:14}}>Detailed Side-by-Side</h3>
+          <div style={{overflowX:'auto'}}>
+            <table style={{width:'100%',borderCollapse:'collapse',fontSize:13,minWidth:340}}>
+              <thead>
+                <tr>
+                  <th style={{textAlign:'left',padding:'8px 12px',borderBottom:'2px solid '+C.border,fontSize:11,color:C.slate,textTransform:'uppercase'}}></th>
+                  <th style={{textAlign:'right',padding:'8px 12px',borderBottom:'2px solid '+C.tealBorder,color:C.teal,fontSize:13}}>Job A</th>
+                  <th style={{textAlign:'right',padding:'8px 12px',borderBottom:'2px solid '+C.amberBorder,color:C.amber,fontSize:13}}>Job B</th>
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  {l:'Gross salary',va:rA.gross,vb:rB.gross},
+                  {l:'Income Tax',va:rA.incomeTax,vb:rB.incomeTax,red:true},
+                  {l:'National Insurance',va:rA.ni,vb:rB.ni,red:true},
+                  {l:'Pension',va:rA.pension,vb:rB.pension,red:true},
+                  (rA.studentLoan>0||rB.studentLoan>0)?{l:'Student Loan',va:rA.studentLoan,vb:rB.studentLoan,red:true}:null,
+                  {l:'Annual take-home',va:rA.takeHome,vb:rB.takeHome,bold:true},
+                  {l:'Monthly take-home',va:rA.monthly.takeHome,vb:rB.monthly.takeHome,bold:true},
+                ].filter(Boolean).map((row,i)=>(
+                  <tr key={row.l} style={{background:i%2===0?C.white:'#F8F9FA',borderBottom:'1px solid '+C.border}}>
+                    <td style={{padding:'10px 12px',fontSize:13,color:row.bold?C.navy:C.textMid,fontWeight:row.bold?700:400}}>{row.l}</td>
+                    <td style={{padding:'10px 12px',textAlign:'right',fontFamily:'JetBrains Mono',fontSize:12,color:row.red?C.red:row.bold?C.teal:C.text,fontWeight:row.bold?700:400}}>{row.red?'-':''}{fmt(row.va)}</td>
+                    <td style={{padding:'10px 12px',textAlign:'right',fontFamily:'JetBrains Mono',fontSize:12,color:row.red?C.red:row.bold?C.amber:C.text,fontWeight:row.bold?700:400}}>{row.red?'-':''}{fmt(row.vb)}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <Footer/>
+    </>
+  );
+}
