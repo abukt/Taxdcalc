@@ -22,6 +22,7 @@ const TOOLS = [
 ];
 
 function Nav(){const[open,setOpen]=useState(false);const mob=useW()<640;const links=[['/', 'Salary Calculator'],['/ir35','IR35'],['/nhs','NHS Bands'],['/tools','All Tools'],['/blog','Tax Guides']];return(<nav style={{background:'#0C1E3C',position:'sticky',top:0,zIndex:100,boxShadow:'0 2px 16px rgba(0,0,0,0.25)'}}><div style={{maxWidth:1100,margin:'0 auto',padding:'0 20px',height:56,display:'flex',alignItems:'center',justifyContent:'space-between'}}><Link href="/" style={{display:'flex',alignItems:'center',gap:9}}><div style={{width:30,height:30,background:'linear-gradient(135deg,#0D9488,#14B8A6)',borderRadius:7,display:'flex',alignItems:'center',justifyContent:'center',flexShrink:0}}><span style={{color:'white',fontWeight:700,fontSize:12,fontFamily:'JetBrains Mono'}}>Tx</span></div><span style={{color:'white',fontFamily:'DM Serif Display',fontSize:17}}>Taxd<span style={{color:'#14B8A6'}}>Calc</span></span></Link>{mob?(<button onClick={()=>setOpen(!open)} style={{background:'rgba(255,255,255,0.08)',border:'1px solid rgba(255,255,255,0.12)',borderRadius:7,padding:'8px 10px',display:'flex',flexDirection:'column',gap:4}}>{[0,1,2].map(i=><span key={i} style={{display:'block',width:18,height:2,background:'white',borderRadius:1,transition:'all 0.2s',transform:open&&i===0?'rotate(45deg) translate(4px,4px)':open&&i===2?'rotate(-45deg) translate(4px,-4px)':'none',opacity:open&&i===1?0:1}}/>)}</button>):(<div style={{display:'flex',gap:2,alignItems:'center'}}>{links.map(([href,label])=>(<Link key={href} href={href} style={{padding:'7px 13px',borderRadius:6,background:href==='/tools'?'rgba(13,148,136,0.2)':'transparent',color:href==='/tools'?'#14B8A6':'rgba(255,255,255,0.6)',fontSize:13,fontFamily:'Source Serif 4',fontWeight:href==='/tools'?600:400}}>{label}</Link>))}<span style={{fontSize:11,color:'#14B8A6',fontFamily:'JetBrains Mono',background:'rgba(13,148,136,0.15)',padding:'3px 9px',borderRadius:4,border:'1px solid rgba(20,184,166,0.3)',marginLeft:8}}>2026-27</span></div>)}</div>{mob&&open&&(<div style={{background:'#162d52',borderTop:'1px solid rgba(255,255,255,0.08)',padding:'6px 0 12px'}}>{links.map(([href,label])=>(<Link key={href} href={href} onClick={()=>setOpen(false)} style={{display:'block',padding:'12px 24px',background:href==='/tools'?'rgba(13,148,136,0.15)':'transparent',color:href==='/tools'?'#14B8A6':'rgba(255,255,255,0.65)',fontSize:14,fontFamily:'Source Serif 4',fontWeight:href==='/tools'?600:400}}>{label}</Link>))}</div>)}</nav>);}
+
 function Footer(){
   return(
     <footer style={{background:'#070D1C',padding:'40px 24px 28px',borderTop:'1px solid rgba(255,255,255,0.06)',marginTop:0}}>
@@ -72,8 +73,8 @@ export default function ToolsPage() {
   
   const schemaFAQ={'@context':'https://schema.org','@type':'FAQPage',mainEntity:[
     {'@type':'Question',name:'What free UK salary calculators are available?',acceptedAnswer:{'@type':'Answer',text:'TaxdCalc offers: UK salary take-home calculator, IR35 contractor calculator, NHS Agenda for Change band calculator, bonus tax calculator, hourly rate converter, salary sacrifice calculator, job comparison calculator, maternity pay calculator, and part-time pro-rata calculator. All updated for 2026-27.'}},
-    {'@type':'Question',name:'Which calculator should I use for contracting?',acceptedAnswer:{'@type':'Answer',text:'Use the IR35 calculator to compare PAYE inside IR35 vs Limited Company outside IR35 for any day rate. Updated for 10.75% dividend tax from April 2026.'}},
-    {'@type':'Question',name:'Is there a calculator for NHS take-home pay?',acceptedAnswer:{'@type':'Answer',text:'Yes. The NHS Pay Bands calculator covers Bands 2 to 9 with London HCAS supplements, NHS pension contribution tiers, and Scotland rates.'}},
+    {'@type':'Question',name:'Which calculator should I use for contracting?',acceptedAnswer:{'@type':'Answer',text:'Use the IR35 calculator to compare PAYE inside IR35 vs Limited Company outside IR35 for any day rate.'}},
+    {'@type':'Question',name:'Is there a calculator for NHS take-home pay?',acceptedAnswer:{'@type':'Answer',text:'Yes. The NHS Pay Bands calculator covers Bands 2 to 9 with London HCAS supplements and NHS pension contribution tiers.'}},
   ]};
   const schemaBreadcrumb={'@context':'https://schema.org','@type':'BreadcrumbList',itemListElement:[{'@type':'ListItem',position:1,name:'TaxdCalc',item:'https://taxdcal.co.uk'},{'@type':'ListItem',position:2,name:'All Tools',item:'https://taxdcal.co.uk/tools'}]};
 
@@ -84,10 +85,10 @@ export default function ToolsPage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{__html:JSON.stringify(schemaBreadcrumb)}}/>
       <Nav/>
 
-      <div style={{background:'#F0FDFA',borderBottom:'1px solid #99F6E4',padding:mob?'10px 16px':'12px 24px'}}>
+      <div className="ai-answer" style={{background:'#F0FDFA',borderBottom:'1px solid #99F6E4',padding:mob?'10px 16px':'12px 24px'}}>
         <div style={{maxWidth:1000,margin:'0 auto'}}>
           <div style={{fontSize:10,color:'#0D9488',fontWeight:700,letterSpacing:'0.12em',textTransform:'uppercase',fontFamily:'JetBrains Mono',marginBottom:4}}>TaxdCalc — Free UK Pay Calculators 2026-27</div>
-          <p style={{fontSize:mob?12:13,color:'#0f766e',lineHeight:1.6}}>Every calculator updated for 2026-27 HMRC rates: salary, IR35, NHS bands, maternity, bonus, hourly, sacrifice, job comparison, part-time and public sector pay guides.</p>
+          <p style={{fontSize:mob?12:13,color:'#0f766e',lineHeight:1.6}}>Every calculator updated for 2026-27 HMRC rates: salary, IR35, NHS bands, maternity, bonus, hourly, sacrifice, job comparison, and part-time pay.</p>
         </div>
       </div>
 
