@@ -138,7 +138,6 @@ export default function BonusPage() {
   const thBase = salary - itBase - niBase;
   const thWith = (salary + bonus) - itWith - niWith;
 
-  
   const schemaFAQ={'@context':'https://schema.org','@type':'FAQPage',mainEntity:[
     {'@type':'Question',name:'How much tax do you pay on a bonus in the UK?',acceptedAnswer:{'@type':'Answer',text:'Bonus tax is charged at your marginal rate — the same rate as your regular income. A 20% basic rate taxpayer pays 20% income tax and 8% NI on a bonus. A 40% higher rate taxpayer pays 40% income tax and 2% NI. The actual amount depends on your total income for the year.'}},
     {'@type':'Question',name:'Does a bonus push you into a higher tax bracket?',acceptedAnswer:{'@type':'Answer',text:'Yes — if your salary plus bonus exceeds £50,270 the portion above £50,270 is taxed at 40% rather than 20%. This applies only to the amount above the threshold, not your entire income. Use the calculator above to see your exact position.'}},
@@ -152,13 +151,11 @@ export default function BonusPage() {
   return (
     <>
       <style>{GS}</style>
-      
       <script type="application/ld+json" dangerouslySetInnerHTML={{__html:JSON.stringify(schemaCalc)}}/>
       <script type="application/ld+json" dangerouslySetInnerHTML={{__html:JSON.stringify(schemaFAQ)}}/>
       <script type="application/ld+json" dangerouslySetInnerHTML={{__html:JSON.stringify(schemaBreadcrumb)}}/>
-<Nav/>
+      <Nav/>
 
-      {/* AI ANSWER BLOCK */}
       {bonus > 0 && (
         <div className="ai-answer" style={{background:'#F0FDFA',borderBottom:'1px solid #99F6E4',padding:mob?'13px 16px':'15px 24px'}}>
           <div style={{maxWidth:1000,margin:'0 auto'}}>
@@ -169,6 +166,7 @@ export default function BonusPage() {
           </div>
         </div>
       )}
+
       <div style={{background:'linear-gradient(135deg,#0C1E3C,#1e3d6e)',padding:mob?'36px 20px 64px':'44px 24px 72px',textAlign:'center',position:'relative',overflow:'hidden'}}>
         <div style={{position:'absolute',top:-50,right:-50,width:220,height:220,borderRadius:'50%',background:'rgba(13,148,136,0.07)',pointerEvents:'none'}}/>
         <div style={{display:'inline-block',background:'rgba(13,148,136,0.15)',border:'1px solid rgba(20,184,166,0.3)',borderRadius:20,padding:'4px 13px',fontSize:11,color:'#14B8A6',marginBottom:13,fontFamily:'JetBrains Mono'}}>Bonus Tax Calculator</div>
@@ -177,8 +175,11 @@ export default function BonusPage() {
         </h1>
         <p style={{color:'rgba(255,255,255,0.5)',fontSize:mob?13:15,maxWidth:440,margin:'0 auto'}}>See exactly how much of your bonus you keep after income tax and National Insurance.</p>
       </div>
+
       <div style={{background:'#F4F6F9',padding:mob?'16px 16px 0':'18px 24px 0',maxWidth:860,margin:'0 auto'}}>
-      <Link href="/" style={{display:'inline-flex',alignItems:'center',gap:8,background:C.navy,color:'white',padding:'10px 18px',borderRadius:8,fontSize:13,fontWeight:700}}>{"<- Back to Salary Calculator"}</Link>
+        <Link href="/" style={{display:'inline-flex',alignItems:'center',gap:8,background:C.navy,color:'white',padding:'10px 18px',borderRadius:8,fontSize:13,fontWeight:700}}>{"<- Back to Salary Calculator"}</Link>
+      </div>
+
       <div style={{maxWidth:860,margin:'0 auto',padding:mob?'16px 16px 48px':'16px 24px 56px'}}>
         <div style={{display:'grid',gridTemplateColumns:mob?'1fr':'1fr 1fr',gap:20,alignItems:'start'}}>
           <div style={{background:'white',borderRadius:14,padding:mob?20:26,boxShadow:C.shadow,border:'1px solid '+C.border}} className="fu">
@@ -189,6 +190,7 @@ export default function BonusPage() {
               Your bonus is taxed at your marginal rate. If salary plus bonus crosses into a higher tax band, only that portion is taxed at the higher rate.
             </div>
           </div>
+
           <div style={{display:'flex',flexDirection:'column',gap:14}} className="fu">
             <div style={{background:'linear-gradient(135deg,#0C1E3C,#1e3d6e)',borderRadius:14,padding:mob?20:26,boxShadow:'0 4px 24px rgba(12,30,60,0.3)'}}>
               <div style={{fontSize:10,color:'rgba(255,255,255,0.4)',letterSpacing:'0.12em',textTransform:'uppercase',fontFamily:'JetBrains Mono',marginBottom:6}}>Net Bonus (After Tax)</div>
@@ -198,6 +200,7 @@ export default function BonusPage() {
                 <div style={{width:Math.min(100,pct)+'%',height:'100%',background:'linear-gradient(90deg,#0D9488,#14B8A6)',borderRadius:2,transition:'width 0.5s'}}/>
               </div>
             </div>
+
             <div style={{background:'white',borderRadius:12,padding:mob?16:22,border:'1px solid '+C.border,boxShadow:C.shadow}}>
               <h3 style={{fontFamily:'DM Serif Display',fontSize:17,color:C.navy,marginBottom:14}}>Bonus Breakdown</h3>
               {[
@@ -212,6 +215,7 @@ export default function BonusPage() {
                 </div>
               ))}
             </div>
+
             <div style={{background:'white',borderRadius:12,padding:mob?16:22,border:'1px solid '+C.border,boxShadow:C.shadow}}>
               <h3 style={{fontFamily:'DM Serif Display',fontSize:17,color:C.navy,marginBottom:14}}>Before and After Comparison</h3>
               {[['Without bonus',salary,itBase,niBase,thBase],['With bonus',salary+bonus,itWith,niWith,thWith]].map(([lbl,g,it,ni,th])=>(
@@ -228,13 +232,13 @@ export default function BonusPage() {
             </div>
           </div>
         </div>
+
         <div style={{marginTop:16,background:C.amberBg,border:'1px solid '+C.amberBorder,borderRadius:10,padding:'14px 18px'}}>
           <div style={{fontSize:12,fontWeight:700,color:'#92400E',marginBottom:4}}>Tip: Sacrifice your bonus into your pension</div>
           <div style={{fontSize:12,color:'#78350F',lineHeight:1.6}}>If your employer allows it, contributing your bonus to your pension via salary sacrifice saves both income tax and National Insurance. A basic rate taxpayer contributing a {fmt(bonus)} bonus only saves {fmt(bonus*0.20)} in tax normally — but salary sacrifice would save {fmt(bonus*0.28)} in combined tax and NI.</div>
         </div>
       </div>
-      
-      {/* STICKY RESULT BAR — mobile only */}
+
       {mob && bonus > 0 && (
         <div style={{position:'fixed',bottom:0,left:0,right:0,background:C.navy,zIndex:90,height:52,display:'flex',alignItems:'center',justifyContent:'space-between',padding:'0 20px',boxShadow:'0 -2px 16px rgba(0,0,0,0.3)'}}>
           <div>
@@ -246,7 +250,8 @@ export default function BonusPage() {
             <div style={{fontFamily:'JetBrains Mono',fontSize:13,color:'white',fontWeight:700,lineHeight:1}}>{fmt(Number(bonus))}</div>
           </div>
         </div>
-            )}
+      )}
+
       <Footer/>
     </>
   );
