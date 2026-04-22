@@ -136,7 +136,7 @@ export default function IR35Page(){
             <div>
               <div style={{display:'flex',justifyContent:'space-between',marginBottom:7}}><label style={{fontSize:12,fontWeight:600,color:C.navy}}>Day Rate</label><span style={{fontSize:11,color:C.slate}}>Exc. VAT</span></div>
               <div style={{position:'relative'}}>
-                <span style={{position:'absolute',left:12,top:'50%',transform:'translateY(-50%)',color:C.slate,fontSize:15,fontWeight:600,fontFamily:'JetBrains Mono',pointerEvents:'none'}}>\u00A3</span>
+                <span style={{position:'absolute',left:12,top:'50%',transform:'translateY(-50%)',color:C.slate,fontSize:15,fontWeight:600,fontFamily:'JetBrains Mono',pointerEvents:'none'}}>£</span>
                 <input type="number" inputMode="decimal" value={dayRate} onChange={e=>setDayRate(Math.max(0,Number(e.target.value)))} min={0} max={5000} style={{width:'100%',padding:'12px 14px 12px 28px',border:`1.5px solid ${C.borderDk}`,borderRadius:8,fontSize:16,fontFamily:'JetBrains Mono',fontWeight:600,color:C.navy,background:'white',outline:'none'}} onFocus={e=>e.target.style.borderColor=C.teal} onBlur={e=>e.target.style.borderColor=C.borderDk}/>
               </div>
             </div>
