@@ -2,6 +2,10 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 
+// Utility formatters
+const fmt = (v) => '£' + (v || 0).toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+const fmtD = (v) => '£' + (v || 0).toLocaleString('en-GB', { maximumFractionDigits: 0 });
+
 function useW(){const[w,setW]=useState(typeof window!=='undefined'?window.innerWidth:800);useEffect(()=>{const f=()=>setW(window.innerWidth);window.addEventListener('resize',f);return()=>window.removeEventListener('resize',f);},[]);return w;}
 
 const C={navy:'#0C1E3C',navyMid:'#1e3d6e',teal:'#0D9488',tealL:'#14B8A6',tealBg:'#F0FDFA',tealBd:'#99F6E4',border:'#E2E8F0',borderDk:'#CBD5E1',bg:'#F4F6F9',white:'#FFFFFF',green:'#059669',amber:'#D97706',amberBg:'#FFFBEB',amberBd:'#FDE68A',red:'#DC2626',text:'#1E293B',mid:'#475569',slate:'#64748B',sl:'#94A3B8',shadow:'0 1px 3px rgba(0,0,0,0.07),0 4px 16px rgba(0,0,0,0.04)',pink:'#EC4899',pinkBg:'#FDF2F8',pinkBd:'#FBCFE8'};
@@ -14,7 +18,7 @@ const SMP_HIGHER_PCT = 0.90;
 const SMP_STANDARD_WEEKLY = 184.03;
 const SMP_WEEKS = 39;
 
-function Nav(){const mob=useW()<640;const[open,setOpen]=useState(false);const links=[['/',   'Salary Calculator'],['/maternity','Employed Maternity'],['/tools','All Tools'],['/blog','Tax Guides']];return(<nav style={{background:C.navy,position:'sticky',top:0,zIndex:100,boxShadow:'0 2px 16px rgba(0,0,0,0.25)'}}><div style={{maxWidth:1100,margin:'0 auto',padding:'0 20px',height:56,display:'flex',alignItems:'center',justifyContent:'space-between'}}><Link href="/" style={{display:'flex',alignItems:'center',gap:9}}><div style={{width:30,height:30,background:'linear-gradient(135deg,#0D9488,#14B8A6)',borderRadius:7,display:'flex',alignItems:'center',justifyContent:'center',flexShrink:0}}><span style={{color:'white',fontWeight:700,fontSize:12,fontFamily:'JetBrains Mono'}}>Tx</span></div><span style={{color:'white',fontFamily:'DM Serif Display',fontSize:17}}>Taxd<span style={{color:'#14B8A6'}}>Calc</span></span></Link>{mob?(<button onClick={()=>setOpen(!open)} style={{background:'rgba(255,255,255,0.08)',border:'1px solid rgba(255,255,255,0.12)',borderRadius:7,padding:'8px 10px',display:'flex',flexDirection:'column',gap:4}}>{[0,1,2].map(i=><span key={i} style={{display:'block',width:18,height:2,background:'white',borderRadius:1}}/>)}</button>):(<div style={{display:'flex',gap:2,alignItems:'center'}}>{links.map(([href,label])=>(<Link key={href} href={href} style={{padding:'7px 13px',borderRadius:6,color:'rgba(255,255,255,0.6)',fontSize:13}}>{label}</Link>))}<span style={{fontSize:11,color:'#14B8A6',fontFamily:'JetBrains Mono',background:'rgba(13,148,136,0.15)',padding:'3px 9px',borderRadius:4,border:'1px solid rgba(20,184,166,0.3)',marginLeft:8}}>2026-27</span></div>)}</div>{mob&&open&&(<div style={{background:'#162d52',borderTop:'1px solid rgba(255,255,255,0.08)',padding:'6px 0 12px'}}>{links.map(([href,label])=>(<Link key={href} href={href} onClick={()=>setOpen(false)} style={{display:'block',padding:'12px 24px',color:'rgba(255,255,255,0.65)',fontSize:14}}>{label}</Link>))}</div>)}</nav>);}
+function Nav(){const mob=useW()<640;const[open,setOpen]=useState(false);const links=[['/', 'Salary Calculator'],['/maternity','Employed Maternity'],['/tools','All Tools'],['/blog','Tax Guides']];return(<nav style={{background:C.navy,position:'sticky',top:0,zIndex:100,boxShadow:'0 2px 16px rgba(0,0,0,0.25)'}}><div style={{maxWidth:1100,margin:'0 auto',padding:'0 20px',height:56,display:'flex',alignItems:'center',justifyContent:'space-between'}}><Link href="/" style={{display:'flex',alignItems:'center',gap:9}}><div style={{width:30,height:30,background:'linear-gradient(135deg,#0D9488,#14B8A6)',borderRadius:7,display:'flex',alignItems:'center',justifyContent:'center',flexShrink:0}}><span style={{color:'white',fontWeight:700,fontSize:12,fontFamily:'JetBrains Mono'}}>Tx</span></div><span style={{color:'white',fontFamily:'DM Serif Display',fontSize:17}}>Taxd<span style={{color:'#14B8A6'}}>Calc</span></span></Link>{mob?(<button onClick={()=>setOpen(!open)} style={{background:'rgba(255,255,255,0.08)',border:'1px solid rgba(255,255,255,0.12)',borderRadius:7,padding:'8px 10px',display:'flex',flexDirection:'column',gap:4}}>{[0,1,2].map(i=><span key={i} style={{display:'block',width:18,height:2,background:'white',borderRadius:1}}/>)}</button>):(<div style={{display:'flex',gap:2,alignItems:'center'}}>{links.map(([href,label])=>(<Link key={href} href={href} style={{padding:'7px 13px',borderRadius:6,color:'rgba(255,255,255,0.6)',fontSize:13}}>{label}</Link>))}<span style={{fontSize:11,color:'#14B8A6',fontFamily:'JetBrains Mono',background:'rgba(13,148,136,0.15)',padding:'3px 9px',borderRadius:4,border:'1px solid rgba(20,184,166,0.3)',marginLeft:8}}>2026-27</span></div>)}</div>{mob&&open&&(<div style={{background:'#162d52',borderTop:'1px solid rgba(255,255,255,0.08)',padding:'6px 0 12px'}}>{links.map(([href,label])=>(<Link key={href} href={href} onClick={()=>setOpen(false)} style={{display:'block',padding:'12px 24px',color:'rgba(255,255,255,0.65)',fontSize:14}}>{label}</Link>))}</div>)}</nav>);}
 function Footer(){
   return(
     <footer style={{background:'#070D1C',padding:'40px 24px 28px',borderTop:'1px solid rgba(255,255,255,0.06)',marginTop:0}}>
@@ -59,6 +63,7 @@ function Footer(){
     </footer>
   );
 }
+
 export default function MaternityPaySelfEmployed(){
   const mob=useW()<640;
   const[avgEarnings,setAvgEarnings]=useState('');
@@ -68,7 +73,7 @@ export default function MaternityPaySelfEmployed(){
   const annualEarnings=Math.max(0,Number(avgEarnings)||0);
   const weeklyEarnings=annualEarnings/52;
 
-  const maWeeklyRate=Math.min(MA_WEEKLY, weeklyEarnings*0.90);
+  const maWeeklyRate=hasClass2 ? Math.min(MA_WEEKLY, weeklyEarnings*0.90) : 27.00;
   const maTotal=maWeeklyRate*MA_WEEKS;
 
   const smpHigherWeeks=6;
@@ -100,7 +105,7 @@ export default function MaternityPaySelfEmployed(){
           <div style={{maxWidth:1000,margin:'0 auto'}}>
             <div style={{fontSize:10,color:'#0D9488',fontWeight:700,letterSpacing:'0.12em',textTransform:'uppercase',fontFamily:'JetBrains Mono',marginBottom:5}}>Quick Answer — Maternity Allowance 2026-27</div>
             <p style={{fontSize:mob?13:14,color:'#0f766e',fontWeight:600,lineHeight:1.6}}>
-              On {'£'}{annualEarnings.toLocaleString('en-GB')} earnings ({'£'}{weeklyEarnings.toFixed(2)}/week): Maternity Allowance is <strong>{'£'}{maWeeklyRate.toFixed(2)}/week</strong> for up to 39 weeks — total <strong>{'£'}{Math.round(maWeeklyRate*39).toLocaleString('en-GB')}</strong>. Standard rate capped at {'£'}184.03/week.
+              On {'£'}{annualEarnings.toLocaleString('en-GB')} earnings ({'£'}{weeklyEarnings.toFixed(2)}/week): Maternity Allowance is <strong>{fmt(maWeeklyRate)}/week</strong> for up to 39 weeks — total <strong>{fmtD(maWeeklyRate*39)}</strong>. Standard rate capped at {'£'}184.03/week.
             </p>
           </div>
         </div>
@@ -254,7 +259,7 @@ export default function MaternityPaySelfEmployed(){
         <div style={{position:'fixed',bottom:0,left:0,right:0,background:C.navy,zIndex:90,height:52,display:'flex',alignItems:'center',justifyContent:'space-between',padding:'0 20px',boxShadow:'0 -2px 16px rgba(0,0,0,0.3)'}}>
           <div>
             <div style={{fontSize:9,color:'rgba(255,255,255,0.4)',fontFamily:'JetBrains Mono',textTransform:'uppercase',letterSpacing:'0.1em'}}>Maternity Allowance</div>
-            <div style={{fontFamily:'DM Serif Display',fontSize:19,color:'#14B8A6',lineHeight:1}}>{fmt(maWeeklyRate * 39)}</div>
+            <div style={{fontFamily:'DM Serif Display',fontSize:19,color:'#14B8A6',lineHeight:1}}>{fmtD(maWeeklyRate * 39)}</div>
           </div>
           <div style={{textAlign:'right'}}>
             <div style={{fontSize:9,color:'rgba(255,255,255,0.4)',fontFamily:'JetBrains Mono',textTransform:'uppercase',letterSpacing:'0.1em'}}>Weekly MA</div>
@@ -266,3 +271,4 @@ export default function MaternityPaySelfEmployed(){
     </>
   );
 }
+
