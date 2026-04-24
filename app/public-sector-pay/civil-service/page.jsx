@@ -1,179 +1,69 @@
 'use client';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
 
-// --- CONFIG & THEME ---
-const C = {
-  navy: '#0C1E3C',
-  navyMid: '#1e3d6e',
-  teal: '#0D9488',
-  tealL: '#14B8A6',
-  tealBg: '#F0FDFA',
-  tealBd: '#99F6E4',
-  border: '#E2E8F0',
-  borderDk: '#CBD5E1',
-  bg: '#F4F6F9',
-  white: '#FFFFFF',
-  green: '#059669',
-  red: '#DC2626',
-  text: '#1E293B',
-  mid: '#475569',
-  slate: '#64748B',
-  sl: '#94A3B8',
-  shadow: '0 1px 3px rgba(0,0,0,0.07),0 4px 16px rgba(0,0,0,0.04)'
-};
+const GS=`@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Source+Serif+4:wght@400;600;700&family=JetBrains+Mono:wght@400;500&display=swap');*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}body{background:#F4F6F9;color:#1E293B;font-family:'Source Serif 4',Georgia,serif;-webkit-tap-highlight-color:transparent;}a{text-decoration:none;color:inherit;}button{cursor:pointer;font-family:inherit;}@keyframes fi{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}.fi{animation:fi 0.35s ease both;}`;
+const fmt=n=>'\u00A3'+Math.round(n).toLocaleString('en-GB');
+const fmtD=n=>'\u00A3'+n.toLocaleString('en-GB',{minimumFractionDigits:2,maximumFractionDigits:2});
+const GRADES=[{rank:'Admin Officer (AO)',gross:24547,pen:4.6,th:20290,mo:1691,desc:'Entry grade — administrative and casework roles'},{rank:'Executive Officer (EO)',gross:28230,pen:5.45,th:22614,mo:1885,desc:'Professional — policy, project, operational roles'},{rank:'Higher Executive Officer (HEO)',gross:34080,pen:5.45,th:26571,mo:2214,desc:'Management grade — team leader, specialist'},{rank:'Senior Executive Officer (SEO)',gross:40474,pen:5.45,th:30896,mo:2575,desc:'Senior professional — policy lead, service mgr'},{rank:'Grade 7',gross:54667,pen:5.45,th:40477,mo:3373,desc:'Middle management — branch head, specialist lead'},{rank:'Grade 6',gross:68040,pen:6.35,th:47428,mo:3952,desc:'Senior manager — function or division head'},{rank:'Grade 5 (Deputy Director)',gross:85000,pen:6.35,th:56619,mo:4718,desc:'Senior Civil Servant entry level'}];
+function Nav(){const[open,setOpen]=useState(false);return(<nav style={{background:'#0C1E3C',position:'sticky',top:0,zIndex:100,boxShadow:'0 2px 16px rgba(0,0,0,0.25)'}}><div style={{maxWidth:1100,margin:'0 auto',padding:'0 20px',height:56,display:'flex',alignItems:'center',justifyContent:'space-between'}}><Link href="/" style={{display:'flex',alignItems:'center',gap:9}}><div style={{width:30,height:30,background:'linear-gradient(135deg,#0D9488,#14B8A6)',borderRadius:7,display:'flex',alignItems:'center',justifyContent:'center'}}><span style={{color:'white',fontWeight:700,fontSize:12,fontFamily:'JetBrains Mono'}}>Tx</span></div><span style={{color:'white',fontFamily:'DM Serif Display',fontSize:17}}>Taxd<span style={{color:'#14B8A6'}}>Calc</span></span></Link><div style={{display:'flex',gap:2}}>{[['/','Salary'],['/ir35','IR35'],['/nhs','NHS'],['/public-sector-pay','Public Sector'],['/blog','Guides']].map(([h,l])=><Link key={h} href={h} style={{padding:'7px 11px',borderRadius:6,color:'rgba(255,255,255,0.6)',fontSize:12}}>{l}</Link>)}</div></div></nav>);}
+function Footer(){return(<footer style={{background:'#070D1C',padding:'40px 24px 28px',borderTop:'1px solid rgba(255,255,255,0.06)'}}><div style={{maxWidth:1100,margin:'0 auto'}}><div style={{display:'grid',gridTemplateColumns:'repeat(auto-fill,minmax(180px,1fr))',gap:'28px 24px',marginBottom:28}}><div><div style={{fontSize:10,color:'rgba(255,255,255,0.28)',letterSpacing:'0.14em',textTransform:'uppercase',marginBottom:12,fontFamily:'JetBrains Mono',fontWeight:600}}>Core Tools</div>{[['/','Salary Calculator'],['/ir35','IR35 Calculator'],['/nhs','NHS Pay Bands'],['/hourly','Hourly Rate'],['/bonus','Bonus Tax'],['/sacrifice','Salary Sacrifice'],['/comparison','Job Comparison'],['/maternity','Maternity Pay'],['/part-time-salary-calculator','Part-Time Pay']].map(([h,l])=><Link key={h} href={h} style={{display:'block',fontSize:12,color:'rgba(255,255,255,0.42)',marginBottom:7,lineHeight:1.4}}>{l}</Link>)}</div><div><div style={{fontSize:10,color:'rgba(255,255,255,0.28)',letterSpacing:'0.14em',textTransform:'uppercase',marginBottom:12,fontFamily:'JetBrains Mono',fontWeight:600}}>Tax Planning</div>{[['/blog/60-percent-tax-trap','60% Tax Trap'],['/blog/hicbc-child-benefit-charge','Child Benefit Taper'],['/blog/personal-allowance-taper-100k','\u00a3100k PA Taper'],['/blog/plan-5-student-loan-take-home','Plan 5 Student Loan'],['/blog/pension-tax-relief-your-free-money','Pension Tax Relief']].map(([h,l])=><Link key={h} href={h} style={{display:'block',fontSize:12,color:'rgba(255,255,255,0.42)',marginBottom:7,lineHeight:1.4}}>{l}</Link>)}</div><div><div style={{fontSize:10,color:'rgba(255,255,255,0.28)',letterSpacing:'0.14em',textTransform:'uppercase',marginBottom:12,fontFamily:'JetBrains Mono',fontWeight:600}}>Public Sector</div>{[['/nhs-pay-guide','NHS Pay Guide'],['/teacher-pay-guide','Teacher Pay Guide'],['/public-sector-pay','Public Sector Hub'],['/public-sector-pay/police','Police Pay'],['/public-sector-pay/firefighters','Firefighter Pay'],['/public-sector-pay/civil-service','Civil Service Pay'],['/public-sector-pay/armed-forces','Armed Forces Pay'],['/public-sector-pay/council-workers','Council Workers Pay']].map(([h,l])=><Link key={h} href={h} style={{display:'block',fontSize:12,color:'rgba(255,255,255,0.42)',marginBottom:7,lineHeight:1.4}}>{l}</Link>)}</div><div><div style={{fontSize:10,color:'rgba(255,255,255,0.28)',letterSpacing:'0.14em',textTransform:'uppercase',marginBottom:12,fontFamily:'JetBrains Mono',fontWeight:600}}>Guides</div>{[['/blog','All Tax Guides'],['/blog/45000-salary-take-home-uk-2026','\u00a345k Salary Guide'],['/blog/50000-salary-after-tax-uk-2026','\u00a350k Salary Guide'],['/maternity-pay-self-employed','Self-Employed Maternity'],['/tools','All Tools']].map(([h,l])=><Link key={h} href={h} style={{display:'block',fontSize:12,color:'rgba(255,255,255,0.42)',marginBottom:7,lineHeight:1.4}}>{l}</Link>)}</div></div><div style={{borderTop:'1px solid rgba(255,255,255,0.07)',paddingTop:20,display:'flex',justifyContent:'space-between',flexWrap:'wrap',gap:12,alignItems:'center'}}><Link href="/" style={{display:'flex',alignItems:'center',gap:9}}><div style={{width:28,height:28,background:'linear-gradient(135deg,#0D9488,#14B8A6)',borderRadius:7,display:'flex',alignItems:'center',justifyContent:'center'}}><span style={{color:'white',fontWeight:700,fontSize:12,fontFamily:'JetBrains Mono'}}>Tx</span></div><span style={{color:'white',fontFamily:'DM Serif Display',fontSize:16}}>Taxd<span style={{color:'#14B8A6'}}>Calc</span></span></Link><span style={{fontSize:11,color:'rgba(255,255,255,0.22)',fontFamily:'JetBrains Mono'}}>Updated April 2026 \u00b7 2026-27 rates</span><span style={{fontSize:11,color:'rgba(255,255,255,0.18)',maxWidth:320,lineHeight:1.6}}>For guidance only. Consult HMRC or a qualified adviser.</span></div></div></footer>);}
+function FAQItem({q,a}){const[open,setOpen]=useState(false);return(<div style={{borderBottom:'1px solid #E2E8F0'}}><button onClick={()=>setOpen(!open)} style={{width:'100%',textAlign:'left',padding:'14px 0',background:'none',border:'none',display:'flex',justifyContent:'space-between',gap:12}}><span style={{fontSize:14,fontWeight:700,color:'#0C1E3C',lineHeight:1.4,flex:1}}>{q}</span><span style={{color:'#0D9488',fontSize:18,fontWeight:700,transition:'transform 0.2s',display:'inline-block',transform:open?'rotate(45deg)':'none',flexShrink:0}}>+</span></button>{open&&<div style={{paddingBottom:14,fontSize:13,color:'#475569',lineHeight:1.8}}>{a}</div>}</div>);}
 
-const GS = `@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Source+Serif+4:wght@400;600;700&family=JetBrains+Mono:wght@400;500&display=swap');*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}body{background:#F4F6F9;color:#1E293B;font-family:'Source Serif 4',Georgia,serif;-webkit-tap-highlight-color:transparent;}a{text-decoration:none;color:inherit;}button{cursor:pointer;font-family:inherit;}@keyframes fi{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}.fi{animation:fi 0.35s ease both;}`;
+export default function Page(){
+  const schemaFAQ={'@context':'https://schema.org','@type':'FAQPage',mainEntity:[{'@type':'Question',name:'What is civil service take-home pay in 2026-27?',acceptedAnswer:{'@type':'Answer',text:'An Admin Officer (AO, £24,547) takes home £20,290/year (£1,691/month) after income tax, NI and 4.6% Alpha pension. A Grade 7 (£54,667) takes home £40,477/year. A Grade 6 (£68,040) takes home £47,428/year. London Weighting of £3,000–£8,000 adds proportionally.'}},{'@type':'Question',name:'How much is the Civil Service Alpha pension?',acceptedAnswer:{'@type':'Answer',text:'Alpha contributions are tiered: 4.6% on earnings below £32,000, 5.45% on £32,001–£56,000, 6.35% on £56,001–£150,000, 7.35% above £150,000. The employer contributes approximately 27.9%. Alpha is a defined benefit career average scheme with a Normal Pension Age linked to the State Pension Age.'}},{'@type':'Question',name:'Is there London Weighting in the civil service?',acceptedAnswer:{'@type':'Answer',text:'Yes. Most departments pay a London Weighting supplement for staff based in London. Typical supplements are £3,500–£8,000/year depending on department and grade, on top of national pay ranges.'}},{'@type':'Question',name:'What is the difference between Grade 7 and Grade 6?',acceptedAnswer:{'@type':'Answer',text:'Grade 7 (around £54,000–£65,000) covers branch heads, specialist leads and policy managers. Grade 6 (around £68,000–£82,000) covers heads of function, division heads and senior specialists. Grade 6 is typically the entry point to the Senior Civil Service (SCS).'}},{'@type':'Question',name:'Can civil servants opt out of the Alpha pension?',acceptedAnswer:{'@type':'Answer',text:'Yes, but opting out means forfeiting the 27.9% employer contribution — a very valuable benefit. All civil servants are auto-enrolled. For most grades the Alpha pension represents the largest single component of total compensation above gross salary.'}}]};
+  const schemaBreadcrumb={'@context':'https://schema.org','@type':'BreadcrumbList',itemListElement:[{'@type':'ListItem',position:1,name:'TaxdCalc',item:'https://taxdcal.co.uk'},{'@type':'ListItem',position:2,name:'Public Sector Pay',item:'https://taxdcal.co.uk/public-sector-pay'},{'@type':'ListItem',position:3,name:'Civil Service Pay Guide 2026-27',item:'https://taxdcal.co.uk/public-sector-pay/civil-service'}]};
 
-// 2026-27 Civil Service Specific Data (England/Wales National Rates)
-const GRADES = [
-  { grade: 'AA / AO', gross: 24547, penPct: 4.6, desc: 'Admin Officer', th: 20290, mo: 1691 },
-  { grade: 'EO', gross: 28230, penPct: 5.45, desc: 'Executive Officer', th: 22614, mo: 1885 },
-  { grade: 'HEO', gross: 34080, penPct: 5.45, desc: 'Higher Executive', th: 26571, mo: 2214 },
-  { grade: 'SEO', gross: 40474, penPct: 5.45, desc: 'Senior Executive', th: 30896, mo: 2575 },
-  { grade: 'Grade 7', gross: 54667, penPct: 5.45, desc: 'Principal', th: 40477, mo: 3373 },
-  { grade: 'Grade 6', gross: 68040, penPct: 6.35, desc: 'Senior Manager', th: 47428, mo: 3952 }
-];
-
-const fmt = n => '£' + Math.round(Math.abs(n || 0)).toLocaleString('en-GB');
-const fmtD = n => '£' + (n || 0).toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-
-function useW() {
-  const [w, setW] = useState(typeof window !== 'undefined' ? window.innerWidth : 800);
-  useEffect(() => {
-    const f = () => setW(window.innerWidth);
-    window.addEventListener('resize', f);
-    return () => window.removeEventListener('resize', f);
-  }, []);
-  return w;
-}
-
-// --- COMPONENTS ---
-function Nav() {
-  const [open, setOpen] = useState(false);
-  const mob = useW() < 640;
-  const links = [['/', 'Salary Calculator'], ['/ir35', 'IR35'], ['/nhs', 'NHS Bands'], ['/tools', 'All Tools']];
-  return (
-    <nav style={{ background: C.navy, position: 'sticky', top: 0, zIndex: 100, boxShadow: '0 2px 16px rgba(0,0,0,0.25)' }}>
-      <div style={{ maxWidth: 1100, margin: '0 auto', padding: '0 20px', height: 56, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-        <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 9 }}>
-          <div style={{ width: 30, height: 30, background: 'linear-gradient(135deg,#0D9488,#14B8A6)', borderRadius: 7, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <span style={{ color: 'white', fontWeight: 700, fontSize: 12, fontFamily: 'JetBrains Mono' }}>Tx</span>
-          </div>
-          <span style={{ color: 'white', fontFamily: 'DM Serif Display', fontSize: 17 }}>Taxd<span style={{ color: '#14B8A6' }}>Calc</span></span>
-        </Link>
-        {!mob && (
-          <div style={{ display: 'flex', gap: 2, alignItems: 'center' }}>
-            {links.map(([href, label]) => (
-              <Link key={href} href={href} style={{ padding: '7px 13px', borderRadius: 6, color: 'rgba(255,255,255,0.6)', fontSize: 13 }}>{label}</Link>
-            ))}
-          </div>
-        )}
-      </div>
-    </nav>
-  );
-}
-
-function Footer() {
-  return (
-    <footer style={{ background: '#070D1C', padding: '40px 20px', borderTop: '1px solid rgba(255,255,255,0.05)', marginTop: 40 }}>
-      <div style={{ maxWidth: 900, margin: '0 auto', textAlign: 'center' }}>
-        <span style={{ fontSize: 11, color: 'rgba(255,255,255,0.2)', fontFamily: 'JetBrains Mono' }}>Updated April 2026 | Public Sector Pay Data</span>
-      </div>
-    </footer>
-  );
-}
-
-// --- PAGE ---
-export default function Page() {
-  const mob = useW() < 640;
-
-  const schemaFAQ = {
-    '@context': 'https://schema.org', '@type': 'FAQPage',
-    mainEntity: [
-      { '@type': 'Question', name: 'What is the Civil Service pension contribution?', acceptedAnswer: { '@type': 'Answer', text: 'Alpha pension contributions range from 4.6% to 8.05% depending on your gross salary.' } },
-      { '@type': 'Question', name: 'What is London Weighting?', acceptedAnswer: { '@type': 'Answer', text: 'Civil servants in London typically receive an additional allowance of £3,500 to £5,000 depending on the department.' } }
-    ]
-  };
-
-  return (
+  return(
     <>
       <style>{GS}</style>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaFAQ) }} />
-      <Nav />
-
-      {/* Hero Section */}
-      <div style={{ background: `linear-gradient(135deg,${C.navy},${C.navyMid})`, padding: mob ? '32px 20px 48px' : '48px 24px 64px', position: 'relative' }}>
-        <div style={{ maxWidth: 900, margin: '0 auto' }}>
-          <div style={{ display: 'inline-block', background: 'rgba(20,184,166,0.15)', border: '1px solid rgba(20,184,166,0.3)', borderRadius: 20, padding: '4px 12px', fontSize: 11, color: '#14B8A6', marginBottom: 12, fontFamily: 'JetBrains Mono' }}>2026-27 Financial Year</div>
-          <h1 style={{ fontFamily: 'DM Serif Display', fontSize: mob ? 28 : 42, color: 'white', lineHeight: 1.1, marginBottom: 16 }}>Civil Service Pay & Alpha Pension</h1>
-          <p style={{ fontSize: mob ? 15 : 18, color: 'rgba(255,255,255,0.7)', maxWidth: 650, lineHeight: 1.6 }}>
-            Understand your take-home pay across different Civil Service grades. Includes calculations for the Alpha pension scheme and latest tax thresholds.
-          </p>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{__html:JSON.stringify(schemaFAQ)}}/>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{__html:JSON.stringify(schemaBreadcrumb)}}/>
+      <Nav/>
+      <div style={{background:'#F0FDFA',borderBottom:'1px solid #99F6E4',padding:'13px 24px'}}>
+        <div style={{maxWidth:900,margin:'0 auto'}}><div style={{fontSize:10,color:'#0D9488',fontWeight:700,letterSpacing:'0.12em',textTransform:'uppercase',fontFamily:'JetBrains Mono',marginBottom:4}}>Quick Answer — 2026-27</div><p style={{fontSize:14,color:'#0f766e',fontWeight:600,lineHeight:1.6}}>A Civil Service Admin Officer (AO, £24,547) takes home £20,290/year (£1,691/month) after income tax, NI and 4.6% Alpha pension in 2026-27. Grade 7 (£54,667): £40,477/year. Grade 6 (£68,040): £47,428/year.</p></div>
+      </div>
+      <div style={{background:'linear-gradient(135deg,#14532D,#166534)',padding:'34px 24px 46px',position:'relative',overflow:'hidden'}}>
+        <div style={{maxWidth:900,margin:'0 auto'}}>
+          <div style={{display:'flex',gap:6,marginBottom:10,alignItems:'center',flexWrap:'wrap'}}><Link href="/public-sector-pay" style={{fontSize:12,color:'rgba(255,255,255,0.5)'}}>Public Sector</Link><span style={{color:'rgba(255,255,255,0.3)'}}>›</span><span style={{fontSize:12,color:'rgba(255,255,255,0.8)'}}>{'Civil Service Pay Guide 2026-27'.split(' ')[0]} Pay</span></div>
+          <h1 style={{fontFamily:'DM Serif Display',fontSize:34,color:'white',lineHeight:1.15,marginBottom:10}}>Civil Service Pay Guide 2026-27</h1>
+          <p style={{color:'rgba(255,255,255,0.55)',fontSize:15,maxWidth:560,lineHeight:1.65,marginBottom:16}}>Grades AO to Grade 5 — England and Wales — take-home pay after income tax, NI and pension deductions. Updated April 2026.</p>
+          <div style={{display:'flex',gap:10,flexWrap:'wrap'}}><Link href="/public-sector-pay" style={{background:'rgba(255,255,255,0.1)',color:'white',padding:'8px 16px',borderRadius:7,fontSize:12,fontWeight:600,border:'1px solid rgba(255,255,255,0.15)'}}>← All Public Sector</Link><Link href="/" style={{background:'#0D9488',color:'white',padding:'8px 16px',borderRadius:7,fontSize:12,fontWeight:700}}>Full Salary Calculator</Link></div>
         </div>
       </div>
-
-      <div style={{ maxWidth: 900, margin: '0 auto', padding: mob ? '16px' : '24px', marginTop: mob ? -20 : -34 }}>
-        
-        {/* Main Table Card */}
-        <div style={{ background: C.white, borderRadius: 12, border: `1px solid ${C.border}`, boxShadow: C.shadow, overflow: 'hidden', marginBottom: 24 }} className="fi">
-          <div style={{ padding: '20px', borderBottom: `1px solid ${C.border}` }}>
-            <h2 style={{ fontFamily: 'DM Serif Display', fontSize: 20, color: C.navy }}>Standard Pay Scale (National)</h2>
-            <p style={{ fontSize: 13, color: C.slate }}>Estimated net pay after Alpha pension, Income Tax, and National Insurance.</p>
-          </div>
-          <div style={{ overflowX: 'auto' }}>
-            <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
-              <thead style={{ background: C.bg }}>
-                <tr>
-                  {['Grade', 'Gross Salary', 'Annual Net', 'Monthly Net', 'Pension'].map(h => (
-                    <th key={h} style={{ textAlign: 'left', padding: '12px 16px', fontSize: 10, textTransform: 'uppercase', color: C.slate, fontFamily: 'JetBrains Mono', letterSpacing: '0.05em' }}>{h}</th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {GRADES.map((g, i) => (
-                  <tr key={i} style={{ borderBottom: `1px solid ${C.border}`, background: i % 2 === 0 ? 'transparent' : 'rgba(0,0,0,0.01)' }}>
-                    <td style={{ padding: '14px 16px', fontWeight: 700, color: C.navy }}>{g.grade}</td>
-                    <td style={{ padding: '14px 16px', fontFamily: 'JetBrains Mono' }}>{fmt(g.gross)}</td>
-                    <td style={{ padding: '14px 16px', fontFamily: 'JetBrains Mono', color: C.teal, fontWeight: 700 }}>{fmt(g.th)}</td>
-                    <td style={{ padding: '14px 16px', fontFamily: 'JetBrains Mono', color: C.teal, fontWeight: 700 }}>{fmtD(g.mo)}</td>
-                    <td style={{ padding: '14px 16px', fontSize: 11, color: C.slate }}>{g.penPct}%</td>
-                  </tr>
-                ))}
-              </tbody>
+      <div style={{maxWidth:900,margin:'0 auto',padding:'20px 24px 72px'}}>
+        <div style={{background:'white',borderRadius:12,border:'1px solid #E2E8F0',boxShadow:'0 1px 3px rgba(0,0,0,0.07),0 4px 16px rgba(0,0,0,0.04)',marginBottom:16,overflow:'hidden'}} className="fi">
+          <div style={{padding:'18px 20px 12px'}}><h2 style={{fontFamily:'DM Serif Display',fontSize:20,color:'#0C1E3C',marginBottom:4}}>Pay Scale — Take-Home Pay 2026-27</h2><p style={{fontSize:13,color:'#64748B'}}>After income tax, NI and pension. England and Wales.</p></div>
+          <div style={{overflowX:'auto',WebkitOverflowScrolling:'touch'}}>
+            <table style={{width:'100%',borderCollapse:'collapse',fontSize:13,minWidth:500}}>
+              <thead><tr style={{background:'#F4F6F9'}}>{['Grade/Rank','Gross','Take-Home/Year','Monthly Net','Pension','Role'].map(h=><th key={h} style={{textAlign:'left',padding:'10px 14px',color:'#64748B',fontSize:10,textTransform:'uppercase',letterSpacing:'0.06em',borderBottom:'1px solid #E2E8F0',fontFamily:'JetBrains Mono',whiteSpace:'nowrap'}}>{h}</th>)}</tr></thead>
+              <tbody>{GRADES.map((g,i)=>(<tr key={g.rank} style={{borderBottom:'1px solid #E2E8F0',background:i%2===0?'transparent':'rgba(0,0,0,0.013)'}}><td style={{padding:'11px 14px',fontWeight:700,color:'#0C1E3C',whiteSpace:'nowrap'}}>{g.rank}</td><td style={{padding:'11px 14px',fontFamily:'JetBrains Mono',fontSize:12,color:'#475569',whiteSpace:'nowrap'}}>{'£'}{g.gross.toLocaleString('en-GB')}</td><td style={{padding:'11px 14px',fontFamily:'JetBrains Mono',fontWeight:700,color:'#0D9488',whiteSpace:'nowrap'}}>{'£'}{g.th.toLocaleString('en-GB')}</td><td style={{padding:'11px 14px',fontFamily:'JetBrains Mono',fontWeight:700,color:'#0D9488',whiteSpace:'nowrap'}}>{'£'}{g.mo.toLocaleString('en-GB',{minimumFractionDigits:2,maximumFractionDigits:2})}</td><td style={{padding:'11px 14px',fontFamily:'JetBrains Mono',fontSize:11,color:'#64748B',whiteSpace:'nowrap'}}>{g.pen}%</td><td style={{padding:'11px 14px',fontSize:12,color:'#64748B'}}>{g.desc}</td></tr>))}</tbody>
             </table>
           </div>
         </div>
-
-        {/* Info Grid */}
-        <div style={{ display: 'grid', gridTemplateColumns: mob ? '1fr' : '1fr 1fr', gap: 20, marginBottom: 24 }}>
-          <div style={{ background: C.tealBg, padding: 24, borderRadius: 12, border: `1px solid ${C.tealBd}` }}>
-            <h3 style={{ fontSize: 15, fontWeight: 700, color: C.teal, marginBottom: 10 }}>Alpha Pension Scheme</h3>
-            <p style={{ fontSize: 14, color: '#0f766e', lineHeight: 1.7 }}>
-              The Alpha scheme is a defined benefit pension. For 2026-27, the employer contribution averages <strong>27% - 28.9%</strong>. Contributions are taken from your gross pay, reducing your taxable income.
-            </p>
-          </div>
-          <div style={{ background: C.white, padding: 24, borderRadius: 12, border: `1px solid ${C.border}` }}>
-            <h3 style={{ fontSize: 15, fontWeight: 700, color: C.navy, marginBottom: 10 }}>London Weighting</h3>
-            <p style={{ fontSize: 14, color: C.mid, lineHeight: 1.7 }}>
-              Salaries above are "National" rates. Civil Servants in London usually receive an additional <strong>London Pay Addition</strong> ranging from £3,800 to £5,500 depending on the department.
-            </p>
+        <div style={{background:'white',borderRadius:12,padding:'20px 22px',border:'1px solid #E2E8F0',boxShadow:'0 1px 3px rgba(0,0,0,0.07)',marginBottom:16}}>
+          <h2 style={{fontFamily:'DM Serif Display',fontSize:20,color:'#0C1E3C',marginBottom:8}}>Civil Service Alpha Pension</h2>
+          <p style={{fontSize:14,color:'#475569',lineHeight:1.8,marginBottom:14}}>The Civil Service Alpha pension is a defined benefit career average scheme. Employee contributions range from 4.6% (earnings below £32,000) to 7.35% (above £150,000). The employer contributes approximately 27.9% of salary. Officers auto-enrolled from day one.</p>
+          <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fill,minmax(190px,1fr))',gap:10,marginBottom:12}}>{[['Employee contribution','4.6% – 7.35% tiered'],['Employer contribution','~27.9% of salary'],['Normal Pension Age','State Pension Age (67)'],['Scheme type','Defined Benefit CARE'],['Death in service','2× annual salary'],['Accrual rate','2.32% per year']].map(([l,v])=><div key={l} style={{background:'#EFF6FF',border:'1px solid #BFDBFE',borderRadius:8,padding:'11px 14px'}}><div style={{fontSize:10,color:'#1D4ED8',textTransform:'uppercase',letterSpacing:'0.08em',fontFamily:'JetBrains Mono',marginBottom:4}}>{l}</div><div style={{fontSize:13,fontWeight:700,color:'#0C1E3C'}}>{v}</div></div>)}</div>
+          <div style={{background:'#FFFBEB',border:'1px solid #FDE68A',borderRadius:8,padding:'12px 16px',fontSize:13,color:'#92400E',lineHeight:1.7}}>London offices typically pay a London Weighting supplement of £3,000–£8,000/year depending on department and grade, on top of the national pay ranges shown.</div>
+        </div>
+        <div style={{background:'white',borderRadius:12,padding:'20px 22px',border:'1px solid #E2E8F0',boxShadow:'0 1px 3px rgba(0,0,0,0.07)',marginBottom:16}}>
+          <h2 style={{fontFamily:'DM Serif Display',fontSize:20,color:'#0C1E3C',marginBottom:4}}>Frequently Asked Questions</h2>
+          <p style={{fontSize:13,color:'#64748B',marginBottom:14}}>Common questions about civil service pay.</p>
+          {[{q:'What is civil service take-home pay in 2026-27?',a:'An Admin Officer (AO, £24,547) takes home £20,290/year (£1,691/month) after income tax, NI and 4.6% Alpha pension. A Grade 7 (£54,667) takes home £40,477/year. A Grade 6 (£68,040) takes home £47,428/year. London Weighting of £3,000–£8,000 adds proportionally.'},{q:'How much is the Civil Service Alpha pension?',a:'Alpha contributions are tiered: 4.6% on earnings below £32,000, 5.45% on £32,001–£56,000, 6.35% on £56,001–£150,000, 7.35% above £150,000. The employer contributes approximately 27.9%. Alpha is a defined benefit career average scheme with a Normal Pension Age linked to the State Pension Age.'},{q:'Is there London Weighting in the civil service?',a:'Yes. Most departments pay a London Weighting supplement for staff based in London. Typical supplements are £3,500–£8,000/year depending on department and grade, on top of national pay ranges.'},{q:'What is the difference between Grade 7 and Grade 6?',a:'Grade 7 (around £54,000–£65,000) covers branch heads, specialist leads and policy managers. Grade 6 (around £68,000–£82,000) covers heads of function, division heads and senior specialists. Grade 6 is typically the entry point to the Senior Civil Service (SCS).'},{q:'Can civil servants opt out of the Alpha pension?',a:'Yes, but opting out means forfeiting the 27.9% employer contribution — a very valuable benefit. All civil servants are auto-enrolled. For most grades the Alpha pension represents the largest single component of total compensation above gross salary.'}].map((f,i)=><FAQItem key={i} q={f.q} a={f.a}/>)}
+        </div>
+        <div style={{background:'white',borderRadius:12,padding:'16px 20px',border:'1px solid #E2E8F0',boxShadow:'0 1px 3px rgba(0,0,0,0.07)',marginBottom:16}}>
+          <h3 style={{fontFamily:'DM Serif Display',fontSize:16,color:'#0C1E3C',marginBottom:12}}>Related Pay Guides</h3>
+          <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fill,minmax(200px,1fr))',gap:8}}>
+            {[['/public-sector-pay/police','Police Pay'],['/public-sector-pay/armed-forces','Armed Forces Pay'],['/public-sector-pay/council-workers','Council Workers Pay'],['/nhs-pay-guide','NHS Pay Guide'],['/','Salary Calculator'],['/sacrifice','Salary Sacrifice']].map(([h,l])=><Link key={h} href={h} style={{display:'flex',alignItems:'center',justifyContent:'space-between',padding:'10px 13px',background:'#F4F6F9',borderRadius:8,border:'1px solid #E2E8F0',fontSize:13,fontWeight:600,color:'#0C1E3C'}}>{l}<span style={{color:'#0D9488'}}>→</span></Link>)}
           </div>
         </div>
-
-        {/* Summary Block */}
-        <div style={{ background: C.navy, color: 'white', padding: 32, borderRadius: 12, textAlign: 'center' }}>
-          <h3 style={{ fontFamily: 'DM Serif Display', fontSize: 22, marginBottom: 8 }}>Get a precise breakdown</h3>
-          <p style={{ fontSize: 15, color: 'rgba(255,255,255,0.6)', marginBottom: 20, maxWidth: 500, margin: '0 auto 20px' }}>
-            Our full calculator allows you to factor in London Weighting, student loans, and custom pension percentages.
-          </p>
-          <Link href="/" style={{ background: C.teal, color: 'white', padding: '12px 24px', borderRadius: 8, fontSize: 14, fontWeight: 700, display: 'inline-block' }}>
-            Open Advanced Calculator →
-          </Link>
+        <div style={{background:'linear-gradient(135deg,#0C1E3C,#1e3d6e)',borderRadius:12,padding:'18px 22px',display:'flex',alignItems:'center',justifyContent:'space-between',flexWrap:'wrap',gap:12}}>
+          <div><div style={{fontFamily:'DM Serif Display',fontSize:16,color:'white',marginBottom:3}}>Calculate your exact take-home pay</div><div style={{fontSize:12,color:'rgba(255,255,255,0.45)'}}>Any salary — pension, student loan, Scotland rates</div></div>
+          <Link href="/" style={{background:'#0D9488',color:'white',padding:'10px 20px',borderRadius:7,fontSize:13,fontWeight:700}}>Open Salary Calculator →</Link>
         </div>
       </div>
-      
-      <Footer />
+      <Footer/>
     </>
   );
 }
