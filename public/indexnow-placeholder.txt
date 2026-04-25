@@ -1,0 +1,3 @@
+Replace this file name with your actual IndexNow key (e.g. abc123def456.txt).
+Set the matching key as INDEXNOW_KEY in your Vercel environment variables.
+Get a free key at: https://www.indexnow.org/documentation

@@ -9,6 +9,13 @@ export const metadata = {
     siteName: 'TaxdCalc',
     locale: 'en_GB',
     type: 'website',
+    images: [{ url: '/api/og?title=Police+Pay+Guide+2026-27&subtitle=Take-Home+by+Rank', width: 1200, height: 630, alt: 'Police Pay Guide 2026-27 — Take-Home by Rank | TaxdCalc' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Police Pay Guide 2026-27 | TaxdCalc',
+    description: 'PC to Chief Inspector take-home pay after tax, NI and 6.5% pension. 2026-27 figures.',
+    images: ['/api/og?title=Police+Pay+Guide+2026-27&subtitle=Take-Home+by+Rank'],
   },
   robots: { index: true, follow: true },
 };

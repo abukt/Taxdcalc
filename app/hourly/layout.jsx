@@ -9,8 +9,14 @@ export const metadata = {
     siteName: 'TaxdCalc',
     locale: 'en_GB',
     type: 'website',
+    images: [{ url: '/api/og?title=Hourly+Rate+Calculator&subtitle=Convert+to+Annual+Salary', width: 1200, height: 630, alt: 'Hourly Rate to Salary Calculator 2026-27 | TaxdCalc' }],
   },
-  twitter: { card: 'summary_large_image' },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Hourly Rate to Salary Calculator 2026-27 | TaxdCalc',
+    description: 'Convert any hourly rate to annual take-home pay. Any hours per week. Updated for 2026-27.',
+    images: ['/api/og?title=Hourly+Rate+Calculator&subtitle=Convert+to+Annual+Salary'],
+  },
   robots: { index: true, follow: true },
 };
 

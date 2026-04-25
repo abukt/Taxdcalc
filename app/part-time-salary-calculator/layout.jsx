@@ -9,8 +9,14 @@ export const metadata = {
     siteName: 'TaxdCalc',
     locale: 'en_GB',
     type: 'website',
+    images: [{ url: '/api/og?title=Part-Time+Salary+Calculator&subtitle=Pro-Rata+Take-Home+2026-27', width: 1200, height: 630, alt: 'Part-Time Salary Calculator 2026-27 | TaxdCalc' }],
   },
-  twitter: { card: 'summary_large_image' },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Part-Time Salary Calculator 2026-27 | TaxdCalc',
+    description: 'Pro-rata take-home pay for any hours. Compare 4-day weeks and custom hours against full-time.',
+    images: ['/api/og?title=Part-Time+Salary+Calculator&subtitle=Pro-Rata+Take-Home+2026-27'],
+  },
   robots: { index: true, follow: true },
 };
 

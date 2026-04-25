@@ -9,8 +9,14 @@ export const metadata = {
     siteName: 'TaxdCalc',
     locale: 'en_GB',
     type: 'website',
+    images: [{ url: '/api/og?title=Teacher+Pay+Guide+2026-27&subtitle=MPR+%26+UPR+Take-Home', width: 1200, height: 630, alt: 'Teacher Pay Guide 2026-27 — MPR & UPR Take-Home | TaxdCalc' }],
   },
-  twitter: { card: 'summary_large_image' },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Teacher Pay Guide 2026-27 | TaxdCalc',
+    description: 'MPR M1 to UPR U3 take-home pay with TPS pension. England, Wales and London scales.',
+    images: ['/api/og?title=Teacher+Pay+Guide+2026-27&subtitle=MPR+%26+UPR+Take-Home'],
+  },
   robots: { index: true, follow: true },
 };
 
