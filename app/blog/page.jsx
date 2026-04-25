@@ -19,6 +19,10 @@ const ARTICLES = [
   {slug:'national-insurance-explained',title:'National Insurance Explained: What You Pay and Why (2026-27)',desc:'Class 1 NI rates, 2026-27 thresholds, and how NI differs from income tax on your payslip.',category:'Tax Basics',date:'6 April 2026',readTime:'5 min'},
   {slug:'pension-tax-relief-your-free-money',title:'Pension Tax Relief: How to Get Free Money From HMRC (2026-27)',desc:'How salary sacrifice saves both income tax and NI, and how to make the most of the annual allowance.',category:'Tax Planning',date:'6 April 2026',readTime:'6 min'},
   {slug:'2026-27-tax-year-changes-uk',title:'2026-27 Tax Year: Everything That Changed in April 2026',desc:'Thresholds frozen to 2031, NLW rises to 12.71/hr, employer NI at 15%, dividend rates increase. Complete guide.',category:'Tax Year Updates',date:'6 April 2026',readTime:'5 min'},
+  {slug:'60-percent-tax-trap',title:'The 60% Tax Trap: How to Escape It in 2026-27',desc:'Between £100,000 and £125,140 your effective marginal rate is 60%. Salary sacrifice into pension escapes it entirely.',category:'Tax Planning',date:'18 April 2026',readTime:'6 min'},
+  {slug:'hicbc-child-benefit-charge',title:'High Income Child Benefit Charge (HICBC) 2026-27 Explained',desc:'Child Benefit is clawed back between £60,000 and £80,000. Salary sacrifice can recover all of it. Calculate your exact position.',category:'Tax Planning',date:'18 April 2026',readTime:'5 min'},
+  {slug:'personal-allowance-taper-100k',title:'Personal Allowance Taper at £100k — 2026-27 Guide',desc:'Above £100,000 your Personal Allowance is withdrawn at £1 per £2 earned. By £125,140 you have none. How to reclaim it.',category:'Tax Planning',date:'18 April 2026',readTime:'5 min'},
+  {slug:'plan-5-student-loan-take-home',title:'Plan 5 Student Loan Take-Home Pay 2026-27',desc:'Plan 5 has the lowest repayment threshold (£25,000) of any UK student loan and a 40-year write-off period. How it affects take-home.',category:'Tax Basics',date:'18 April 2026',readTime:'4 min'},
 ];
 
 const CATEGORIES = ['All','Salary Guide','NHS Pay','Contractor Tax','Tax Basics','Tax Planning','Tax Year Updates'];
