@@ -100,7 +100,7 @@ export const INTENT_ROUTING = {
 
 export function generateMetaTitle(type, data) {
   const { salary, takeHome, monthly, band, year = '2026-27' } = data;
-  const fmt = n => '\u00A3' + Math.round(n).toLocaleString('en-GB');
+  const fmt = n => '£' + Math.round(n).toLocaleString('en-GB');
 
   switch (type) {
     case 'result-first': // Pattern 1 — highest CTR for numeric queries
@@ -125,8 +125,8 @@ export function generateMetaTitle(type, data) {
 
 export function generateMetaDesc(type, data) {
   const { salary, takeHome, monthly, band, pension = 5 } = data;
-  const fmt = n => '\u00A3' + Math.round(n).toLocaleString('en-GB');
-  const fmtD = n => '\u00A3' + n.toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  const fmt = n => '£' + Math.round(n).toLocaleString('en-GB');
+  const fmtD = n => '£' + n.toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
   switch (type) {
     case 'result-first':
@@ -141,114 +141,105 @@ export function generateMetaDesc(type, data) {
 }
 
 // ── DELIVERABLE 4B: JSON-LD SCHEMA TEMPLATE ──────────────────────────────────
+// Returns an ARRAY of separate schema objects — never use @graph to bundle FAQPage.
+// Each element must be rendered as its own <script type="application/ld+json"> tag.
 export function generateSalaryPageSchema(slug, salary, results, year = '2026-27') {
-  const fmt = n => '\u00A3' + Math.round(n).toLocaleString('en-GB');
-  const fmtD = n => '\u00A3' + n.toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  const fmt = n => '£' + Math.round(n).toLocaleString('en-GB');
+  const fmtD = n => '£' + n.toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
   const baseUrl = 'https://taxdcal.co.uk';
   const pageUrl = `${baseUrl}/${slug}`;
+  const today = new Date().toISOString().split('T')[0];
 
-  return {
+  const webApp = {
     '@context': 'https://schema.org',
-    '@graph': [
-      // 1. WebApplication — tells Google this is an interactive tool
-      {
-        '@type': 'WebApplication',
-        '@id': `${pageUrl}#calculator`,
-        name: `${fmt(salary)} Salary Take-Home Pay Calculator ${year}`,
-        applicationCategory: 'FinanceApplication',
-        applicationSubCategory: 'Tax Calculator',
-        operatingSystem: 'Any',
-        browserRequirements: 'Requires JavaScript',
-        offers: { '@type': 'Offer', price: '0', priceCurrency: 'GBP', availability: 'https://schema.org/InStock' },
-        url: pageUrl,
-        inLanguage: 'en-GB',
-        dateModified: new Date().toISOString().split('T')[0],
-        provider: {
-          '@type': 'Organization',
-          name: 'TaxdCalc',
-          url: baseUrl,
-        },
-        featureList: [
-          'Income Tax Calculation 2026-27',
-          'National Insurance Calculation',
-          'Student Loan Plans 1-5',
-          'Salary Sacrifice Pension',
-          'Scotland Income Tax',
-          'Tax Trap Alerts',
-        ],
-      },
+    '@type': 'WebApplication',
+    '@id': `${pageUrl}#calculator`,
+    name: `${fmt(salary)} Salary Take-Home Pay Calculator ${year}`,
+    applicationCategory: 'FinanceApplication',
+    applicationSubCategory: 'Tax Calculator',
+    operatingSystem: 'Any',
+    browserRequirements: 'Requires JavaScript',
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'GBP', availability: 'https://schema.org/InStock' },
+    url: pageUrl,
+    inLanguage: 'en-GB',
+    dateModified: today,
+    provider: { '@type': 'Organization', name: 'TaxdCalc', url: baseUrl },
+    featureList: [
+      'Income Tax Calculation 2026-27',
+      'National Insurance Calculation',
+      'Student Loan Plans 1-5',
+      'Salary Sacrifice Pension',
+      'Scotland Income Tax',
+      'Tax Trap Alerts',
+    ],
+  };
 
-      // 2. FAQPage — creates expandable Q&A rich snippets in SERPs
+  // FAQPage must always be a standalone script tag — never inside @graph
+  const faqPage = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: [
       {
-        '@type': 'FAQPage',
-        '@id': `${pageUrl}#faq`,
-        mainEntity: [
-          {
-            '@type': 'Question',
-            name: `What is take-home pay on ${fmt(salary)} in the UK?`,
-            acceptedAnswer: {
-              '@type': 'Answer',
-              text: `On a ${fmt(salary)} salary with 5% pension contribution and no student loan, your take-home pay is approximately ${fmt(results.takeHome)} per year or ${fmtD(results.monthly.takeHome)} per month for the ${year} UK tax year, after income tax and National Insurance.`,
-            },
-          },
-          {
-            '@type': 'Question',
-            name: `How much income tax on ${fmt(salary)}?`,
-            acceptedAnswer: {
-              '@type': 'Answer',
-              text: `On ${fmt(salary)} you pay ${fmt(results.incomeTax)} in income tax for ${year}. Your effective income tax rate is ${((results.incomeTax / salary) * 100).toFixed(1)}%. ${salary <= 50270 ? 'You are in the 20% basic rate band throughout.' : 'You pay 20% on the first portion and 40% on earnings above £50,270.'}`,
-            },
-          },
-          {
-            '@type': 'Question',
-            name: `How much National Insurance on ${fmt(salary)}?`,
-            acceptedAnswer: {
-              '@type': 'Answer',
-              text: `On ${fmt(salary)} you pay ${fmt(results.ni)} in National Insurance for ${year}. NI is charged at 8% on earnings between £12,570 and £50,270, and 2% on earnings above that.`,
-            },
-          },
-          {
-            '@type': 'Question',
-            name: `What is the monthly take-home on ${fmt(salary)}?`,
-            acceptedAnswer: {
-              '@type': 'Answer',
-              text: `On ${fmt(salary)} per year, your monthly take-home pay is ${fmtD(results.monthly.takeHome)} for ${year} with 5% pension and no student loan. This is after income tax (${fmt(results.incomeTax / 12)}/month) and National Insurance (${fmtD(results.ni / 12)}/month).`,
-            },
-          },
-        ],
-      },
-
-      // 3. BreadcrumbList — helps Google understand site structure
-      {
-        '@type': 'BreadcrumbList',
-        '@id': `${pageUrl}#breadcrumb`,
-        itemListElement: [
-          { '@type': 'ListItem', position: 1, name: 'TaxdCalc', item: baseUrl },
-          { '@type': 'ListItem', position: 2, name: `${fmt(salary)} Salary Take-Home Pay ${year}`, item: pageUrl },
-        ],
-      },
-
-      // 4. WebPage with speakable — enables voice search / AI overviews
-      {
-        '@type': 'WebPage',
-        '@id': `${pageUrl}#webpage`,
-        url: pageUrl,
-        name: `${fmt(salary)} Salary Take-Home Pay ${year} | TaxdCalc`,
-        description: `${fmt(salary)} salary takes home ${fmt(results.takeHome)}/year in ${year} after income tax and NI. Free UK calculator updated for 2026-27.`,
-        speakable: {
-          '@type': 'SpeakableSpecification',
-          cssSelector: ['.quick-answer', 'h1'],
+        '@type': 'Question',
+        name: `What is take-home pay on ${fmt(salary)} in the UK?`,
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: `On a ${fmt(salary)} salary with 5% pension contribution and no student loan, your take-home pay is approximately ${fmt(results.takeHome)} per year or ${fmtD(results.monthly.takeHome)} per month for the ${year} UK tax year, after income tax and National Insurance.`,
         },
-        primaryImageOfPage: {
-          '@type': 'ImageObject',
-          url: `${baseUrl}/og-image.png`,
+      },
+      {
+        '@type': 'Question',
+        name: `How much income tax on ${fmt(salary)}?`,
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: `On ${fmt(salary)} you pay ${fmt(results.incomeTax)} in income tax for ${year}. Your effective income tax rate is ${((results.incomeTax / salary) * 100).toFixed(1)}%. ${salary <= 50270 ? 'You are in the 20% basic rate band throughout.' : 'You pay 20% on the first portion and 40% on earnings above £50,270.'}`,
         },
-        isPartOf: { '@id': baseUrl },
-        inLanguage: 'en-GB',
-        dateModified: new Date().toISOString().split('T')[0],
+      },
+      {
+        '@type': 'Question',
+        name: `How much National Insurance on ${fmt(salary)}?`,
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: `On ${fmt(salary)} you pay ${fmt(results.ni)} in National Insurance for ${year}. NI is charged at 8% on earnings between £12,570 and £50,270, and 2% on earnings above that.`,
+        },
+      },
+      {
+        '@type': 'Question',
+        name: `What is the monthly take-home on ${fmt(salary)}?`,
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: `On ${fmt(salary)} per year, your monthly take-home pay is ${fmtD(results.monthly.takeHome)} for ${year} with 5% pension and no student loan. This is after income tax (${fmt(results.incomeTax / 12)}/month) and National Insurance (${fmtD(results.ni / 12)}/month).`,
+        },
       },
     ],
   };
+
+  const breadcrumb = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'TaxdCalc', item: baseUrl },
+      { '@type': 'ListItem', position: 2, name: `${fmt(salary)} Salary Take-Home Pay ${year}`, item: pageUrl },
+    ],
+  };
+
+  const webPage = {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    '@id': `${pageUrl}#webpage`,
+    url: pageUrl,
+    name: `${fmt(salary)} Salary Take-Home Pay ${year} | TaxdCalc`,
+    description: `${fmt(salary)} salary takes home ${fmt(results.takeHome)}/year in ${year} after income tax and NI. Free UK calculator updated for 2026-27.`,
+    speakable: {
+      '@type': 'SpeakableSpecification',
+      cssSelector: ['.quick-answer', 'h1'],
+    },
+    isPartOf: { '@id': baseUrl },
+    inLanguage: 'en-GB',
+    dateModified: today,
+  };
+
+  return [webApp, faqPage, breadcrumb, webPage];
 }
 
 // ── DELIVERABLE 4C: HARD-LINK OVERLAY STRATEGY ───────────────────────────────

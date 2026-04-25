@@ -19,7 +19,7 @@ const routeConfig = {
   '/tools':                           { priority: 0.7,  freq: 'monthly' },
   '/part-time-salary-calculator':     { priority: 0.8,  freq: 'monthly' },
   '/maternity-pay-self-employed':     { priority: 0.8,  freq: 'yearly'  },
-  '/embed':                           { priority: 0.5,  freq: 'yearly'  },
+  '/embed':                           { priority: 0.4,  freq: 'yearly'  },
   '/nhs-pay-guide':                   { priority: 0.85, freq: 'yearly'  },
   '/teacher-pay-guide':               { priority: 0.85, freq: 'yearly'  },
   '/public-sector-pay':               { priority: 0.85, freq: 'yearly'  },

@@ -14,6 +14,13 @@ const nextConfig = {
   // Enforce www → non-www redirect and https (Vercel handles https but explicit is safer)
   async redirects() {
     return [
+      // www → non-www canonical redirect (must be first to avoid chain with trailing-slash rule)
+      {
+        source: '/:path*',
+        has: [{ type: 'host', value: 'www.taxdcal.co.uk' }],
+        destination: 'https://taxdcal.co.uk/:path*',
+        permanent: true,
+      },
       {
         source: '/:path+/',
         destination: '/:path+',

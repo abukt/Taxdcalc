@@ -3,7 +3,7 @@
 // Prevents redirect loops caused by missing canonical on client-only pages.
 
 export const metadata = {
-  title: 'All UK Tax & Salary Calculators 2026-27 | TaxdCalc — Tools Hub',
+  title: 'UK Tax & Salary Calculators 2026-27 | TaxdCalc Tools',
   description: 'Every free UK pay calculator in one place: salary, IR35, NHS bands, maternity, bonus, hourly rate, salary sacrifice, job comparison, part-time and more. Updated for 2026-27.',
   alternates: {
     canonical: 'https://taxdcal.co.uk/tools',
@@ -15,11 +15,13 @@ export const metadata = {
     siteName: 'TaxdCalc',
     locale: 'en_GB',
     type: 'website',
+    images: [{ url: '/api/og?title=UK+Tax+Calculators&subtitle=All+Tools+in+One+Place', width: 1200, height: 630, alt: 'All UK Tax & Salary Calculators 2026-27 | TaxdCalc' }],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'All UK Tax & Salary Calculators 2026-27 | TaxdCalc',
     description: 'Every free UK pay calculator in one place. Updated for 2026-27.',
+    images: ['/api/og?title=UK+Tax+Calculators&subtitle=All+Tools+in+One+Place'],
   },
   robots: { index: true, follow: true },
 };
