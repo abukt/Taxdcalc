@@ -23,9 +23,12 @@ const routeConfig = {
   '/nhs-pay-guide':                   { priority: 0.85, freq: 'yearly'  },
   '/teacher-pay-guide':               { priority: 0.85, freq: 'yearly'  },
   '/public-sector-pay':               { priority: 0.85, freq: 'yearly'  },
-  '/public-sector-pay/civil-service': { priority: 0.80, freq: 'yearly'  },
-  '/public-sector-pay/armed-forces':  { priority: 0.80, freq: 'yearly'  },
-  '/blog':                            { priority: 0.8,  freq: 'weekly'  },
+  '/public-sector-pay/civil-service':    { priority: 0.80, freq: 'yearly'  },
+  '/public-sector-pay/armed-forces':    { priority: 0.80, freq: 'yearly'  },
+  '/public-sector-pay/police':          { priority: 0.80, freq: 'yearly'  },
+  '/public-sector-pay/firefighters':    { priority: 0.80, freq: 'yearly'  },
+  '/public-sector-pay/council-workers': { priority: 0.80, freq: 'yearly'  },
+  '/blog':                              { priority: 0.8,  freq: 'weekly'  },
 };
 
 const defaultConfig = { priority: 0.7, freq: 'monthly' };
@@ -34,7 +37,7 @@ function getMtime(filePath) {
   try {
     return fs.statSync(filePath).mtime;
   } catch {
-    return new Date();
+    return new Date('2026-04-18');
   }
 }
 

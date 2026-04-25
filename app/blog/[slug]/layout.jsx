@@ -1,7 +1,7 @@
 // app/blog/[slug]/layout.jsx
 // Server component — generates result-first meta titles for all blog posts
-// This is the CTR fix: position 5.34, 97 impressions, 0 clicks on minimum wage post
-// Result-first pattern: "£21,478 Take-Home | Minimum Wage 2026 After Tax UK | TaxdCalc"
+
+import { BLOG_POSTS } from '../../lib/blog-data.js';
 
 const META = {
   'minimum-wage-take-home-pay-2026': {
@@ -75,30 +75,52 @@ const DEFAULT_META = {
   description: 'Plain-English guide to UK income tax, National Insurance, and take-home pay. Confirmed 2026-27 HMRC figures. Free salary calculator.',
 };
 
+const OG_PARAMS = {
+  'minimum-wage-take-home-pay-2026':    { salary: 26418, th: 21478, mo: 1790 },
+  '45000-salary-take-home-uk-2026':     { salary: 45000, th: 34120, mo: 2843 },
+  '50000-salary-after-tax-uk-2026':     { salary: 50000, th: 37520, mo: 3127 },
+  '40000-salary-after-tax-uk-2026':     { salary: 40000, th: 30720, mo: 2560 },
+  '30000-salary-take-home-pay-uk-2026': { salary: 30000, th: 23920, mo: 1993 },
+  'nhs-band-5-take-home-pay-2026':      { salary: 29970, th: 22748, mo: 1896, type: 'nhs' },
+  '60-percent-tax-trap':                { salary: 110000, th: 65557, mo: 5463, type: 'trap' },
+};
+
+export function generateStaticParams() {
+  return BLOG_POSTS.map(({ slug }) => ({ slug }));
+}
+
 export async function generateMetadata({ params }) {
-  const meta = META[params.slug] || DEFAULT_META;
+  const { slug } = await params;
+  const meta = META[slug] || DEFAULT_META;
+  const pageUrl = `https://taxdcal.co.uk/blog/${slug}`;
+  const ogP = OG_PARAMS[slug];
+  const ogImg = ogP
+    ? `https://taxdcal.co.uk/api/og?salary=${ogP.salary}&th=${ogP.th}&mo=${ogP.mo}&type=${ogP.type || 'salary'}`
+    : undefined;
+
   return {
     title: meta.title,
     description: meta.description,
+    alternates: { canonical: pageUrl },
     openGraph: {
       title: meta.title,
       description: meta.description,
-      url: `https://taxdcal.co.uk/blog/${params.slug}`,
+      url: pageUrl,
       siteName: 'TaxdCalc',
       locale: 'en_GB',
       type: 'article',
+      ...(ogImg ? { images: [{ url: ogImg, width: 1200, height: 630, alt: meta.title }] } : {}),
     },
     twitter: {
       card: 'summary_large_image',
       title: meta.title,
       description: meta.description,
+      ...(ogImg ? { images: [ogImg] } : {}),
     },
-    alternates: {
-      canonical: `https://taxdcal.co.uk/blog/${params.slug}`,
-    },
+    robots: { index: true, follow: true },
   };
 }
 
 export default function BlogSlugLayout({ children }) {
   return children;
-} 
+}

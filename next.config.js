@@ -14,13 +14,6 @@ const nextConfig = {
   // Enforce www → non-www redirect and https (Vercel handles https but explicit is safer)
   async redirects() {
     return [
-      // Catch any legacy /ir35/ trailing slash
-      {
-        source: '/ir35/',
-        destination: '/ir35',
-        permanent: true, // 301
-      },
-      // Catch all other trailing slashes
       {
         source: '/:path+/',
         destination: '/:path+',
