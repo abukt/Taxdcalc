@@ -52,22 +52,22 @@ const ARTICLES = [
 ];
 
 const RELATED = {
-  '45000-salary-take-home-uk-2026':        [['/45000-salary-take-home','£45k Take-Home Calculator'],['/salary-take-home-pay-uk','All Salary Guides'],['/sacrifice','Salary Sacrifice'],['/bonus','Bonus Tax Calculator']],
-  '50000-salary-after-tax-uk-2026':        [['/50000-salary-take-home','£50k Take-Home Calculator'],['/salary-take-home-pay-uk','All Salary Guides'],['/sacrifice','Salary Sacrifice'],['/ir35','IR35 Calculator']],
-  '40000-salary-after-tax-uk-2026':        [['/40000-salary-take-home','£40k Take-Home Calculator'],['/salary-take-home-pay-uk','All Salary Guides'],['/sacrifice','Salary Sacrifice'],['/bonus','Bonus Tax']],
-  '30000-salary-take-home-pay-uk-2026':    [['/30000-salary-take-home','£30k Take-Home Calculator'],['/salary-take-home-pay-uk','All Salary Guides'],['/sacrifice','Salary Sacrifice'],['/bonus','Bonus Tax']],
-  'nhs-band-5-take-home-pay-2026':         [['/nhs-band-5-take-home','Band 5 Calculator'],['/nhs','NHS Pay Calculator'],['/nhs-pay-guide','NHS Pay Guide'],['/public-sector-pay','Public Sector Hub']],
-  'minimum-wage-take-home-pay-2026':       [['/minimum-wage-take-home','Minimum Wage Calculator'],['/salary-take-home-pay-uk','All Salary Guides'],['/hourly','Hourly Rate Calculator'],['/bonus','Bonus Tax']],
-  'ir35-inside-outside-calculator-2026':   [['/ir35','IR35 Calculator'],['/contractor-pay','Contractor Pay Hub'],['/350-day-rate-take-home','£350/Day Take-Home'],['/500-day-rate-take-home','£500/Day Take-Home']],
-  '60-percent-tax-trap':                   [['/tax-traps','Tax Traps Hub'],['/sacrifice','Salary Sacrifice Calculator'],['/blog/personal-allowance-taper-100k','£100k PA Taper'],['/blog/hicbc-child-benefit-charge','Child Benefit Charge']],
-  'hicbc-child-benefit-charge':            [['/tax-traps','Tax Traps Hub'],['/sacrifice','Salary Sacrifice Calculator'],['/blog/60-percent-tax-trap','60% Tax Trap'],['/blog/personal-allowance-taper-100k','£100k PA Taper']],
-  'personal-allowance-taper-100k':         [['/tax-traps','Tax Traps Hub'],['/sacrifice','Salary Sacrifice Calculator'],['/blog/60-percent-tax-trap','60% Tax Trap'],['/100000-salary-take-home','£100k Take-Home']],
-  'plan-5-student-loan-take-home':         [['/',  'Salary Calculator'],['/salary-take-home-pay-uk','All Salary Guides'],['/sacrifice','Salary Sacrifice'],['/blog/how-uk-income-tax-brackets-work','Tax Brackets Guide']],
-  'pension-tax-relief-your-free-money':    [['/sacrifice','Salary Sacrifice Calculator'],['/comparison','Compare Two Jobs'],['/',  'Salary Calculator'],['/blog/salary-sacrifice-electric-car-uk-2026','EV Salary Sacrifice']],
-  'salary-sacrifice-electric-car-uk-2026': [['/sacrifice','Salary Sacrifice Calculator'],['/blog/pension-tax-relief-your-free-money','Pension Tax Relief'],['/',  'Salary Calculator'],['/bonus','Bonus Tax']],
-  '2026-27-tax-year-changes-uk':           [['/',  'Salary Calculator'],['/ir35','IR35 Calculator'],['/blog/national-insurance-explained','NI Explained'],['/blog/how-uk-income-tax-brackets-work','Tax Brackets']],
-  'how-uk-income-tax-brackets-work':       [['/',  'Salary Calculator'],['/salary-take-home-pay-uk','All Salary Guides'],['/blog/national-insurance-explained','NI Explained'],['/blog/2026-27-tax-year-changes-uk','2026-27 Changes']],
-  'national-insurance-explained':          [['/',  'Salary Calculator'],['/blog/how-uk-income-tax-brackets-work','Tax Brackets'],['/sacrifice','Salary Sacrifice'],['/blog/2026-27-tax-year-changes-uk','2026-27 Changes']],
+  '45000-salary-take-home-uk-2026':        [['/45000-salary-take-home','£45,000 salary take-home pay'],['/salary-take-home-pay-uk','All UK salary guides'],['/sacrifice','Salary sacrifice calculator'],['/comparison','Compare two job offers'],['/bonus','Bonus tax calculator']],
+  '50000-salary-after-tax-uk-2026':        [['/50000-salary-take-home','£50,000 salary take-home pay'],['/salary-take-home-pay-uk','All UK salary guides'],['/sacrifice','Salary sacrifice calculator'],['/ir35','Inside vs outside IR35 calculator'],['/comparison','Compare two job offers']],
+  '40000-salary-after-tax-uk-2026':        [['/40000-salary-take-home','£40,000 salary take-home pay'],['/salary-take-home-pay-uk','All UK salary guides'],['/sacrifice','Salary sacrifice calculator'],['/bonus','Bonus tax calculator'],['/comparison','Compare two job offers']],
+  '30000-salary-take-home-pay-uk-2026':    [['/30000-salary-take-home','£30,000 salary take-home pay'],['/salary-take-home-pay-uk','All UK salary guides'],['/sacrifice','Salary sacrifice calculator'],['/nhs-pay-guide','NHS pay guide 2026-27'],['/bonus','Bonus tax calculator']],
+  'nhs-band-5-take-home-pay-2026':         [['/nhs-band-5-take-home','NHS Band 5 take-home pay calculator'],['/nhs','NHS pay bands calculator'],['/nhs-pay-guide','NHS pay guide 2026-27'],['/public-sector-pay','Public sector pay hub'],['/sacrifice','Salary sacrifice NHS pension']],
+  'minimum-wage-take-home-pay-2026':       [['/minimum-wage-take-home','Minimum wage take-home calculator'],['/salary-take-home-pay-uk','All UK salary guides'],['/hourly','Hourly rate to annual salary'],['/bonus','Bonus tax calculator'],['/nhs-pay-guide','NHS pay guide']],
+  'ir35-inside-outside-calculator-2026':   [['/ir35','Inside vs outside IR35 calculator'],['/contractor-pay','Contractor pay hub'],['/300-day-rate-take-home','£300/day contractor take-home'],['/500-day-rate-take-home','£500/day contractor take-home'],['/700-day-rate-take-home','£700/day contractor take-home']],
+  '60-percent-tax-trap':                   [['/tax-traps','Tax traps guide'],['/sacrifice','Salary sacrifice tax calculator'],['/100000-salary-take-home','£100,000 salary take-home pay'],['/blog/personal-allowance-taper-100k','Personal allowance taper at £100k'],['/blog/hicbc-child-benefit-charge','High income child benefit charge']],
+  'hicbc-child-benefit-charge':            [['/tax-traps','Tax traps guide'],['/sacrifice','Salary sacrifice tax calculator'],['/blog/60-percent-tax-trap','60% tax trap explained'],['/blog/personal-allowance-taper-100k','Personal allowance taper at £100k'],['/80000-salary-take-home','£80,000 salary take-home pay']],
+  'personal-allowance-taper-100k':         [['/tax-traps','Tax traps guide'],['/sacrifice','Salary sacrifice tax calculator'],['/blog/60-percent-tax-trap','60% tax trap explained'],['/100000-salary-take-home','£100,000 salary take-home pay'],['/blog/hicbc-child-benefit-charge','Child benefit charge explained']],
+  'plan-5-student-loan-take-home':         [['/',  'UK salary take-home calculator'],['/salary-take-home-pay-uk','All UK salary guides'],['/sacrifice','Salary sacrifice calculator'],['/blog/how-uk-income-tax-brackets-work','UK income tax brackets explained'],['/tools','All tax calculators']],
+  'pension-tax-relief-your-free-money':    [['/sacrifice','Salary sacrifice tax calculator'],['/comparison','Compare two job offers'],['/',  'UK salary take-home calculator'],['/tax-traps','Tax traps guide'],['/blog/salary-sacrifice-electric-car-uk-2026','EV salary sacrifice explained']],
+  'salary-sacrifice-electric-car-uk-2026': [['/sacrifice','Salary sacrifice tax calculator'],['/blog/pension-tax-relief-your-free-money','Pension tax relief: free money from HMRC'],['/',  'UK salary take-home calculator'],['/bonus','Bonus tax calculator'],['/tax-traps','Tax traps guide']],
+  '2026-27-tax-year-changes-uk':           [['/',  'UK salary take-home calculator'],['/ir35','IR35 calculator 2026-27'],['/salary-take-home-pay-uk','All UK salary guides'],['/blog/national-insurance-explained','National Insurance explained'],['/blog/how-uk-income-tax-brackets-work','UK income tax brackets']],
+  'how-uk-income-tax-brackets-work':       [['/',  'UK salary take-home calculator'],['/salary-take-home-pay-uk','All UK salary guides'],['/blog/national-insurance-explained','National Insurance explained'],['/blog/2026-27-tax-year-changes-uk','2026-27 tax year changes'],['/sacrifice','Salary sacrifice calculator']],
+  'national-insurance-explained':          [['/',  'UK salary take-home calculator'],['/blog/how-uk-income-tax-brackets-work','UK income tax brackets explained'],['/sacrifice','Salary sacrifice calculator'],['/blog/2026-27-tax-year-changes-uk','2026-27 tax year changes'],['/nhs','NHS pay calculator']],
 };
 
 function Nav() {
@@ -83,7 +83,7 @@ function Footer() {
       <div style={{ maxWidth: 1100, margin: '0 auto' }}>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(180px,1fr))', gap: '28px 24px', marginBottom: 28 }}>
           <div>
-            <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.28)', letterSpacing: '0.14em', textTransform: 'uppercase', marginBottom: 12, fontFamily: 'JetBrains Mono', fontWeight: 600 }}>Core Tools</div>
+            <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.28)', letterSpacing: '0.14em', textTransform: 'uppercase', marginBottom: 12, fontFamily: 'JetBrains Mono', fontWeight: 600 }}>Tools</div>
             {[['/', 'Salary Calculator'], ['/ir35', 'IR35 Calculator'], ['/nhs', 'NHS Pay Bands'], ['/hourly', 'Hourly Rate'], ['/bonus', 'Bonus Tax'], ['/sacrifice', 'Salary Sacrifice'], ['/comparison', 'Job Comparison'], ['/maternity', 'Maternity Pay'], ['/part-time-salary-calculator', 'Part-Time Pay']].map(([h, l]) => (
               <Link key={h} href={h} style={{ display: 'block', fontSize: 12, color: 'rgba(255,255,255,0.42)', marginBottom: 7, lineHeight: 1.4, textDecoration: 'none' }}>{l}</Link>
             ))}
@@ -101,8 +101,14 @@ function Footer() {
             ))}
           </div>
           <div>
-            <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.28)', letterSpacing: '0.14em', textTransform: 'uppercase', marginBottom: 12, fontFamily: 'JetBrains Mono', fontWeight: 600 }}>Guides</div>
-            {[['/blog', 'All Tax Guides'], ['/blog/45000-salary-take-home-uk-2026', '£45k Salary Guide'], ['/blog/50000-salary-after-tax-uk-2026', '£50k Salary Guide'], ['/blog/nhs-band-5-take-home-pay-2026', 'NHS Band 5 Guide'], ['/maternity-pay-self-employed', 'Self-Employed Maternity'], ['/tools', 'All Tools']].map(([h, l]) => (
+            <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.28)', letterSpacing: '0.14em', textTransform: 'uppercase', marginBottom: 12, fontFamily: 'JetBrains Mono', fontWeight: 600 }}>Salary Pages</div>
+            {[['/30000-salary-take-home', '£30,000 take-home pay'], ['/40000-salary-take-home', '£40,000 take-home pay'], ['/50000-salary-take-home', '£50,000 take-home pay'], ['/60000-salary-take-home', '£60,000 take-home pay'], ['/80000-salary-take-home', '£80,000 take-home pay'], ['/100000-salary-take-home', '£100,000 take-home pay'], ['/salary-take-home-pay-uk', 'All UK salary guides']].map(([h, l]) => (
+              <Link key={h} href={h} style={{ display: 'block', fontSize: 12, color: 'rgba(255,255,255,0.42)', marginBottom: 7, lineHeight: 1.4, textDecoration: 'none' }}>{l}</Link>
+            ))}
+          </div>
+          <div>
+            <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.28)', letterSpacing: '0.14em', textTransform: 'uppercase', marginBottom: 12, fontFamily: 'JetBrains Mono', fontWeight: 600 }}>Contractor Pay</div>
+            {[['/contractor-pay', 'Contractor pay hub'], ['/ir35', 'IR35 calculator'], ['/300-day-rate-take-home', '£300/day take-home'], ['/500-day-rate-take-home', '£500/day take-home'], ['/700-day-rate-take-home', '£700/day take-home'], ['/blog/ir35-inside-outside-calculator-2026', 'IR35 guide 2026'], ['/tools', 'All tax tools']].map(([h, l]) => (
               <Link key={h} href={h} style={{ display: 'block', fontSize: 12, color: 'rgba(255,255,255,0.42)', marginBottom: 7, lineHeight: 1.4, textDecoration: 'none' }}>{l}</Link>
             ))}
           </div>
