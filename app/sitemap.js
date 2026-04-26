@@ -29,6 +29,9 @@ const routeConfig = {
   '/public-sector-pay/firefighters':    { priority: 0.80, freq: 'yearly'  },
   '/public-sector-pay/council-workers': { priority: 0.80, freq: 'yearly'  },
   '/blog':                              { priority: 0.8,  freq: 'weekly'  },
+  '/salary-take-home-pay-uk':          { priority: 0.90, freq: 'monthly' },
+  '/tax-traps':                        { priority: 0.85, freq: 'monthly' },
+  '/contractor-pay':                   { priority: 0.85, freq: 'monthly' },
 };
 
 const defaultConfig = { priority: 0.7, freq: 'monthly' };
@@ -68,9 +71,11 @@ function scanStaticRoutes(dir, prefix = '') {
 // Add a new entry here when you create a new salary landing page.
 const salaryRoutes = [
   ...[
-    20000, 22000, 25000, 27000, 28000, 30000, 32000, 35000, 38000, 40000,
-    42000, 45000, 48000, 50000, 55000, 60000, 65000, 70000, 75000, 80000,
-    85000, 90000, 95000, 100000, 105000, 110000, 120000, 125000, 150000,
+    18000, 19000, 20000, 21000, 22000, 23000, 24000, 25000, 26000, 27000,
+    28000, 29000, 30000, 31000, 32000, 33000, 34000, 35000, 36000, 37000,
+    38000, 39000, 40000, 41000, 42000, 43000, 44000, 45000, 46000, 47000,
+    48000, 49000, 50000, 52000, 55000, 58000, 60000, 65000, 70000, 75000,
+    80000, 85000, 90000, 95000, 100000, 110000, 120000, 125000, 130000, 140000, 150000,
   ].map(s => ({ slug: `/${s}-salary-take-home`, priority: 0.85 })),
   { slug: '/minimum-wage-take-home',    priority: 0.85 },
   { slug: '/nhs-band-5-take-home',      priority: 0.85 },
@@ -78,6 +83,25 @@ const salaryRoutes = [
   { slug: '/nhs-band-7-take-home',      priority: 0.80 },
   { slug: '/teacher-salary-take-home',  priority: 0.80 },
   { slug: '/graduate-salary-take-home', priority: 0.80 },
+  { slug: '/nhs-band-2-take-home',      priority: 0.80 },
+  { slug: '/nhs-band-3-take-home',      priority: 0.80 },
+  { slug: '/nhs-band-4-take-home',      priority: 0.80 },
+  { slug: '/nhs-band-8a-take-home',     priority: 0.80 },
+  { slug: '/nhs-band-8b-take-home',     priority: 0.80 },
+  { slug: '/200-day-rate-take-home',    priority: 0.80 },
+  { slug: '/250-day-rate-take-home',    priority: 0.80 },
+  { slug: '/300-day-rate-take-home',    priority: 0.80 },
+  { slug: '/350-day-rate-take-home',    priority: 0.80 },
+  { slug: '/400-day-rate-take-home',    priority: 0.80 },
+  { slug: '/450-day-rate-take-home',    priority: 0.80 },
+  { slug: '/500-day-rate-take-home',    priority: 0.80 },
+  { slug: '/550-day-rate-take-home',    priority: 0.80 },
+  { slug: '/600-day-rate-take-home',    priority: 0.80 },
+  { slug: '/650-day-rate-take-home',    priority: 0.80 },
+  { slug: '/700-day-rate-take-home',    priority: 0.80 },
+  { slug: '/750-day-rate-take-home',    priority: 0.80 },
+  { slug: '/800-day-rate-take-home',    priority: 0.80 },
+  { slug: '/1000-day-rate-take-home',   priority: 0.80 },
 ];
 
 export default function sitemap() {

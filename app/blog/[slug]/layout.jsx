@@ -25,7 +25,7 @@ const META = {
     description: '£30,000 salary takes home £23,920/year (£1,993/month) in 2026-27. Full income tax, NI and pension breakdown. Free UK calculator.',
   },
   'nhs-band-5-take-home-pay-2026': {
-    title: 'NHS Band 5 Take-Home Pay 2026-27 | £1,896/Month Net | TaxdCalc',
+    title: '£22,748 Take-Home | NHS Band 5 Salary After Tax 2026-27 | TaxdCalc',
     description: 'NHS Band 5 entry take-home: £22,748/year (£1,896/month) after income tax, NI and 9.8% NHS pension. Full band 5 spine point table. London HCAS included.',
   },
   'ir35-inside-outside-calculator-2026': {
