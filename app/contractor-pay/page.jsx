@@ -136,7 +136,7 @@ export default function ContractorPayPage() {
         <div style={{ maxWidth: 1000, margin: '0 auto' }}>
           <div style={{ fontSize: 10, color: C.teal, fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', fontFamily: 'JetBrains Mono', marginBottom: 6 }}>Quick Answer — 2026-27</div>
           <p style={{ fontSize: mob ? 14 : 16, color: '#0f766e', lineHeight: 1.6, fontWeight: 600 }}>
-            A £400/day contractor <strong>outside IR35</strong> takes home approx <strong>£68,000/year</strong> via Ltd Co vs £54,000 inside IR35 (PAYE). Dividend tax rises to 10.75% from April 2026.
+            A £400/day contractor <strong>outside IR35</strong> takes home approx <strong>£65,000/year</strong> via Ltd Co vs <strong>~£59,000 inside IR35</strong> (PAYE, 5% pension). Dividend tax rises to 10.75% from April 2026.
           </p>
         </div>
       </div>
