@@ -42,7 +42,9 @@ const DAY_RATES = [
   { rate: 600, slug: '600-day-rate-take-home', salary: 132000 },
   { rate: 650, slug: '650-day-rate-take-home', salary: 143000 },
   { rate: 700, slug: '700-day-rate-take-home', salary: 154000 },
-  { rate: 750, slug: '750-day-rate-take-home', salary: 165000 },
+  { rate: 750,  slug: '750-day-rate-take-home',  salary: 165000 },
+  { rate: 800,  slug: '800-day-rate-take-home',  salary: 176000 },
+  { rate: 1000, slug: '1000-day-rate-take-home', salary: 220000 },
 ];
 
 const C = {

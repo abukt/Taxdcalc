@@ -31,17 +31,35 @@ function calcTH(gross) {
 
 const fmt = n => '£' + n.toLocaleString('en-GB');
 
-const NUMERIC_SALARIES = [
-  20000, 22000, 25000, 27000, 28000, 30000, 32000, 35000, 38000, 40000,
-  42000, 45000, 48000, 50000, 55000, 60000, 65000, 70000, 75000, 80000,
-  85000, 90000, 95000, 100000, 105000, 110000, 120000, 125000, 150000,
+const GROUPS = [
+  {
+    label: '£18,000 – £30,000',
+    salaries: [18000,19000,20000,21000,22000,23000,24000,25000,26000,27000,28000,29000,30000],
+  },
+  {
+    label: '£31,000 – £50,000',
+    salaries: [31000,32000,33000,34000,35000,36000,37000,38000,39000,40000,41000,42000,43000,44000,45000,46000,47000,48000,49000,50000],
+  },
+  {
+    label: '£52,000 – £80,000',
+    salaries: [52000,55000,58000,60000,65000,70000,75000,80000],
+  },
+  {
+    label: '£85,000 – £150,000',
+    salaries: [85000,90000,95000,100000,110000,120000,125000,130000,140000,150000],
+  },
 ];
 
 const SPECIAL_SALARIES = [
   { slug: 'minimum-wage-take-home',    label: 'Minimum Wage (£12.71/hr)', salary: 26418 },
+  { slug: 'nhs-band-2-take-home',      label: 'NHS Band 2 Entry',         salary: 23615 },
+  { slug: 'nhs-band-3-take-home',      label: 'NHS Band 3 Entry',         salary: 24625 },
+  { slug: 'nhs-band-4-take-home',      label: 'NHS Band 4 Entry',         salary: 26530 },
   { slug: 'nhs-band-5-take-home',      label: 'NHS Band 5 Entry',         salary: 29970 },
   { slug: 'nhs-band-6-take-home',      label: 'NHS Band 6 Entry',         salary: 37338 },
   { slug: 'nhs-band-7-take-home',      label: 'NHS Band 7 Entry',         salary: 43742 },
+  { slug: 'nhs-band-8a-take-home',     label: 'NHS Band 8a Entry',        salary: 53755 },
+  { slug: 'nhs-band-8b-take-home',     label: 'NHS Band 8b Entry',        salary: 62215 },
   { slug: 'teacher-salary-take-home',  label: 'NQT Teacher M1',           salary: 32916 },
   { slug: 'graduate-salary-take-home', label: 'UK Graduate Average',      salary: 28000 },
 ];
@@ -116,7 +134,7 @@ function Footer() {
 function SalaryCard({ slug, label, salary }) {
   const { th, mo } = calcTH(salary);
   return (
-    <Link href={`/${slug}`} style={{ display: 'block', background: C.white, border: `1px solid ${C.border}`, borderRadius: 10, padding: '14px 16px', boxShadow: C.shadow, transition: 'border-color 0.15s' }}>
+    <Link href={`/${slug}`} style={{ display: 'block', background: C.white, border: `1px solid ${C.border}`, borderRadius: 10, padding: '14px 16px', boxShadow: C.shadow }}>
       <div style={{ fontSize: 11, color: C.slate, fontFamily: 'JetBrains Mono', marginBottom: 4 }}>{label}</div>
       <div style={{ fontFamily: 'DM Serif Display', fontSize: 22, color: C.teal, lineHeight: 1 }}>{fmt(th)}/yr</div>
       <div style={{ fontSize: 11, color: C.mid, marginTop: 3 }}>{fmt(mo)}/month net</div>
@@ -155,32 +173,34 @@ export default function SalaryTakeHomePayUKPage() {
         <div style={{ maxWidth: 1000, margin: '0 auto' }}>
           <h1 style={{ fontFamily: 'DM Serif Display', fontSize: mob ? 22 : 32, color: 'white', lineHeight: 1.2, marginBottom: 10 }}>UK Salary Take-Home Pay 2026-27</h1>
           <p style={{ fontSize: mob ? 13 : 15, color: 'rgba(255,255,255,0.7)', lineHeight: 1.7, maxWidth: 640 }}>
-            Every common UK salary from £20,000 to £150,000 — exact take-home pay after income tax, National Insurance and 5% pension contribution. All figures use confirmed 2026-27 HMRC rates.
+            Every common UK salary from £18,000 to £150,000 — exact take-home pay after income tax, National Insurance and 5% pension contribution. All figures use confirmed 2026-27 HMRC rates.
           </p>
         </div>
       </div>
 
       <div style={{ maxWidth: 1000, margin: '0 auto', padding: mob ? '16px 16px 48px' : '24px 24px 56px' }}>
 
-        <h2 style={{ fontFamily: 'DM Serif Display', fontSize: mob ? 18 : 22, color: C.navy, marginBottom: 4 }}>Salary Take-Home Pay Table</h2>
-        <p style={{ fontSize: 13, color: C.slate, marginBottom: 16 }}>Click any salary to open the full calculator with pension, student loan and Scotland adjustments.</p>
-
-        <div style={{ display: 'grid', gridTemplateColumns: mob ? 'repeat(2,1fr)' : 'repeat(4,1fr)', gap: 10, marginBottom: 32 }} className="fi">
-          {NUMERIC_SALARIES.map(s => (
-            <SalaryCard key={s} slug={`${s}-salary-take-home`} label={fmt(s) + ' salary'} salary={s} />
-          ))}
-        </div>
+        {GROUPS.map(({ label, salaries }) => (
+          <div key={label} style={{ marginBottom: 32 }}>
+            <h2 style={{ fontFamily: 'DM Serif Display', fontSize: mob ? 18 : 22, color: C.navy, marginBottom: 4 }}>{label} Salary Take-Home</h2>
+            <p style={{ fontSize: 13, color: C.slate, marginBottom: 14 }}>Click any salary to open the full calculator.</p>
+            <div style={{ display: 'grid', gridTemplateColumns: mob ? 'repeat(2,1fr)' : 'repeat(4,1fr)', gap: 10 }} className="fi">
+              {salaries.map(s => (
+                <SalaryCard key={s} slug={`${s}-salary-take-home`} label={fmt(s) + ' salary'} salary={s} />
+              ))}
+            </div>
+          </div>
+        ))}
 
         <h2 style={{ fontFamily: 'DM Serif Display', fontSize: mob ? 18 : 22, color: C.navy, marginBottom: 4 }}>Common Role Salaries</h2>
         <p style={{ fontSize: 13, color: C.slate, marginBottom: 16 }}>Minimum wage, NHS bands, teacher pay and graduate salary take-home.</p>
-
         <div style={{ display: 'grid', gridTemplateColumns: mob ? 'repeat(2,1fr)' : 'repeat(3,1fr)', gap: 10, marginBottom: 32 }}>
           {SPECIAL_SALARIES.map(({ slug, label, salary }) => (
             <SalaryCard key={slug} slug={slug} label={label} salary={salary} />
           ))}
         </div>
 
-        <div style={{ background: C.tealBg, border: `1px solid ${C.tealBd}`, borderRadius: 12, padding: mob ? 16 : 22, marginBottom: 16 }}>
+        <div style={{ background: C.tealBg, border: `1px solid ${C.tealBd}`, borderRadius: 12, padding: mob ? 16 : 22, marginBottom: 24 }}>
           <h2 style={{ fontFamily: 'DM Serif Display', fontSize: mob ? 17 : 20, color: C.navy, marginBottom: 8 }}>Want to adjust pension, student loan or Scotland rates?</h2>
           <p style={{ fontSize: 13, color: C.mid, marginBottom: 14, lineHeight: 1.7 }}>
             Each salary page above includes a full interactive calculator — adjust pension contribution (0–20%), student loan plan (1, 2, 4, or 5), and toggle Scottish income tax. Results update instantly.
@@ -188,10 +208,14 @@ export default function SalaryTakeHomePayUKPage() {
           <Link href="/" style={{ display: 'inline-block', background: C.teal, color: 'white', padding: '10px 20px', borderRadius: 8, fontSize: 13, fontWeight: 700 }}>Open main salary calculator →</Link>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: mob ? '1fr' : '1fr 1fr', gap: 12 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: mob ? '1fr' : '1fr 1fr 1fr', gap: 12 }}>
           <Link href="/nhs" style={{ background: C.white, border: `1px solid ${C.border}`, borderRadius: 10, padding: '16px 18px', display: 'block', boxShadow: C.shadow }}>
             <div style={{ fontFamily: 'DM Serif Display', fontSize: 17, color: C.navy, marginBottom: 4 }}>NHS Pay Bands Calculator</div>
             <div style={{ fontSize: 12, color: C.mid }}>Interactive calculator for all NHS Agenda for Change bands 2–9, including HCAS London supplements.</div>
+          </Link>
+          <Link href="/contractor-pay" style={{ background: C.white, border: `1px solid ${C.border}`, borderRadius: 10, padding: '16px 18px', display: 'block', boxShadow: C.shadow }}>
+            <div style={{ fontFamily: 'DM Serif Display', fontSize: 17, color: C.navy, marginBottom: 4 }}>Contractor Pay Hub</div>
+            <div style={{ fontSize: 12, color: C.mid }}>Day-rate take-home from £200/day to £1,000/day — IR35, Ltd company and umbrella comparisons.</div>
           </Link>
           <Link href="/public-sector-pay" style={{ background: C.white, border: `1px solid ${C.border}`, borderRadius: 10, padding: '16px 18px', display: 'block', boxShadow: C.shadow }}>
             <div style={{ fontFamily: 'DM Serif Display', fontSize: 17, color: C.navy, marginBottom: 4 }}>Public Sector Pay Hub</div>

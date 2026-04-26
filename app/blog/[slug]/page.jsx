@@ -51,6 +51,25 @@ const ARTICLES = [
   { slug: 'plan-5-student-loan-take-home', title: 'Plan 5 Student Loan Take-Home Pay 2026-27 — £25,000 Threshold', desc: 'Plan 5 has the lowest repayment threshold (£25,000) of any UK student loan. 40-year write-off period. Impact on take-home at every salary.', category: 'Tax Planning', date: '18 April 2026', readTime: '5 min', relatedCalc: { label: 'Calculate Your Take-Home Pay', href: '/' }, faqs: [{ q: 'What is the Plan 5 student loan threshold?', a: '£25,000/year (£2,083/month). This is lower than Plan 2 (£27,295) and Plan 1 (£24,990). Almost every full-time worker on Plan 5 will be making repayments.' }, { q: 'Who is on Plan 5?', a: 'Students who started undergraduate courses in England from August 2023 onwards. This covers the 2023-24 academic year intake and all subsequent years.' }, { q: 'When does Plan 5 get written off?', a: 'After 40 years — 10 years longer than Plan 2. High earners are more likely to fully repay before write-off, making this a genuine long-term debt rather than a graduate tax.' }], sections: [{ h: 'Plan 5 vs other student loan plans 2026-27', table: { headers: ['Plan', 'Threshold', 'Write-off', 'Who'], rows: [['Plan 1', '£24,990', '25 years', 'Pre Sept 2012 starters'], ['Plan 2', '£27,295', '30 years', 'Sept 2012 to Jul 2023'], ['Plan 4 (Scotland)', '£31,395', '30 years', 'Scottish students'], ['Plan 5', '£25,000', '40 years', 'Aug 2023 onwards']] } }, { h: 'Plan 5 monthly repayments at key salaries', table: { headers: ['Salary', 'Annual Repayment', 'Monthly', 'Extra vs Plan 2/year'], rows: [['£26,000', '£90', '£7.50', '£114 more'], ['£30,000', '£450', '£37.50', '£243 more'], ['£35,000', '£900', '£75', '£693 more'], ['£40,000', '£1,350', '£112.50', '£1,143 more'], ['£50,000', '£2,250', '£187.50', '£2,043 more']] } }, { h: 'Should you overpay a Plan 5 loan?', p: 'For low earners whose income will remain below or near the threshold, the loan will likely be written off — overpaying wastes money. For higher earners who will fully repay within 40 years, overpayments can save interest. The decision depends heavily on your expected career earnings trajectory. Unlike Plan 2, there are many Plan 5 borrowers for whom full repayment before write-off is realistic.' }, { h: 'Plan 5 and salary sacrifice', p: 'Salary sacrifice pension contributions reduce gross pay for student loan calculation purposes. A £30,000 earner contributing 5% via salary sacrifice has adjusted gross of £28,500 — repaying 9% on £3,500 rather than £5,000, saving £135/year in student loan repayments as a side benefit of pension saving.' }] }
 ];
 
+const RELATED = {
+  '45000-salary-take-home-uk-2026':        [['/45000-salary-take-home','£45k Take-Home Calculator'],['/salary-take-home-pay-uk','All Salary Guides'],['/sacrifice','Salary Sacrifice'],['/bonus','Bonus Tax Calculator']],
+  '50000-salary-after-tax-uk-2026':        [['/50000-salary-take-home','£50k Take-Home Calculator'],['/salary-take-home-pay-uk','All Salary Guides'],['/sacrifice','Salary Sacrifice'],['/ir35','IR35 Calculator']],
+  '40000-salary-after-tax-uk-2026':        [['/40000-salary-take-home','£40k Take-Home Calculator'],['/salary-take-home-pay-uk','All Salary Guides'],['/sacrifice','Salary Sacrifice'],['/bonus','Bonus Tax']],
+  '30000-salary-take-home-pay-uk-2026':    [['/30000-salary-take-home','£30k Take-Home Calculator'],['/salary-take-home-pay-uk','All Salary Guides'],['/sacrifice','Salary Sacrifice'],['/bonus','Bonus Tax']],
+  'nhs-band-5-take-home-pay-2026':         [['/nhs-band-5-take-home','Band 5 Calculator'],['/nhs','NHS Pay Calculator'],['/nhs-pay-guide','NHS Pay Guide'],['/public-sector-pay','Public Sector Hub']],
+  'minimum-wage-take-home-pay-2026':       [['/minimum-wage-take-home','Minimum Wage Calculator'],['/salary-take-home-pay-uk','All Salary Guides'],['/hourly','Hourly Rate Calculator'],['/bonus','Bonus Tax']],
+  'ir35-inside-outside-calculator-2026':   [['/ir35','IR35 Calculator'],['/contractor-pay','Contractor Pay Hub'],['/350-day-rate-take-home','£350/Day Take-Home'],['/500-day-rate-take-home','£500/Day Take-Home']],
+  '60-percent-tax-trap':                   [['/tax-traps','Tax Traps Hub'],['/sacrifice','Salary Sacrifice Calculator'],['/blog/personal-allowance-taper-100k','£100k PA Taper'],['/blog/hicbc-child-benefit-charge','Child Benefit Charge']],
+  'hicbc-child-benefit-charge':            [['/tax-traps','Tax Traps Hub'],['/sacrifice','Salary Sacrifice Calculator'],['/blog/60-percent-tax-trap','60% Tax Trap'],['/blog/personal-allowance-taper-100k','£100k PA Taper']],
+  'personal-allowance-taper-100k':         [['/tax-traps','Tax Traps Hub'],['/sacrifice','Salary Sacrifice Calculator'],['/blog/60-percent-tax-trap','60% Tax Trap'],['/100000-salary-take-home','£100k Take-Home']],
+  'plan-5-student-loan-take-home':         [['/',  'Salary Calculator'],['/salary-take-home-pay-uk','All Salary Guides'],['/sacrifice','Salary Sacrifice'],['/blog/how-uk-income-tax-brackets-work','Tax Brackets Guide']],
+  'pension-tax-relief-your-free-money':    [['/sacrifice','Salary Sacrifice Calculator'],['/comparison','Compare Two Jobs'],['/',  'Salary Calculator'],['/blog/salary-sacrifice-electric-car-uk-2026','EV Salary Sacrifice']],
+  'salary-sacrifice-electric-car-uk-2026': [['/sacrifice','Salary Sacrifice Calculator'],['/blog/pension-tax-relief-your-free-money','Pension Tax Relief'],['/',  'Salary Calculator'],['/bonus','Bonus Tax']],
+  '2026-27-tax-year-changes-uk':           [['/',  'Salary Calculator'],['/ir35','IR35 Calculator'],['/blog/national-insurance-explained','NI Explained'],['/blog/how-uk-income-tax-brackets-work','Tax Brackets']],
+  'how-uk-income-tax-brackets-work':       [['/',  'Salary Calculator'],['/salary-take-home-pay-uk','All Salary Guides'],['/blog/national-insurance-explained','NI Explained'],['/blog/2026-27-tax-year-changes-uk','2026-27 Changes']],
+  'national-insurance-explained':          [['/',  'Salary Calculator'],['/blog/how-uk-income-tax-brackets-work','Tax Brackets'],['/sacrifice','Salary Sacrifice'],['/blog/2026-27-tax-year-changes-uk','2026-27 Changes']],
+};
+
 function Nav() {
   const [open, setOpen] = useState(false);
   const mob = useW() < 640;
@@ -194,6 +213,17 @@ export default function BlogPost() {
             </div>
           )}
         </div>
+
+        {RELATED[params.slug] && (
+          <div style={{ background: 'white', borderRadius: 12, padding: mob ? 16 : 22, border: '1px solid ' + C.border, boxShadow: C.shadow, marginBottom: 20 }}>
+            <div style={{ fontSize: 11, fontWeight: 700, color: C.teal, letterSpacing: '0.15em', textTransform: 'uppercase', marginBottom: 10, fontFamily: 'JetBrains Mono' }}>Related Calculators &amp; Guides</div>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
+              {RELATED[params.slug].map(([href, label]) => (
+                <Link key={href} href={href} style={{ display: 'inline-block', padding: '7px 12px', background: C.tealBg, border: '1px solid ' + C.tealBorder, borderRadius: 7, fontSize: 12, color: C.teal, fontWeight: 600 }}>{label}</Link>
+              ))}
+            </div>
+          </div>
+        )}
 
         <div style={{ background: 'linear-gradient(135deg,#0C1E3C,#1e3d6e)', borderRadius: 14, padding: mob ? 20 : 28, marginBottom: 20, textAlign: 'center' }}>
           <h2 style={{ fontFamily: 'DM Serif Display', fontSize: 22, color: 'white', marginBottom: 6 }}>Calculate your exact take-home pay</h2>

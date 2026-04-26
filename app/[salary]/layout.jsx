@@ -19,9 +19,11 @@ function calcTakeHome(gross) {
 }
 
 const VALID = new Set([
-  20000, 22000, 25000, 27000, 28000, 30000, 32000, 35000, 38000, 40000,
-  42000, 45000, 48000, 50000, 55000, 60000, 65000, 70000, 75000, 80000,
-  85000, 90000, 95000, 100000, 105000, 110000, 120000, 125000, 150000,
+  18000, 19000, 20000, 21000, 22000, 23000, 24000, 25000, 26000, 27000,
+  28000, 29000, 30000, 31000, 32000, 33000, 34000, 35000, 36000, 37000,
+  38000, 39000, 40000, 41000, 42000, 43000, 44000, 45000, 46000, 47000,
+  48000, 49000, 50000, 52000, 55000, 58000, 60000, 65000, 70000, 75000,
+  80000, 85000, 90000, 95000, 100000, 110000, 120000, 125000, 130000, 140000, 150000,
 ]);
 
 const SPECIAL = {
@@ -48,6 +50,8 @@ const SPECIAL = {
   '650-day-rate-take-home':    { salary: 143000, label: '£650/Day Contractor' },
   '700-day-rate-take-home':    { salary: 154000, label: '£700/Day Contractor' },
   '750-day-rate-take-home':    { salary: 165000, label: '£750/Day Contractor' },
+  '800-day-rate-take-home':    { salary: 176000, label: '£800/Day Contractor' },
+  '1000-day-rate-take-home':   { salary: 220000, label: '£1,000/Day Contractor' },
 };
 
 const fmt = n => '£' + Math.round(n).toLocaleString('en-GB');
@@ -76,8 +80,8 @@ export async function generateMetadata({ params }) {
   const { takeHome, monthly } = calcTakeHome(salaryNum);
   const isDayRate = slug.endsWith('-day-rate-take-home');
   const title = isDayRate
-    ? `${fmt(takeHome)} Take-Home | ${label} After Tax | 2026-27 UK`
-    : `${fmt(takeHome)} Take-Home | ${label} Salary After Tax | 2026-27 UK`;
+    ? `${fmt(takeHome)} Take-Home | ${label} After Tax 2026-27 UK | TaxdCalc`
+    : `${fmt(takeHome)} Take-Home | ${label} Salary After Tax 2026-27 UK | TaxdCalc`;
   const description = isDayRate
     ? `${label} annualised at 220 days (${fmt(salaryNum)}/year) takes home ${fmt(takeHome)}/year (${fmt(monthly)}/month) in 2026-27 after income tax and NI. Free UK calculator.`
     : `${label} salary takes home ${fmt(takeHome)}/year (${fmt(monthly)}/month) in 2026-27 after income tax and NI. Adjust pension, student loan, Scotland. Free.`;
