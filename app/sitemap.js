@@ -29,6 +29,9 @@ const routeConfig = {
   '/public-sector-pay/firefighters':    { priority: 0.80, freq: 'yearly'  },
   '/public-sector-pay/council-workers': { priority: 0.80, freq: 'yearly'  },
   '/blog':                              { priority: 0.8,  freq: 'weekly'  },
+  '/salary-take-home-pay-uk':          { priority: 0.90, freq: 'monthly' },
+  '/tax-traps':                        { priority: 0.85, freq: 'monthly' },
+  '/contractor-pay':                   { priority: 0.85, freq: 'monthly' },
 };
 
 const defaultConfig = { priority: 0.7, freq: 'monthly' };
@@ -78,6 +81,23 @@ const salaryRoutes = [
   { slug: '/nhs-band-7-take-home',      priority: 0.80 },
   { slug: '/teacher-salary-take-home',  priority: 0.80 },
   { slug: '/graduate-salary-take-home', priority: 0.80 },
+  { slug: '/nhs-band-2-take-home',      priority: 0.80 },
+  { slug: '/nhs-band-3-take-home',      priority: 0.80 },
+  { slug: '/nhs-band-4-take-home',      priority: 0.80 },
+  { slug: '/nhs-band-8a-take-home',     priority: 0.80 },
+  { slug: '/nhs-band-8b-take-home',     priority: 0.80 },
+  { slug: '/200-day-rate-take-home',    priority: 0.80 },
+  { slug: '/250-day-rate-take-home',    priority: 0.80 },
+  { slug: '/300-day-rate-take-home',    priority: 0.80 },
+  { slug: '/350-day-rate-take-home',    priority: 0.80 },
+  { slug: '/400-day-rate-take-home',    priority: 0.80 },
+  { slug: '/450-day-rate-take-home',    priority: 0.80 },
+  { slug: '/500-day-rate-take-home',    priority: 0.80 },
+  { slug: '/550-day-rate-take-home',    priority: 0.80 },
+  { slug: '/600-day-rate-take-home',    priority: 0.80 },
+  { slug: '/650-day-rate-take-home',    priority: 0.80 },
+  { slug: '/700-day-rate-take-home',    priority: 0.80 },
+  { slug: '/750-day-rate-take-home',    priority: 0.80 },
 ];
 
 export default function sitemap() {
