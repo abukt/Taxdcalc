@@ -237,11 +237,12 @@ function NavBar() {
   const [open, setOpen] = useState(false);
   const mob = useW() < 700;
   const links = [
-    ['/', 'Salary Calculator'],
+    ['/', 'Calculator'],
+    ['/salary-take-home-pay-uk', 'Salary Hub'],
+    ['/tools', 'Tools'],
+    ['/nhs', 'NHS'],
     ['/ir35', 'IR35'],
-    ['/nhs', 'NHS Bands'],
-    ['/tools', 'All Tools'],
-    ['/blog', 'Tax Guides'],
+    ['/blog', 'Guides'],
   ];
   return (
     <nav style={{ background: C.navy, position: 'sticky', top: 0, zIndex: 100, boxShadow: '0 2px 12px rgba(0,0,0,0.28)' }}>
@@ -333,24 +334,51 @@ function TaxCodePanel({ taxCode, setTaxCode }) {
 
 // ── FOOTER ────────────────────────────────────────────────────────────────────
 function Footer() {
-  const mob = useW() < 640;
   return (
-    <footer style={{ background: '#07111F', padding: '24px 20px', borderTop: '1px solid rgba(255,255,255,0.06)', marginTop: 48 }}>
-      <div style={{ maxWidth: 1100, margin: '0 auto', display: 'flex', flexDirection: mob ? 'column' : 'row', justifyContent: 'space-between', gap: 14, alignItems: mob ? 'flex-start' : 'center' }}>
-        <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-          <div style={{ width: 26, height: 26, background: 'linear-gradient(135deg,#0D9488,#14B8A6)', borderRadius: 6, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <span style={{ color: 'white', fontWeight: 700, fontSize: 11, fontFamily: 'JetBrains Mono' }}>Tx</span>
+    <footer style={{ background: '#07111F', padding: '40px 24px 28px', borderTop: '1px solid rgba(255,255,255,0.06)', marginTop: 0 }}>
+      <div style={{ maxWidth: 1100, margin: '0 auto' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(180px,1fr))', gap: '28px 24px', marginBottom: 28 }}>
+          <div>
+            <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.28)', letterSpacing: '0.14em', textTransform: 'uppercase', marginBottom: 12, fontFamily: 'JetBrains Mono', fontWeight: 600 }}>Salary Pages</div>
+            {[['/30000-salary-take-home', '£30,000 take-home pay'], ['/40000-salary-take-home', '£40,000 take-home pay'], ['/50000-salary-take-home', '£50,000 take-home pay'], ['/60000-salary-take-home', '£60,000 take-home pay'], ['/80000-salary-take-home', '£80,000 take-home pay'], ['/100000-salary-take-home', '£100,000 take-home pay'], ['/125000-salary-take-home', '£125,000 take-home pay'], ['/salary-take-home-pay-uk', 'All UK salary guides']].map(([h, l]) => (
+              <Link key={h} href={h} style={{ display: 'block', fontSize: 12, color: 'rgba(255,255,255,0.42)', marginBottom: 7, lineHeight: 1.4, textDecoration: 'none' }}>{l}</Link>
+            ))}
           </div>
-          <span style={{ color: 'white', fontFamily: 'DM Serif Display', fontSize: 15 }}>Taxd<span style={{ color: '#14B8A6' }}>Calc</span></span>
-        </Link>
-        <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap' }}>
-          {[['/ir35', 'IR35'], ['/nhs', 'NHS Bands'], ['/tools', 'All Tools'], ['/blog', 'Tax Guides']].map(([href, label]) => (
-            <Link key={href} href={href} style={{ color: 'rgba(255,255,255,0.35)', fontSize: 12 }}>{label}</Link>
-          ))}
+          <div>
+            <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.28)', letterSpacing: '0.14em', textTransform: 'uppercase', marginBottom: 12, fontFamily: 'JetBrains Mono', fontWeight: 600 }}>Tools</div>
+            {[['/', 'Salary calculator'], ['/ir35', 'IR35 calculator'], ['/nhs', 'NHS pay bands'], ['/bonus', 'Bonus tax calculator'], ['/sacrifice', 'Salary sacrifice'], ['/comparison', 'Job comparison'], ['/hourly', 'Hourly rate'], ['/maternity', 'Maternity pay'], ['/tools', 'All tax tools']].map(([h, l]) => (
+              <Link key={h} href={h} style={{ display: 'block', fontSize: 12, color: 'rgba(255,255,255,0.42)', marginBottom: 7, lineHeight: 1.4, textDecoration: 'none' }}>{l}</Link>
+            ))}
+          </div>
+          <div>
+            <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.28)', letterSpacing: '0.14em', textTransform: 'uppercase', marginBottom: 12, fontFamily: 'JetBrains Mono', fontWeight: 600 }}>Tax Planning</div>
+            {[['/tax-traps', 'Tax traps guide'], ['/blog/60-percent-tax-trap', '60% tax trap explained'], ['/blog/hicbc-child-benefit-charge', 'Child benefit taper'], ['/blog/personal-allowance-taper-100k', '£100k PA taper'], ['/blog/pension-tax-relief-your-free-money', 'Pension tax relief'], ['/blog/salary-sacrifice-electric-car-uk-2026', 'EV salary sacrifice'], ['/blog/plan-5-student-loan-take-home', 'Plan 5 student loan'], ['/sacrifice', 'Salary sacrifice calculator']].map(([h, l]) => (
+              <Link key={h} href={h} style={{ display: 'block', fontSize: 12, color: 'rgba(255,255,255,0.42)', marginBottom: 7, lineHeight: 1.4, textDecoration: 'none' }}>{l}</Link>
+            ))}
+          </div>
+          <div>
+            <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.28)', letterSpacing: '0.14em', textTransform: 'uppercase', marginBottom: 12, fontFamily: 'JetBrains Mono', fontWeight: 600 }}>Public Sector</div>
+            {[['/nhs', 'NHS pay calculator'], ['/nhs-pay-guide', 'NHS pay guide'], ['/teacher-pay-guide', 'Teacher pay guide'], ['/public-sector-pay', 'Public sector hub'], ['/public-sector-pay/police', 'Police pay'], ['/public-sector-pay/firefighters', 'Firefighter pay'], ['/public-sector-pay/civil-service', 'Civil service pay'], ['/public-sector-pay/armed-forces', 'Armed forces pay']].map(([h, l]) => (
+              <Link key={h} href={h} style={{ display: 'block', fontSize: 12, color: 'rgba(255,255,255,0.42)', marginBottom: 7, lineHeight: 1.4, textDecoration: 'none' }}>{l}</Link>
+            ))}
+          </div>
+          <div>
+            <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.28)', letterSpacing: '0.14em', textTransform: 'uppercase', marginBottom: 12, fontFamily: 'JetBrains Mono', fontWeight: 600 }}>Contractor Pay</div>
+            {[['/contractor-pay', 'Contractor pay hub'], ['/ir35', 'IR35 calculator'], ['/300-day-rate-take-home', '£300/day take-home'], ['/400-day-rate-take-home', '£400/day take-home'], ['/500-day-rate-take-home', '£500/day take-home'], ['/600-day-rate-take-home', '£600/day take-home'], ['/700-day-rate-take-home', '£700/day take-home'], ['/blog/ir35-inside-outside-calculator-2026', 'IR35 guide 2026']].map(([h, l]) => (
+              <Link key={h} href={h} style={{ display: 'block', fontSize: 12, color: 'rgba(255,255,255,0.42)', marginBottom: 7, lineHeight: 1.4, textDecoration: 'none' }}>{l}</Link>
+            ))}
+          </div>
         </div>
-        <span style={{ fontSize: 11, color: 'rgba(255,255,255,0.18)', maxWidth: 260, lineHeight: 1.6 }}>
-          For guidance only. Always consult HMRC or a qualified tax adviser. Updated April 2026.
-        </span>
+        <div style={{ borderTop: '1px solid rgba(255,255,255,0.07)', paddingTop: 20, display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: 12, alignItems: 'center' }}>
+          <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 9, textDecoration: 'none' }}>
+            <div style={{ width: 28, height: 28, background: 'linear-gradient(135deg,#0D9488,#14B8A6)', borderRadius: 7, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+              <span style={{ color: 'white', fontWeight: 700, fontSize: 12, fontFamily: 'JetBrains Mono' }}>Tx</span>
+            </div>
+            <span style={{ color: 'white', fontFamily: 'DM Serif Display', fontSize: 16 }}>Taxd<span style={{ color: '#14B8A6' }}>Calc</span></span>
+          </Link>
+          <span style={{ fontSize: 11, color: 'rgba(255,255,255,0.22)', fontFamily: 'JetBrains Mono' }}>Updated April 2026 · 2026-27 HMRC rates</span>
+          <span style={{ fontSize: 11, color: 'rgba(255,255,255,0.18)', maxWidth: 320, lineHeight: 1.6 }}>For guidance only. Consult HMRC or a qualified tax adviser.</span>
+        </div>
       </div>
     </footer>
   );
@@ -965,6 +993,90 @@ export default function HomePage() {
             <Link href="/blog" style={{ display: 'inline-block', background: 'rgba(13,148,136,0.15)', border: '1px solid rgba(20,184,166,0.3)', color: '#14B8A6', padding: '10px 24px', borderRadius: 8, fontSize: 13, fontWeight: 600 }}>
               View all tax guides →
             </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* SEO INTERNAL LINKING AUTHORITY SECTION */}
+      <section style={{ background: C.white, borderTop: `1px solid ${C.border}`, padding: mob ? '44px 16px 52px' : '56px 24px 64px' }}>
+        <div style={{ maxWidth: 1100, margin: '0 auto' }}>
+          <h2 style={{ fontFamily: 'DM Serif Display', fontSize: mob ? 22 : 30, color: C.navy, marginBottom: 6 }}>UK Salary &amp; Tax Guides</h2>
+          <p style={{ color: C.slate, fontSize: 14, marginBottom: 36, maxWidth: 560 }}>Every calculator, every salary, every tax scenario — 2026-27 HMRC rates throughout.</p>
+          <div style={{ display: 'grid', gridTemplateColumns: mob ? '1fr 1fr' : 'repeat(5,1fr)', gap: mob ? '28px 20px' : 32 }}>
+
+            <div>
+              <h3 style={{ fontFamily: 'DM Serif Display', fontSize: 15, color: C.navy, marginBottom: 8, paddingBottom: 8, borderBottom: `2px solid ${C.teal}` }}>Popular Salary Pages</h3>
+              <p style={{ fontSize: 11, color: C.slate, marginBottom: 10, lineHeight: 1.5 }}>Income tax &amp; NI breakdown by salary.</p>
+              {[
+                ['/30000-salary-take-home', '£30,000 salary take-home pay'],
+                ['/40000-salary-take-home', '£40,000 salary take-home pay'],
+                ['/50000-salary-take-home', '£50,000 salary take-home pay'],
+                ['/60000-salary-take-home', '£60,000 salary take-home pay'],
+                ['/80000-salary-take-home', '£80,000 salary take-home pay'],
+                ['/100000-salary-take-home', '£100,000 salary take-home pay'],
+                ['/125000-salary-take-home', '£125,000 salary take-home pay'],
+              ].map(([href, label]) => (
+                <Link key={href} href={href} style={{ display: 'block', fontSize: 12, color: C.teal, marginBottom: 7, lineHeight: 1.4, fontWeight: 500 }}>{label}</Link>
+              ))}
+            </div>
+
+            <div>
+              <h3 style={{ fontFamily: 'DM Serif Display', fontSize: 15, color: C.navy, marginBottom: 8, paddingBottom: 8, borderBottom: `2px solid ${C.teal}` }}>Salary Hubs &amp; Tools</h3>
+              <p style={{ fontSize: 11, color: C.slate, marginBottom: 10, lineHeight: 1.5 }}>Compare salaries and model scenarios.</p>
+              {[
+                ['/salary-take-home-pay-uk', 'All UK salary guides'],
+                ['/tools', 'All tax calculators'],
+                ['/comparison', 'Compare two job offers'],
+                ['/bonus', 'Bonus tax calculator'],
+                ['/sacrifice', 'Salary sacrifice calculator'],
+              ].map(([href, label]) => (
+                <Link key={href} href={href} style={{ display: 'block', fontSize: 12, color: C.teal, marginBottom: 7, lineHeight: 1.4, fontWeight: 500 }}>{label}</Link>
+              ))}
+            </div>
+
+            <div>
+              <h3 style={{ fontFamily: 'DM Serif Display', fontSize: 15, color: C.navy, marginBottom: 8, paddingBottom: 8, borderBottom: `2px solid ${C.teal}` }}>Public Sector Pay</h3>
+              <p style={{ fontSize: 11, color: C.slate, marginBottom: 10, lineHeight: 1.5 }}>NHS bands, teachers, police &amp; more.</p>
+              {[
+                ['/nhs', 'NHS Band pay calculator'],
+                ['/nhs-pay-guide', 'NHS pay guide 2026-27'],
+                ['/teacher-pay-guide', 'Teacher pay guide 2026-27'],
+                ['/public-sector-pay', 'Public sector pay hub'],
+                ['/public-sector-pay/police', 'Police pay take-home'],
+                ['/public-sector-pay/firefighters', 'Firefighter pay take-home'],
+              ].map(([href, label]) => (
+                <Link key={href} href={href} style={{ display: 'block', fontSize: 12, color: C.teal, marginBottom: 7, lineHeight: 1.4, fontWeight: 500 }}>{label}</Link>
+              ))}
+            </div>
+
+            <div>
+              <h3 style={{ fontFamily: 'DM Serif Display', fontSize: 15, color: C.navy, marginBottom: 8, paddingBottom: 8, borderBottom: `2px solid ${C.teal}` }}>Tax Planning Guides</h3>
+              <p style={{ fontSize: 11, color: C.slate, marginBottom: 10, lineHeight: 1.5 }}>Avoid traps. Reclaim thousands.</p>
+              {[
+                ['/tax-traps', 'Tax traps guide'],
+                ['/blog/60-percent-tax-trap', '60% tax trap explained'],
+                ['/blog/hicbc-child-benefit-charge', 'High income child benefit charge'],
+                ['/blog/personal-allowance-taper-100k', 'Personal allowance taper at £100k'],
+                ['/blog/pension-tax-relief-your-free-money', 'Pension tax relief: free money from HMRC'],
+              ].map(([href, label]) => (
+                <Link key={href} href={href} style={{ display: 'block', fontSize: 12, color: C.teal, marginBottom: 7, lineHeight: 1.4, fontWeight: 500 }}>{label}</Link>
+              ))}
+            </div>
+
+            <div>
+              <h3 style={{ fontFamily: 'DM Serif Display', fontSize: 15, color: C.navy, marginBottom: 8, paddingBottom: 8, borderBottom: `2px solid ${C.teal}` }}>Contractor Pay</h3>
+              <p style={{ fontSize: 11, color: C.slate, marginBottom: 10, lineHeight: 1.5 }}>IR35 and day rate take-home calculators.</p>
+              {[
+                ['/contractor-pay', 'Contractor pay hub'],
+                ['/ir35', 'Inside vs outside IR35 calculator'],
+                ['/300-day-rate-take-home', '£300/day contractor take-home'],
+                ['/500-day-rate-take-home', '£500/day contractor take-home'],
+                ['/700-day-rate-take-home', '£700/day contractor take-home'],
+              ].map(([href, label]) => (
+                <Link key={href} href={href} style={{ display: 'block', fontSize: 12, color: C.teal, marginBottom: 7, lineHeight: 1.4, fontWeight: 500 }}>{label}</Link>
+              ))}
+            </div>
+
           </div>
         </div>
       </section>
