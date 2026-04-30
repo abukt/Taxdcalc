@@ -231,6 +231,15 @@ const schemaArticle={'@context':'https://schema.org','@type':'Article','@id':'ht
           </div>
           <Link href="/nhs" style={{background:C.teal,color:'white',padding:'12px 24px',borderRadius:8,fontSize:14,fontWeight:700,display:'inline-block',flexShrink:0}}>Open NHS Calculator →</Link>
         </div>
+
+        <div style={{background:C.white,borderRadius:12,padding:mob?16:22,border:`1px solid ${C.border}`,boxShadow:C.shadow,marginTop:20}}>
+          <div style={{fontSize:11,fontWeight:700,color:C.teal,letterSpacing:'0.15em',textTransform:'uppercase',marginBottom:10,fontFamily:'JetBrains Mono'}}>Related Calculators &amp; Guides</div>
+          <div style={{display:'flex',flexWrap:'wrap',gap:8}}>
+            {[['/nhs','NHS band calculator'],['/sacrifice','Salary sacrifice calculator'],['/blog/nhs-band-5-take-home-pay-2026','NHS Band 5 take-home guide']].map(([href,label])=>(
+              <Link key={href} href={href} style={{display:'inline-block',padding:'7px 12px',background:C.tealBg,border:`1px solid ${C.tealBd}`,borderRadius:7,fontSize:12,color:C.teal,fontWeight:600}}>{label}</Link>
+            ))}
+          </div>
+        </div>
       </div>
       <Footer/>
     </>
