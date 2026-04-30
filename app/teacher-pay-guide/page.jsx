@@ -210,6 +210,15 @@ const schemaArticle={'@context':'https://schema.org','@type':'Article','@id':'ht
           </div>
           <Link href="/teacher-salary-take-home" style={{background:'white',color:'#4C1D95',padding:'12px 24px',borderRadius:8,fontSize:14,fontWeight:700,display:'inline-block',flexShrink:0}}>Open Teacher Calculator →</Link>
         </div>
+
+        <div style={{background:'#FFFFFF',borderRadius:12,padding:mob?16:22,border:'1px solid #E2E8F0',boxShadow:'0 1px 3px rgba(0,0,0,0.07)',marginTop:20}}>
+          <div style={{fontSize:11,fontWeight:700,color:'#0D9488',letterSpacing:'0.15em',textTransform:'uppercase',marginBottom:10,fontFamily:'JetBrains Mono'}}>Related Calculators</div>
+          <div style={{display:'flex',flexWrap:'wrap',gap:8}}>
+            {[['/sacrifice','Salary sacrifice & TPS pension'],['/','Full salary calculator'],['/comparison','Compare two job offers']].map(([href,label])=>(
+              <Link key={href} href={href} style={{display:'inline-block',padding:'7px 12px',background:'#F0FDFA',border:'1px solid #99F6E4',borderRadius:7,fontSize:12,color:'#0D9488',fontWeight:600}}>{label}</Link>
+            ))}
+          </div>
+        </div>
       </div>
       <Footer/>
     </>

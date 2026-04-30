@@ -5,36 +5,36 @@ import { BLOG_POSTS } from '../../lib/blog-data.js';
 
 const META = {
   'minimum-wage-take-home-pay-2026': {
-    title: '£21,478 Take-Home | Minimum Wage 2026 After Tax UK | TaxdCalc',
-    description: 'Minimum wage (£12.71/hr, 40hrs) takes home £21,478/year — £1,790/month in 2026-27. Full breakdown of income tax, NI and net pay. Free calculator.',
+    title: '£21,478 Take-Home | UK Minimum Wage 2026 After Tax',
+    description: 'Full-time minimum wage worker (£12.71/hr, 40hrs) takes home £21,478/year (£1,790/month) after income tax and NI in 2026-27.',
   },
   '45000-salary-take-home-uk-2026': {
-    title: '£34,120 Take-Home | £45,000 Salary After Tax | 2026-27 UK | TaxdCalc',
-    description: '£45,000 salary takes home £34,120/year (£2,843/month) in 2026-27 after income tax and NI. Adjust pension, student loan and Scotland. Free, accurate.',
+    title: '£34,120 Take-Home | £45,000 Salary After Tax 2026-27',
+    description: '£45,000 salary: £34,120 take-home per year (£2,843/month) after £6,486 income tax and £2,594 NI in 2026-27.',
   },
   '50000-salary-after-tax-uk-2026': {
-    title: '£37,520 Take-Home | £50,000 Salary After Tax | 2026-27 UK | TaxdCalc',
-    description: '£50,000 salary takes home £37,520/year (£3,127/month) in 2026-27. Just below the 40% threshold at £50,270. Full breakdown with pension and NI.',
+    title: '£37,520 Take-Home | £50,000 Salary After Tax 2026-27',
+    description: '£50,000 salary: £37,520 take-home per year (£3,127/month) after £7,486 income tax and £3,004 NI in 2026-27.',
   },
   '40000-salary-after-tax-uk-2026': {
-    title: '£30,720 Take-Home | £40,000 Salary After Tax | 2026-27 UK | TaxdCalc',
-    description: '£40,000 salary takes home £30,720/year (£2,560/month) in 2026-27 after income tax (20%) and National Insurance. Free UK calculator updated for 2026-27.',
+    title: '£30,510 Take-Home | £40,000 Salary After Tax 2026-27',
+    description: '£40,000 salary: £30,510 take-home per year (£2,542/month) after £5,686 income tax and £2,554 NI in 2026-27.',
   },
   '30000-salary-take-home-pay-uk-2026': {
-    title: '£23,920 Take-Home | £30,000 Salary After Tax | 2026-27 UK | TaxdCalc',
-    description: '£30,000 salary takes home £23,920/year (£1,993/month) in 2026-27. Full income tax, NI and pension breakdown. Free UK calculator.',
+    title: '£25,350 Take-Home | £30,000 Salary After Tax 2026-27',
+    description: '£30,000 salary: £25,350 take-home per year (£2,112/month) after £3,486 income tax and £1,404 NI in 2026-27.',
   },
   'nhs-band-5-take-home-pay-2026': {
     title: '£22,748 Take-Home | NHS Band 5 Salary After Tax 2026-27 | TaxdCalc',
     description: 'NHS Band 5 entry take-home: £22,748/year (£1,896/month) after income tax, NI and 9.8% NHS pension. Full band 5 spine point table. London HCAS included.',
   },
   'ir35-inside-outside-calculator-2026': {
-    title: 'IR35 Inside vs Outside 2026-27 — What You Actually Take Home | TaxdCalc',
-    description: 'Updated for 10.75% dividend tax from April 2026. Side-by-side comparison of PAYE inside IR35 vs Limited Company outside IR35. See your exact figures.',
+    title: 'IR35 2026: Inside vs Outside Take-Home at Every Day Rate',
+    description: 'Compare PAYE inside IR35 vs Ltd Company outside IR35 for £300–£800/day. Dividend tax rose to 10.75% April 2026. Updated figures.',
   },
   'salary-sacrifice-electric-car-uk-2026': {
-    title: 'Salary Sacrifice Electric Car 2026-27 — Is It Worth It? | TaxdCalc',
-    description: '3% BiK rate makes EV salary sacrifice exceptionally efficient in 2026-27. A £400/month car costs a basic rate taxpayer only £288/month. Full guide.',
+    title: 'EV Salary Sacrifice 2026: Real Cost After Tax Savings',
+    description: 'Electric car salary sacrifice: real monthly cost after income tax and NI savings. 2% BIK rate continues in 2026-27.',
   },
   'how-uk-income-tax-brackets-work': {
     title: 'How UK Income Tax Brackets Work 2026-27 — Plain English Guide | TaxdCalc',
@@ -53,20 +53,20 @@ const META = {
     description: 'Thresholds frozen to 2031. NLW rises to £12.71/hr. Employer NI up to 15%. Dividend tax rises to 10.75%. Complete guide to April 2026 tax changes.',
   },
   '60-percent-tax-trap': {
-    title: '60% Tax Trap Explained 2026-27 — How to Escape It | TaxdCalc',
-    description: 'Between £100,000–£125,140 your effective marginal rate is 60%. Salary sacrifice into pension escapes it entirely. See exactly how much you can save.',
+    title: '60% Tax Trap 2026: What It Is and How to Escape It',
+    description: 'Personal Allowance withdraws between £100k–£125,140 creating a 60% effective rate. Salary sacrifice is the fix. Explained.',
   },
   'hicbc-child-benefit-charge': {
-    title: 'High Income Child Benefit Charge 2026-27 — HICBC Explained | TaxdCalc',
-    description: 'Child Benefit is clawed back between £60,000–£80,000 through the HICBC taper. Salary sacrifice can recover all of it. Calculate your exact position.',
+    title: 'HICBC 2026: Child Benefit You Lose at £60k–£80k',
+    description: 'High Income Child Benefit Charge: how much you lose between £60,000 and £80,000, and how salary sacrifice can stop it.',
   },
   'personal-allowance-taper-100k': {
-    title: 'Personal Allowance Taper at £100k — 2026-27 Guide | TaxdCalc',
-    description: 'Above £100,000 your Personal Allowance is withdrawn at £1 per £2 earned. By £125,140 you have none. How to reclaim it with pension contributions.',
+    title: '60% Tax Trap 2026: Escape the £100k–£125k PA Taper',
+    description: 'Personal Allowance withdrawn at £1 per £2 above £100k. Effective 60% rate on £100k–£125,140. How salary sacrifice fixes it.',
   },
   'plan-5-student-loan-take-home': {
-    title: 'Plan 5 Student Loan Take-Home Pay 2026-27 — £25,000 Threshold | TaxdCalc',
-    description: 'Plan 5 has the lowest repayment threshold (£25,000) of any UK student loan. 40-year write-off period. How it affects your monthly take-home pay.',
+    title: 'Plan 5 Student Loan 2026: How Much It Cuts Your Pay',
+    description: '9% on earnings above £25,000. Plan 5 starts April 2026. See exactly how much it reduces take-home at every salary.',
   },
 };
 
