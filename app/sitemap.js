@@ -29,6 +29,9 @@ const routeConfig = {
   '/public-sector-pay/firefighters':    { priority: 0.80, freq: 'yearly'  },
   '/public-sector-pay/council-workers': { priority: 0.80, freq: 'yearly'  },
   '/blog':                              { priority: 0.8,  freq: 'weekly'  },
+  '/salary-take-home-pay-uk':          { priority: 0.90, freq: 'monthly' },
+  '/tax-traps':                        { priority: 0.85, freq: 'monthly' },
+  '/contractor-pay':                   { priority: 0.85, freq: 'monthly' },
 };
 
 const defaultConfig = { priority: 0.7, freq: 'monthly' };
@@ -102,7 +105,7 @@ const salaryRoutes = [
 ];
 
 export default function sitemap() {
-  const salaryMtime = getMtime(path.join(appDir, '[salary]', 'page.jsx'));
+  const salaryMtime = getMtime(path.join(appDir, '[salary]', 'page.js'));
 
   // Static pages: auto-discovered from the filesystem.
   // lastModified reflects the actual file mtime, so it updates whenever the file changes.

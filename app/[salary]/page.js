@@ -83,12 +83,12 @@ function RelatedLinks({slug,salaryNum}){
     if(ni>0)links.push({href:`/${NHS_SLUGS[ni-1]}`,label:`NHS ${NHS_LABELS[ni-1]} Take-Home`});
     if(ni>=0&&ni<NHS_SLUGS.length-1)links.push({href:`/${NHS_SLUGS[ni+1]}`,label:`NHS ${NHS_LABELS[ni+1]} Take-Home`});
   }else{
-    links.push({href:'/salary-take-home-pay-uk',label:'All Salary Guides'},{href:'/tools',label:'All Tax Tools'},{href:'/sacrifice',label:salaryNum>=50000?'Salary sacrifice saves 42p per pound at higher rate':'Salary Sacrifice'},{href:'/bonus',label:'Bonus Tax Calculator'},{href:'/comparison',label:'Compare Two Jobs'});
-    if(salaryNum>=25000&&salaryNum<=55000)links.push({href:'/nhs-pay-guide',label:'NHS worker? See your exact band take-home'});
+    links.push({href:'/salary-take-home-pay-uk',label:'All Salary Guides'},{href:'/tools',label:'All Tax Tools'},{href:'/sacrifice',label:'Salary Sacrifice'},{href:'/bonus',label:'Bonus Tax Calculator'},{href:'/comparison',label:'Compare Two Jobs'});
+    if(salaryNum>=23000&&salaryNum<=55000)links.push({href:'/nhs-pay-guide',label:'NHS Pay Guide'});
     if(salaryNum>=50000)links.push({href:'/ir35',label:'IR35 Calculator'},{href:'/contractor-pay',label:'Contractor Pay'});
     if(salaryNum>=90000&&salaryNum<=130000)links.push({href:'/tax-traps',label:'Tax Traps Guide'},{href:'/blog/60-percent-tax-trap',label:'60% Tax Trap'});
     if(salaryNum>=100000)links.push({href:'/blog/personal-allowance-taper-100k',label:'£100k Allowance Taper'});
-    if(salaryNum>=60000&&salaryNum<=80000)links.push({href:'/blog/hicbc-child-benefit-charge',label:'Earning £60k–£80k? Check the child benefit taper'});
+    if(salaryNum>=50000)links.push({href:'/blog/hicbc-child-benefit-charge',label:'Child Benefit Charge'});
     const lower=VALID.filter(v=>v<salaryNum).slice(-3).reverse();
     const higher=VALID.filter(v=>v>salaryNum).slice(0,3);
     lower.forEach(v=>links.push({href:`/${v}-salary-take-home`,label:`£${v.toLocaleString('en-GB')} Salary`}));
