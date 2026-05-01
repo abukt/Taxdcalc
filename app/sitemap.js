@@ -119,18 +119,6 @@ const salaryRoutes = [
   { slug: '/nhs-band-8b-take-home',     priority: 0.80 },
   { slug: '/200-day-rate-take-home',    priority: 0.80 },
   { slug: '/250-day-rate-take-home',    priority: 0.80 },
-  { slug: '/300-day-rate-take-home',    priority: 0.85 },
-  { slug: '/350-day-rate-take-home',    priority: 0.85 },
-  { slug: '/400-day-rate-take-home',    priority: 0.85 },
-  { slug: '/450-day-rate-take-home',    priority: 0.85 },
-  { slug: '/500-day-rate-take-home',    priority: 0.85 },
-  { slug: '/550-day-rate-take-home',    priority: 0.85 },
-  { slug: '/600-day-rate-take-home',    priority: 0.85 },
-  { slug: '/650-day-rate-take-home',    priority: 0.85 },
-  { slug: '/700-day-rate-take-home',    priority: 0.85 },
-  { slug: '/750-day-rate-take-home',    priority: 0.85 },
-  { slug: '/800-day-rate-take-home',    priority: 0.85 },
-  { slug: '/1000-day-rate-take-home',   priority: 0.85 },
 ];
 
 export default function sitemap() {
