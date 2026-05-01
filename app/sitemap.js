@@ -107,18 +107,8 @@ const salaryRoutes = [
     80000, 85000, 90000, 95000, 100000, 110000, 120000, 125000, 130000, 140000, 150000,
   ].map(s => ({ slug: `/${s}-salary-take-home`, priority: 0.85 })),
   { slug: '/minimum-wage-take-home',    priority: 0.85 },
-  { slug: '/nhs-band-5-take-home',      priority: 0.85 },
-  { slug: '/nhs-band-6-take-home',      priority: 0.85 },
-  { slug: '/nhs-band-7-take-home',      priority: 0.80 },
   { slug: '/teacher-salary-take-home',  priority: 0.80 },
   { slug: '/graduate-salary-take-home', priority: 0.80 },
-  { slug: '/nhs-band-2-take-home',      priority: 0.80 },
-  { slug: '/nhs-band-3-take-home',      priority: 0.80 },
-  { slug: '/nhs-band-4-take-home',      priority: 0.80 },
-  { slug: '/nhs-band-8a-take-home',     priority: 0.80 },
-  { slug: '/nhs-band-8b-take-home',     priority: 0.80 },
-  { slug: '/200-day-rate-take-home',    priority: 0.80 },
-  { slug: '/250-day-rate-take-home',    priority: 0.80 },
 ];
 
 export default function sitemap() {
